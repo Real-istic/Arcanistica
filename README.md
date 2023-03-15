@@ -1,2 +1,2 @@
-# el-pollo-loco
+# Arcanistica
  crazy game :)
