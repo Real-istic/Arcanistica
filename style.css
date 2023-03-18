@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+h1 {
+    font-size: 100px;
+    margin: 50px 0px 0px;
+}
+
 body {
     margin: 0;
     display: flex;
@@ -11,4 +16,6 @@ body {
 
 canvas {
     background-color: black;
+    border-radius: 10px;
+    /* transition: 300ms all ease-in-out; */
 }
