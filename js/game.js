@@ -23,7 +23,7 @@ window.addEventListener('keydown', (e) => {
     } else if (e.key.toLowerCase() == 's') {
         keyboard.DOWN = true;
 
-    } else if (e.key.toLowerCase() == 'space') {
+    } else if (e.key.toLowerCase() == ' ') {
         keyboard.SPACE = true;
 
     }
@@ -43,7 +43,7 @@ window.addEventListener('keyup', (e) => {
     } else if (e.key.toLowerCase() == 's') {
         keyboard.DOWN = false;
 
-    } else if (e.key.toLowerCase() == 'space') {
+    } else if (e.key.toLowerCase() == ' ') {
         keyboard.SPACE = false;
         
     }
