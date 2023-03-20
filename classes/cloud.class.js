@@ -4,10 +4,9 @@ class Cloud extends MovableObject {
     height = 480;
     
 
-    constructor() {
-        super().loadImage('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png')
-        
-        this.x = Math.random() * 500;
+    constructor(path, x) {
+        super().loadImage(path, x)
+        this.x = x + Math.random() * 10;
         this.animate();
     }
 

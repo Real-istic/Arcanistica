@@ -1,5 +1,4 @@
 class Endboss extends MovableObject {
-
     y = 190;
     width = 264;
     height = 264;
@@ -15,20 +14,16 @@ class Endboss extends MovableObject {
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0])
         this.loadImages(this.IMAGES_WALKING)
-        this.x = 550
-        this.speed = 0.25
-
+        this.speed = 0.25;
+        this.x = 4200;
         this.animate();
     }
 
     animate() {
         this.moveLeft();
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_WALKING.length;
-            let path = this.IMAGES_WALKING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
-        }, 100);
+            this.playAnimation(this.IMAGES_WALKING);
+        }, 300);
     }
 }
 
