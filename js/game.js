@@ -7,7 +7,6 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     console.log('My Character is', world.character);
-
 }
 
 window.addEventListener('keydown', (e) => {
@@ -25,9 +24,8 @@ window.addEventListener('keydown', (e) => {
 
     } else if (e.key.toLowerCase() == ' ') {
         keyboard.SPACE = true;
-
     }
-    console.log(e)
+    // console.log(e)
 })
 
 window.addEventListener('keyup', (e) => {
@@ -45,7 +43,6 @@ window.addEventListener('keyup', (e) => {
 
     } else if (e.key.toLowerCase() == ' ') {
         keyboard.SPACE = false;
-        
     }
-    console.log(e)
+    // console.log(e)
 })

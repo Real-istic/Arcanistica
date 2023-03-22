@@ -1,9 +1,8 @@
 class Character extends MovableObject {
     x = 50;
-    y = 260;
     width = 164
     height = 164
-    speed = 3
+    speed = 13
     idleCounter = 0;
     IMAGES_WALKING = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk1.png',
@@ -98,28 +97,18 @@ class Character extends MovableObject {
         setInterval(() => {
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x) {
-                this.x += this.speed;
-                this.world.level.backgrounds[0].x += this.speed / 20;
-                this.world.level.backgrounds[1].x += this.speed / 15;
-                this.otherDirection = false;
-                this.walking_sound.play();
+                this.moveRight();
+                // this.walking_sound.play();
             }
             if (this.world.keyboard.LEFT && this.x > -45) {
-                this.x -= this.speed;
-                this.world.level.backgrounds[0].x -= this.speed / 20;
-                this.world.level.backgrounds[1].x -= this.speed / 15;
-
-                this.otherDirection = true;
-                this.walking_sound.play();
+                this.moveLeft();
             }
-
-            console.log('this.speedY', this.speedY)
-
-            if (this.world.keyboard.SPACE) {
-                this.speedY = 20;
+            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+                this.jump()
             }
-
             this.world.camera_x = -this.x + 100;
+            // console.log('this.speedY', this.speedY)
+            // console.log('this.speedY', this.y)
         }, 1000 / 60);
 
 
@@ -141,5 +130,5 @@ class Character extends MovableObject {
 
     }
 
-        
+
 }
