@@ -108,20 +108,19 @@ class MovableObject {
         }
     }
 
-    isColliding (mo) {
-        return  this.x + this.width >= mo.x && 
-                this.y + this.height >= mo.y &&
-                this.x < mo.x &&
-                this.y < mo.y + mo.height
-             // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-}
+    isColliding(mo) {
+        return this.x + this.width >= mo.x &&
+            this.y + this.height >= mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height
+    }
 }
 
 
 
 // isColliding (mo) {
-//     return  (this.X + this.width) >= mo.X && this.X <= (mo.X + mo.width) && 
+//     return  (this.X + this.width) >= mo.X && this.X <= (mo.X + mo.width) &&
 //             (this.Y + this.offsetY + this.height) >= mo.Y &&
-//             (this.Y + this.offsetY) <= (mo.Y + mo.height) && 
+//             (this.Y + this.offsetY) <= (mo.Y + mo.height) &&
 //             mo.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 // }
