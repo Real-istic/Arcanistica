@@ -64,7 +64,7 @@ class MovableObject {
     }
 
     jump() {
-        this.speedY = 6;
+        this.speedY = 8;
     }
 
     drawMirroredObjects(ctx) {
@@ -109,18 +109,25 @@ class MovableObject {
     }
 
     isColliding(mo) {
-        return this.x + this.width >= mo.x &&
-            this.y + this.height >= mo.y &&
-            this.x < mo.x &&
+        if (mo instanceof Endboss) {
+        return this.x + this.width -25 >= mo.x + 30 &&
+            this.y + this.height -90 >= mo.y + 50 &&
+            this.x + 50 < mo.x + 50 &&
             this.y < mo.y + mo.height
+        } else {
+            return this.x + this.width -25 >= mo.x &&
+            this.y + this.height -90 >= mo.y &&
+            this.x + 50 < mo.x &&
+            this.y < mo.y + mo.height
+        }
     }
 }
 
 
 
 // isColliding (mo) {
-//     return  (this.X + this.width) >= mo.X && this.X <= (mo.X + mo.width) &&
-//             (this.Y + this.offsetY + this.height) >= mo.Y &&
-//             (this.Y + this.offsetY) <= (mo.Y + mo.height) &&
+//     return  (this.x + this.width) >= mo.x && this.x <= (mo.x + mo.width) &&
+//             (this.y + this.offsetY + this.height) >= mo.y &&
+//             (this.y + this.offsetY) <= (mo.Y + mo.height) &&
 //             mo.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 // }

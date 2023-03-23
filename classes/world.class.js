@@ -14,7 +14,6 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
     }
 
     setWorld() {
@@ -22,12 +21,12 @@ class World {
     }
 
     checkCollisions() {
-        setInterval(() => {
+        // setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
                     console.log('collosion with Character ', enemy)
                 } 
-            });
+            // });
         }, 150);
     }
 
@@ -62,10 +61,10 @@ class World {
         // mirror rendering if necessary
         if (mo instanceof Goblin) {
             mo.drawMirroredObjects(this.ctx)
-
+            this.checkCollisions()
         } else if (mo instanceof Endboss || (mo instanceof Character && mo.otherDirection)) {
             mo.drawMirroredObjectsNotCentered(this.ctx)
-
+            this.checkCollisions()
         } else {
             mo.drawObjects(this.ctx)
         }
