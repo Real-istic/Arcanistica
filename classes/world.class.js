@@ -20,14 +20,13 @@ class World {
         this.character.world = this;
     }
 
-    checkCollisions() {
-        // setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    console.log('collosion with Character ', enemy)
-                } 
-            // });
-        }, 150);
+    checkCollisions(mo) {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                // console.log('HP = ', this.character.HP)
+                this.character.isHit();
+            }
+        })
     }
 
 
@@ -42,7 +41,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
-        
+
         // Performance? -> check
         setTimeout(() => {
             requestAnimationFrame(function () {

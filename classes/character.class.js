@@ -4,6 +4,11 @@ class Character extends MovableObject {
     height = 164
     speed = 13
     idleCounter = 0;
+    HP = 100;
+    world;
+    walking_sound = new Audio('audio/steps_grass.mp3')
+    idleTime = 0;
+
     IMAGES_WALKING = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk1.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk2.png',
@@ -24,6 +29,48 @@ class Character extends MovableObject {
     ];
 
     IMAGES_IDLE = [
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle9.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle11.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle11.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle11.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+    ]
+
+    IMAGES_IDLE_LONG = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
@@ -79,15 +126,34 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
     ];
 
-    world;
-    walking_sound = new Audio('audio/steps_grass.mp3')
+    IMAGES_DEAD = [
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death1.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death2.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death3.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death4.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death5.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death6.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death7.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death8.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death9.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death10.png',
+    ]
 
+    IMAGES_HURT = [
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Hurt/hurt1.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Hurt/hurt2.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Hurt/hurt3.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Hurt/hurt4.png',
+    ]
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_IDLE);
+        this.loadImages(this.IMAGES_IDLE_LONG);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
         this.animate();
     }
@@ -113,22 +179,30 @@ class Character extends MovableObject {
 
 
         setInterval(() => {
-            if (this.isAboveGround()) {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD)
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT)
+            } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING)
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                //walk animation
                 this.playAnimation(this.IMAGES_WALKING)
             }
         }, 100);
 
 
         setInterval(() => {
-            if (!(this.isAboveGround()) && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
-                this.playAnimation(this.IMAGES_IDLE)
+            console.log('idleTime ', this.idleTime)
+            if ((this.isAboveGround()) || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || (this.isHurt())) {
+                this.idleTime = 0
             }
-        }, 250);
+            if (this.idleTime >= 40) {
+                this.playAnimation(this.IMAGES_IDLE_LONG)
 
+            } else if (!(this.isAboveGround()) && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDead() && !(this.isHurt())) {
+                this.playAnimation(this.IMAGES_IDLE)
+                this.idleTime++
+            }
+        }, 200);
     }
-
-
 }

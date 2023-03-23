@@ -11,6 +11,8 @@ class MovableObject {
     speed = 0.15;
     speedY = 0;
     acceleration = 0.15;
+    HP = 100;
+    lastHit = 0;
 
     applyGravity() {
         setInterval(() => {
@@ -57,10 +59,10 @@ class MovableObject {
     }
 
     playAnimation(images) {
-        let i = this.currentImage % images.length;
-        let path = images[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
+            let i = this.currentImage % images.length;
+            let path = images[i];
+            this.img = this.imageCache[path];
+            this.currentImage++;
     }
 
     jump() {
@@ -110,16 +112,36 @@ class MovableObject {
 
     isColliding(mo) {
         if (mo instanceof Endboss) {
-        return this.x + this.width -25 >= mo.x + 30 &&
-            this.y + this.height -90 >= mo.y + 50 &&
-            this.x + 50 < mo.x + 50 &&
-            this.y < mo.y + mo.height
+            return this.x + this.width - 25 >= mo.x + 30 &&
+                this.y + this.height - 90 >= mo.y + 50 &&
+                this.x + 50 < mo.x + 35 &&
+                this.y < mo.y + mo.height
         } else {
-            return this.x + this.width -25 >= mo.x &&
-            this.y + this.height -90 >= mo.y &&
-            this.x + 50 < mo.x &&
-            this.y < mo.y + mo.height
+            return this.x + this.width - 25 >= mo.x &&
+                this.y + this.height - 90 >= mo.y &&
+                this.x + 50 < mo.x &&
+                this.y < mo.y + mo.height
         }
+    }
+
+    isHit() {
+        this.HP -= 0.2;
+        if (this.HP <= 0) {
+            this.HP = 0
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isDead() {
+        return this.HP == 0;
+    }
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit
+        timepassed = timepassed / 1000
+        // console.log('timepassed = ', timepassed)
+        return timepassed < 0.5;
     }
 }
 
