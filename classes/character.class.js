@@ -4,7 +4,6 @@ class Character extends MovableObject {
     height = 164
     speed = 13
     idleCounter = 0;
-    HP = 100;
     world;
     walking_sound = new Audio('audio/steps_grass.mp3')
     idleTime = 0;
@@ -34,6 +33,8 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle9.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle11.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
