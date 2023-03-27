@@ -7,10 +7,7 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
     HP = 100;
-
-
-
-
+    
 
     loadImage(path) {
         this.img = new Image();

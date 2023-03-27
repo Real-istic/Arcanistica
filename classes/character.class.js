@@ -193,7 +193,7 @@ class Character extends MovableObject {
 
 
         setInterval(() => {
-            console.log('idleTime ', this.idleTime)
+            // console.log('idleTime ', this.idleTime)
             if ((this.isAboveGround()) || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || (this.isHurt())) {
                 this.idleTime = 0
             }
