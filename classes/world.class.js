@@ -5,9 +5,7 @@ class World {
     ctx;
     keyboard;
     camera_x;
-    statusbarHP = new StatusbarHP();
-    statusbarMP = new StatusbarMP();
-    statusbarBackground = new StatusbarBackground();
+    ui = uiElements;
 
     constructor(canvas, keyboard) {
         // canvas.width=900;
@@ -42,11 +40,11 @@ class World {
         this.addObjectsToMap(this.level.enemies);
 
         this.ctx.translate(-this.camera_x, 0);
-        // --- space for fixed objects below
-        this.addToMap(this.statusbarBackground);
-        this.addToMap(this.statusbarHP);
-        this.addToMap(this.statusbarMP);
-        // --- space for fixed objects above
+        // --- space for fixed objects below 
+
+        this.addObjectsToMap(this.ui.statusbars);
+
+        // --- space for fixed objects above 
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);

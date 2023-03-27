@@ -27,9 +27,9 @@ window.addEventListener('keydown', (e) => {
     } else if (e.key.toLowerCase() == 'arrowright') {
         keyboard.arrowRight = true;
     }
-    console.log('keyboard.arrowRight ', keyboard.arrowRight)
+    // console.log('keyboard.arrowRight ', keyboard.arrowRight)
 
-    console.log(e)
+    // console.log(e)
 })
 
 window.addEventListener('keyup', (e) => {
@@ -50,7 +50,7 @@ window.addEventListener('keyup', (e) => {
     } else if (e.key.toLowerCase() == 'arrowright') {
         keyboard.arrowRight = false;
     }
-    console.log('keyboard.arrowRight ', keyboard.arrowRight)
+    // console.log('keyboard.arrowRight ', keyboard.arrowRight)
 
-    console.log(e)
+    // console.log(e)
 })

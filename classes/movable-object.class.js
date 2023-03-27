@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
     acceleration = 0.15;
     lastHit = 0;
 
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY >= 0) {
@@ -79,7 +80,7 @@ class MovableObject extends DrawableObject {
 
     isHit() {
         this.HP -= 0.2;
-        world.statusbarHP.setHPbarWidth(this.HP)
+        this.setHPbarWidth(this.HP)
         if (this.HP <= 0) {
             this.HP = 0
         } else {
