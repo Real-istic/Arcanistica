@@ -6,6 +6,7 @@ class World {
     keyboard;
     camera_x;
     ui = uiElements;
+    throwableObjects = new ThrowableObject();
 
     constructor(canvas, keyboard) {
         // canvas.width=900;
@@ -21,6 +22,7 @@ class World {
         this.character.world = this;
     }
 
+    
     checkCollisions(mo) {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
@@ -46,8 +48,8 @@ class World {
 
         // --- space for fixed objects above 
         this.ctx.translate(this.camera_x, 0);
-
         this.addToMap(this.character);
+        this.addToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;

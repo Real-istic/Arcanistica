@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 0.15;
     lastHit = 0;
+  
 
 
     applyGravity() {
@@ -79,7 +80,7 @@ class MovableObject extends DrawableObject {
     }
 
     isHit() {
-        this.HP -= 0.2;
+        this.HP -= 0.1;
         this.setHPbarWidth(this.HP)
         if (this.HP <= 0) {
             this.HP = 0
