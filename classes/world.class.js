@@ -6,7 +6,7 @@ class World {
     keyboard;
     camera_x;
     ui = uiElements;
-    throwableObjects = new ThrowableObject();
+    throwableObjects = [new ThrowableObject()];
 
     constructor(canvas, keyboard) {
         // canvas.width=900;
@@ -23,11 +23,15 @@ class World {
     }
 
     
-    checkCollisions(mo) {
+    checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 // console.log('HP = ', this.character.HP)
-                this.character.isHit();
+                if (enemy instanceof Endboss) {
+                this.character.isHit(0.06);
+                } else {
+                this.character.isHit(0.03);
+            }
             }
         })
     }
@@ -49,7 +53,7 @@ class World {
         // --- space for fixed objects above 
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
-        this.addToMap(this.throwableObjects);
+        this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
@@ -69,13 +73,13 @@ class World {
     }
 
     addToMap(mo) {
+        this.checkCollisions()
+
         // mirror rendering if necessary
         if (mo instanceof Goblin) {
             mo.drawMirroredObjects(this.ctx)
-            this.checkCollisions()
         } else if (mo instanceof Endboss || (mo instanceof Character && mo.otherDirection)) {
             mo.drawMirroredObjectsNotCentered(this.ctx)
-            this.checkCollisions()
         } else {
             mo.drawObjects(this.ctx)
         }

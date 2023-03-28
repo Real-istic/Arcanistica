@@ -79,8 +79,8 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    isHit() {
-        this.HP -= 0.1;
+    isHit(intensity) {
+        this.HP -= intensity;
         this.setHPbarWidth(this.HP)
         if (this.HP <= 0) {
             this.HP = 0
