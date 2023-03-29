@@ -8,7 +8,7 @@ class ThrowableObject extends MovableObject {
         'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire3.png',
         'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire4.png',
         'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire5.png',
-        'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire6.png',
+        'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire6.png'
         // 'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire7.png',
         // 'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire8.png',
         // 'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire9.png',

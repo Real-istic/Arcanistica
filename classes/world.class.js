@@ -53,7 +53,6 @@ class World {
         // --- space for fixed objects above 
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
