@@ -5,7 +5,7 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 0.15;
     lastHit = 0;
-  
+
 
 
     applyGravity() {
@@ -53,31 +53,39 @@ class MovableObject extends DrawableObject {
     }
 
     playAnimation(images) {
-            let i = this.currentImage % images.length;
-            let path = images[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+        let i = this.currentImage % images.length;
+        let path = images[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
     }
 
     jump() {
         this.speedY = 8;
     }
 
-    
+
+
+    // isColliding(mo) {
+    //     if (mo instanceof Endboss) {
+    //         return this.x + this.width - 25 >= mo.x + 30 &&
+    //             this.y + this.height - 90 >= mo.y + 50 &&
+    //             this.x + 50 < mo.x + 35 &&
+    //             this.y < mo.y + mo.height
+    //     } else {
+    //         return this.x + this.width - 25 >= mo.x &&
+    //             this.y + this.height - 90 >= mo.y &&
+    //             this.x + 50 < mo.x &&
+    //             this.y < mo.y + mo.height
+    //     }
+    // }
 
     isColliding(mo) {
-        if (mo instanceof Endboss) {
-            return this.x + this.width - 25 >= mo.x + 30 &&
-                this.y + this.height - 90 >= mo.y + 50 &&
-                this.x + 50 < mo.x + 35 &&
-                this.y < mo.y + mo.height
-        } else {
-            return this.x + this.width - 25 >= mo.x &&
-                this.y + this.height - 90 >= mo.y &&
-                this.x + 50 < mo.x &&
-                this.y < mo.y + mo.height
-        }
+        return this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
     }
+
 
     isHit(intensity) {
         this.HP -= intensity;

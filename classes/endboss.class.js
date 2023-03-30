@@ -10,6 +10,13 @@ class Endboss extends MovableObject {
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk5.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk6.png',
     ]
+    offset = {
+        top: 50,
+        bottom: 0,
+        left: 40,
+        right: 50 
+    }
+
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0])

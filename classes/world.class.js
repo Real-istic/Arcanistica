@@ -37,17 +37,16 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.throwableObjects[0].fireballCooldown <= 0) {
-            this.throwableObjects[0].fireballCooldown = 0
+        if (this.character.fireballCooldown <= 0) {
+            this.character.fireballCooldown = 0
         }
-        this.throwableObjects[0].fireballCooldown -= 20;
-        if (this.keyboard.arrowRight && this.throwableObjects[0].fireballCooldown <= 0) {
-            
-            let fireball = new ThrowableObject(this.character.x + 50, this.character.y + 20);
+        this.character.fireballCooldown -= 20;
+        if (this.keyboard.arrowRight && this.character.fireballCooldown <= 0) {
+            let fireball = new ThrowableObject(this.character.x + 50, this.character.y + 10);
             this.throwableObjects.push(fireball);
-            this.throwableObjects[0].fireballCooldown = 1000;
+            this.character.fireballCooldown = 1000;
         }
-        console.log('fireball cooldown', this.throwableObjects[0].fireballCooldown)
+        // console.log('fireball cooldown', this.character.fireballCooldown)
     }
 
     // Draw() wird immer wieder aufgerufen

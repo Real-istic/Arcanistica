@@ -1,5 +1,4 @@
 class ThrowableObject extends MovableObject {
-    fireballCooldown = 1000;
 
 
     IMAGES_FIREBALL = [

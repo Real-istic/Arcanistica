@@ -11,7 +11,13 @@ class Goblin extends MovableObject {
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk5.png',
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk6.png',
     ]
-
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    }
+    
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0])
         this.loadImages(this.IMAGES_WALKING)

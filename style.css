@@ -19,3 +19,14 @@ canvas {
     border-radius: 10px;
     /* transition: 300ms all ease-in-out; */
 }
+
+.frame-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(assets/frame.png);
+    width: 757px;
+    height: 504px;
+    z-index: 1;
+    background-size: cover;
+}

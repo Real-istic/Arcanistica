@@ -2,11 +2,18 @@ class Character extends MovableObject {
     x = 50;
     width = 164
     height = 164
-    speed = 13
+    speed = 3
     idleCounter = 0;
     world;
     walking_sound = new Audio('audio/steps_grass.mp3')
     idleTime = 0;
+    fireballCooldown = 1000;
+    offset = {
+        top: 20,
+        bottom: 90,
+        left: 230,
+        right: 35
+    }
 
     IMAGES_WALKING = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk1.png',
@@ -154,7 +161,7 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack4.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack5.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack6.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack7.png',  
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack7.png',
     ]
 
     constructor() {
@@ -185,13 +192,12 @@ class Character extends MovableObject {
                 this.jump()
             }
             if (this.world.keyboard.arrowRight) {
-
+                /** attack function here */
             }
             this.world.camera_x = -this.x + 100;
             // console.log('this.speedY', this.speedY)
             // console.log('this.speedY', this.y)
         }, 1000 / 60);
-
 
         setInterval(() => {
             if (this.isDead()) {
@@ -202,7 +208,9 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_JUMPING)
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING)
-            } 
+            } else if (this.world.keyboard.arrowRight) {
+                this.playAnimation(this.IMAGES_ATTACKING)
+            }
         }, 100);
 
 
