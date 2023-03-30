@@ -147,6 +147,16 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Hurt/hurt4.png',
     ]
 
+    IMAGES_ATTACKING = [
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack1.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack2.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack3.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack4.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack5.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack6.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack7.png',  
+    ]
+
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -155,6 +165,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE_LONG);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_ATTACKING);
         this.applyGravity();
         this.animate();
     }
@@ -174,7 +185,6 @@ class Character extends MovableObject {
                 this.jump()
             }
             if (this.world.keyboard.arrowRight) {
-                this.addObjectsToMap(this.throwableObjects);
 
             }
             this.world.camera_x = -this.x + 100;
@@ -192,9 +202,7 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_JUMPING)
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING)
-            } else if (this.world.keyboard.arrowRight) {
-                this.playAnimation(this.world.throwableObjects.IMAGES_FIREBALL)
-            }
+            } 
         }, 100);
 
 

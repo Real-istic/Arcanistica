@@ -22,20 +22,33 @@ class World {
         this.character.world = this;
     }
 
-    
+
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 // console.log('HP = ', this.character.HP)
                 if (enemy instanceof Endboss) {
-                this.character.isHit(0.06);
+                    this.character.isHit(0.06);
                 } else {
-                this.character.isHit(0.03);
-            }
+                    this.character.isHit(0.03);
+                }
             }
         })
     }
 
+    checkThrowObjects() {
+        if (this.throwableObjects[0].fireballCooldown <= 0) {
+            this.throwableObjects[0].fireballCooldown = 0
+        }
+        this.throwableObjects[0].fireballCooldown -= 20;
+        if (this.keyboard.arrowRight && this.throwableObjects[0].fireballCooldown <= 0) {
+            
+            let fireball = new ThrowableObject(this.character.x + 50, this.character.y + 20);
+            this.throwableObjects.push(fireball);
+            this.throwableObjects[0].fireballCooldown = 1000;
+        }
+        console.log('fireball cooldown', this.throwableObjects[0].fireballCooldown)
+    }
 
     // Draw() wird immer wieder aufgerufen
     draw() {
@@ -44,8 +57,9 @@ class World {
         this.addObjectsToMap(this.level.backgrounds);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
-
+        this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
+
         // --- space for fixed objects below 
 
         this.addObjectsToMap(this.ui.statusbars);
@@ -55,10 +69,12 @@ class World {
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
 
+
         let self = this;
 
         // Performance? -> check
         setTimeout(() => {
+            this.checkThrowObjects();
             requestAnimationFrame(function () {
                 self.draw();
             });
@@ -82,5 +98,6 @@ class World {
         } else {
             mo.drawObjects(this.ctx)
         }
+
     }
 }

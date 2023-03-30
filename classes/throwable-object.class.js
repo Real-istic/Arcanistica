@@ -1,5 +1,5 @@
 class ThrowableObject extends MovableObject {
-
+    fireballCooldown = 1000;
 
 
     IMAGES_FIREBALL = [
@@ -15,33 +15,33 @@ class ThrowableObject extends MovableObject {
         // 'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire10.png',
     ];
 
-    constructor() {
+    constructor(x, y) {
         super().loadImage(this.IMAGES_FIREBALL[0]);
         this.loadImages(this.IMAGES_FIREBALL);
         this.animate();
-        this.x = 100;
-        this.y = 100;
-        this.width = 150;
-        this.height = 150;
-        this.throw(100, 270);
-    }
-
-    throw(x, y) {
         this.x = x;
         this.y = y;
-        this.speedY = 0.12;
+        this.width = 150;
+        this.height = 150;
+        this.throw();
+    }
+
+
+    throw() {
+        // this.speedY = 0.12;
         // this.applyGravity();
         setInterval(() => {
             this.x += 15;
         }, 50);
     }
 
+
+
     animate() {
 
         setInterval(() => {
             this.playAnimation(this.IMAGES_FIREBALL);
         }, 50);
-
     }
 
 
