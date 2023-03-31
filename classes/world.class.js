@@ -36,19 +36,6 @@ class World {
         })
     }
 
-    checkThrowObjects() {
-        if (this.character.fireballCooldown <= 0) {
-            this.character.fireballCooldown = 0
-        }
-        this.character.fireballCooldown -= 20;
-        if (this.keyboard.arrowRight && this.character.fireballCooldown <= 0) {
-            let fireball = new ThrowableObject(this.character.x + 50, this.character.y + 10);
-            this.throwableObjects.push(fireball);
-            this.character.fireballCooldown = 1000;
-        }
-        // console.log('fireball cooldown', this.character.fireballCooldown)
-    }
-
     // Draw() wird immer wieder aufgerufen
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -73,7 +60,6 @@ class World {
 
         // Performance? -> check
         setTimeout(() => {
-            this.checkThrowObjects();
             requestAnimationFrame(function () {
                 self.draw();
             });
@@ -93,10 +79,11 @@ class World {
         if (mo instanceof Goblin) {
             mo.drawMirroredObjects(this.ctx)
         } else if (mo instanceof Endboss || (mo instanceof Character && mo.otherDirection)) {
+            // mirror rendering for not centered objects
             mo.drawMirroredObjectsNotCentered(this.ctx)
         } else {
+            // normal rendering
             mo.drawObjects(this.ctx)
         }
-
     }
 }

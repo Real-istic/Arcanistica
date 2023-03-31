@@ -59,25 +59,19 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+    playAnimationOnce(images) {
+        let i = this.currentImage % images.length;
+        let path = images[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+        if (this.currentImage == images.length) {
+            this.currentImage = 0;
+        }
+    }
+
     jump() {
         this.speedY = 8;
     }
-
-
-
-    // isColliding(mo) {
-    //     if (mo instanceof Endboss) {
-    //         return this.x + this.width - 25 >= mo.x + 30 &&
-    //             this.y + this.height - 90 >= mo.y + 50 &&
-    //             this.x + 50 < mo.x + 35 &&
-    //             this.y < mo.y + mo.height
-    //     } else {
-    //         return this.x + this.width - 25 >= mo.x &&
-    //             this.y + this.height - 90 >= mo.y &&
-    //             this.x + 50 < mo.x &&
-    //             this.y < mo.y + mo.height
-    //     }
-    // }
 
     isColliding(mo) {
         return this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&
@@ -85,7 +79,6 @@ class MovableObject extends DrawableObject {
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
     }
-
 
     isHit(intensity) {
         this.HP -= intensity;

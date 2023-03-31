@@ -2,12 +2,13 @@ class Character extends MovableObject {
     x = 50;
     width = 164
     height = 164
-    speed = 3
+    speed = 13
     idleCounter = 0;
     world;
     walking_sound = new Audio('audio/steps_grass.mp3')
     idleTime = 0;
     fireballCooldown = 1000;
+    fireballStatus = false;
     offset = {
         top: 20,
         bottom: 90,
@@ -180,6 +181,7 @@ class Character extends MovableObject {
     animate() {
 
         setInterval(() => {
+
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x) {
                 this.moveRight();
@@ -200,32 +202,61 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
+            this.fireballCooldown -= 100;
+            if (this.fireballCooldown <= 0) {
+                this.fireballCooldown = 0;
+            }
+            
+            console.log('fireballCooldown', this.fireballCooldown)
+
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD)
+
+            } else if (this.fireballStatus) {
+                this.playAnimationOnce(this.IMAGES_ATTACKING)
+
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT)
+
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING)
+
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING)
-            } else if (this.world.keyboard.arrowRight) {
-                this.playAnimation(this.IMAGES_ATTACKING)
             }
         }, 100);
 
 
         setInterval(() => {
+            console.log('fireballstatus', this.fireballStatus)
             // console.log('idleTime ', this.idleTime)
-            if ((this.isAboveGround()) || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || (this.isHurt())) {
+            if (this.isAboveGround() || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || this.isHurt() || this.world.keyboard.arrowRight) {
                 this.idleTime = 0
             }
             if (this.idleTime >= 40) {
                 this.playAnimation(this.IMAGES_IDLE_LONG)
 
-            } else if (!(this.isAboveGround()) && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDead() && !(this.isHurt())) {
+            } else if (!(this.isAboveGround()) && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDead() && !(this.isHurt()) && !(this.world.keyboard.arrowRight) && !(this.isHurt()) && !(this.fireballStatus)) {
                 this.playAnimation(this.IMAGES_IDLE)
                 this.idleTime++
             }
         }, 200);
+    }
+
+    throwFireball() {
+        if (this.fireballCooldown <= 0) {
+            this.fireballStatus = true;
+            this.fireballCooldown = 1000;
+            setTimeout(() => {
+
+                let fireball = new ThrowableObject(this.x + 50, this.y + 10);
+                world.throwableObjects.push(fireball);
+            }, 220);
+
+            setTimeout(() => {
+                this.fireballStatus = false;
+                this.currentImage = 0;
+            }, 700);
+        }
     }
 }

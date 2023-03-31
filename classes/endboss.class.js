@@ -1,7 +1,7 @@
 class Endboss extends MovableObject {
-    y = 190;
-    width = 264;
-    height = 264;
+    y = 110;
+    width = 364;
+    height = 364;
     IMAGES_WALKING = [
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk1.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk2.png',
@@ -11,10 +11,10 @@ class Endboss extends MovableObject {
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk6.png',
     ]
     offset = {
-        top: 50,
+        top: 85,
         bottom: 0,
-        left: 40,
-        right: 50 
+        left: 80,
+        right: 75 
     }
 
 
