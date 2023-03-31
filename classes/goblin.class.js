@@ -1,5 +1,4 @@
 class Goblin extends MovableObject {
-
     y = 290;
     width = 164;
     height = 164;
@@ -11,6 +10,14 @@ class Goblin extends MovableObject {
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk5.png',
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk6.png',
     ]
+
+    IMAGES_DEATH = [
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death1.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death2.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death3.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death4.png',
+    ]
+
     offset = {
         top: 0,
         bottom: 0,
@@ -21,7 +28,8 @@ class Goblin extends MovableObject {
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0])
         this.loadImages(this.IMAGES_WALKING)
-        this.x = 350 + Math.random() * 500;
+        this.loadImages(this.IMAGES_DEATH)
+        this.x = 550 + Math.random() * 2500;
         this.speed = 0.25 + Math.random() * 0.75;
 
         this.animate();
@@ -34,7 +42,13 @@ class Goblin extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
-        }, 120);
+            
+            console.log('goblin HP:', this.HP)
+            if (this.isDead()) {
+                this.playAnimationOnce(this.IMAGES_DEATH);
+            } else {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 200);
     }
 }

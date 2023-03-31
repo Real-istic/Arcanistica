@@ -3,20 +3,19 @@ const level1 = new Level(
     [
         new Goblin(),
         new Goblin(),
-        new Goblin(),
         new Endboss()
     ],
 
     [
-        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 40),
-        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 400),
-        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 400 * 2),
-        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 400 * 4),
-        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 400 * 6),
-        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 400 * 8),
-        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 400 * 10),
-        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 400 * 12),
-        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 400 * 14)
+        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 50),
+        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 500),
+        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 500 * 2),
+        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 500 * 4),
+        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 500 * 6),
+        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 500 * 8),
+        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 500 * 10),
+        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 500 * 12),
+        new Cloud('assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds_small.png', 500 * 14)
     ],
 
     [

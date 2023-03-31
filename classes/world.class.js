@@ -31,6 +31,7 @@ class World {
                     this.character.isHit(0.06);
                 } else {
                     this.character.isHit(0.03);
+                    this.level.enemies[0].isHit(0.03);
                 }
             }
         })
@@ -78,7 +79,7 @@ class World {
         // mirror rendering if necessary
         if (mo instanceof Goblin) {
             mo.drawMirroredObjects(this.ctx)
-        } else if (mo instanceof Endboss || (mo instanceof Character && mo.otherDirection)) {
+        } else if (mo instanceof Endboss || (mo instanceof Character && mo.otherDirection) || (mo instanceof ThrowableObject && mo.otherDirection)) {
             // mirror rendering for not centered objects
             mo.drawMirroredObjectsNotCentered(this.ctx)
         } else {

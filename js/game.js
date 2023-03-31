@@ -1,14 +1,6 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let intervalIds = [];
-
-function setStoppableInterval(callback, time) {
-    let id = setInterval(callback, time);
-    intervalIds.push(id);
-}
-
-// setStoppableInterval(movementAnimation, (1000 / 60));
 
 function init() {
     canvas = document.getElementById('canvas');

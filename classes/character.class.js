@@ -2,7 +2,7 @@ class Character extends MovableObject {
     x = 50;
     width = 164
     height = 164
-    speed = 13
+    speed = 14
     idleCounter = 0;
     world;
     walking_sound = new Audio('audio/steps_grass.mp3')
@@ -187,16 +187,15 @@ class Character extends MovableObject {
                 this.moveRight();
                 // this.walking_sound.play();
             }
+
             if (this.world.keyboard.LEFT && this.x > -45) {
                 this.moveLeft();
+
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump()
             }
-            if (this.world.keyboard.arrowRight) {
-                /** attack function here */
-            }
-            this.world.camera_x = -this.x + 100;
+            this.world.camera_x = -this.x + 200;
             // console.log('this.speedY', this.speedY)
             // console.log('this.speedY', this.y)
         }, 1000 / 60);
@@ -206,14 +205,14 @@ class Character extends MovableObject {
             if (this.fireballCooldown <= 0) {
                 this.fireballCooldown = 0;
             }
-            
-            console.log('fireballCooldown', this.fireballCooldown)
+
+            // console.log('fireballCooldown', this.fireballCooldown)
 
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD)
 
             } else if (this.fireballStatus) {
-                this.playAnimationOnce(this.IMAGES_ATTACKING)
+                // this.playAnimation(this.IMAGES_ATTACKING)
 
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT)
@@ -228,7 +227,7 @@ class Character extends MovableObject {
 
 
         setInterval(() => {
-            console.log('fireballstatus', this.fireballStatus)
+            // console.log('fireballstatus', this.fireballStatus)
             // console.log('idleTime ', this.idleTime)
             if (this.isAboveGround() || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || this.isHurt() || this.world.keyboard.arrowRight) {
                 this.idleTime = 0
@@ -243,15 +242,23 @@ class Character extends MovableObject {
         }, 200);
     }
 
-    throwFireball() {
+    async throwFireball() {
         if (this.fireballCooldown <= 0) {
             this.fireballStatus = true;
             this.fireballCooldown = 1000;
-            setTimeout(() => {
 
-                let fireball = new ThrowableObject(this.x + 50, this.y + 10);
-                world.throwableObjects.push(fireball);
-            }, 220);
+            this.playAnimationOnce(this.IMAGES_ATTACKING)
+
+            setTimeout(() => {
+                if (this.otherDirection) {
+                    let fireball = new ThrowableObject(this.x + 100, this.y + 10, this.otherDirection);
+                    world.throwableObjects.push(fireball);
+
+                } else {
+                    let fireball = new ThrowableObject(this.x + 50, this.y + 10, this.otherDirection);
+                    world.throwableObjects.push(fireball);
+                }
+            }, 300);
 
             setTimeout(() => {
                 this.fireballStatus = false;

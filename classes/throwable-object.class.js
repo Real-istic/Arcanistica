@@ -14,24 +14,31 @@ class ThrowableObject extends MovableObject {
         // 'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire10.png',
     ];
 
-    constructor(x, y) {
+    constructor(x, y, otherDirection) {
         super().loadImage(this.IMAGES_FIREBALL[0]);
         this.loadImages(this.IMAGES_FIREBALL);
         this.animate();
         this.x = x;
         this.y = y;
+        this.otherDirection = otherDirection;
         this.width = 150;
         this.height = 150;
         this.throw();
     }
 
-
     throw() {
         // this.speedY = 0.12;
         // this.applyGravity();
-        setInterval(() => {
-            this.x += 15;
-        }, 50);
+        if (this.otherDirection) {
+            this.x -= 130
+            setInterval(() => {
+                this.x -= 15;
+            }, 50);
+        } else {
+            setInterval(() => {
+                this.x += 15;
+            }, 50);
+        }
     }
 
 
