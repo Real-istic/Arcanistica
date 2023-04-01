@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 0.15;
     lastHit = 0;
     otherDirection = false;
+    isFinallyDead = false;
 
 
 
@@ -59,15 +60,14 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
-    playAnimationOnce(images) {
-        let i = this.currentImage % images.length;
-        let path = images[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
-        if (this.currentImage == images.length) {
-            this.currentImage = 0;
+    async playAnimationOnce(images) {
+        for (let i = 0; i < images.length; i++) {
+            let path = images[i];
+            this.img = this.imageCache[path];
+            await new Promise(resolve => setTimeout(resolve, 100));
         }
     }
+
 
     jump() {
         this.speedY = 8;
@@ -82,7 +82,9 @@ class MovableObject extends DrawableObject {
 
     isHit(intensity) {
         this.HP -= intensity;
+
         this.setHPbarWidth(this.HP)
+
         if (this.HP <= 0) {
             this.HP = 0
         } else {
@@ -91,7 +93,7 @@ class MovableObject extends DrawableObject {
     }
 
     isDead() {
-        return this.HP == 0;
+        return this.HP <= 0;
     }
 
     isHurt() {

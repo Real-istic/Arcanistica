@@ -31,7 +31,7 @@ class World {
                     this.character.isHit(0.06);
                 } else {
                     this.character.isHit(0.03);
-                    this.level.enemies[0].isHit(0.03);
+                    // enemy.HP -= 0.1;
                 }
             }
         })

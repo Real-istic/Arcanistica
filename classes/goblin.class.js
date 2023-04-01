@@ -18,19 +18,35 @@ class Goblin extends MovableObject {
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death4.png',
     ]
 
+    IMAGES_HURT = [
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt1.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt3.png',
+    ]
+
+    IMAGES_ATTACK = [
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack1.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack2.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack3.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack4.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack5.png',
+    ]
+
     offset = {
         top: 0,
         bottom: 0,
-        left: 0,
-        right: 0
+        left: -65,
+        right: -30
     }
     
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0])
         this.loadImages(this.IMAGES_WALKING)
         this.loadImages(this.IMAGES_DEATH)
+        this.loadImages(this.IMAGES_HURT)
+        this.loadImages(this.IMAGES_ATTACK)
         this.x = 550 + Math.random() * 2500;
-        this.speed = 0.25 + Math.random() * 0.75;
+        this.speed = 0.05 + Math.random() * 1.75;
 
         this.animate();
     }
@@ -38,15 +54,27 @@ class Goblin extends MovableObject {
     animate() {
        
         setInterval(() => {
+            if (!this.isFinallyDead && this.x - 150> world.character.x) {
             this.x -= this.speed;
+
+            } else if (!this.isFinallyDead && this.x -50 < world.character.x) {
+            this.x += this.speed;
+            }
         }, 1000 / 60);
 
         setInterval(() => {
-            
-            console.log('goblin HP:', this.HP)
-            if (this.isDead()) {
+
+            console.log('goblinHP', this.HP)
+
+            if (this.isDead() && !this.isFinallyDead) {
+                this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
-            } else {
+
+            } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
+                this.playAnimation(this.IMAGES_ATTACK);
+
+
+            } else if (!this.isFinallyDead){
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 200);

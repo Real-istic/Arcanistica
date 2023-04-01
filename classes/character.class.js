@@ -208,11 +208,10 @@ class Character extends MovableObject {
 
             // console.log('fireballCooldown', this.fireballCooldown)
 
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD)
+            if (this.isDead() && !this.isFinallyDead) {
+                this.isFinallyDead = true;
 
-            } else if (this.fireballStatus) {
-                // this.playAnimation(this.IMAGES_ATTACKING)
+                this.playAnimationOnce(this.IMAGES_DEAD)
 
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT)
@@ -263,7 +262,7 @@ class Character extends MovableObject {
             setTimeout(() => {
                 this.fireballStatus = false;
                 this.currentImage = 0;
-            }, 700);
+            }, 750);
         }
     }
 }
