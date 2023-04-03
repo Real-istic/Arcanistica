@@ -21,14 +21,15 @@ window.addEventListener('keydown', (e) => {
     } else if (e.key.toLowerCase() == 's') {
         keyboard.DOWN = true;
 
-    } else if (e.key.toLowerCase() == ' ') {
+    } else if (e.key.toLowerCase() == ' ' && !keyboard.SPACE && !world.character.isDead() && !world.character.isAboveGround() ) {
         keyboard.SPACE = true;
-
+        // world.character.jumpAnimation();
+ 
     } else if (e.key.toLowerCase() == 'arrowright') {
         keyboard.arrowRight = true;
         world.character.throwFireball()
     }
-    // console.log('keyboard.arrowRight ', keyboard.arrowRight)
+    console.log('keyboard.SPACE: ', keyboard.SPACE)
 
     // console.log(e)
 })

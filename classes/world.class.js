@@ -27,12 +27,10 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 // console.log('HP = ', this.character.HP)
-                if (enemy instanceof Endboss) {
-                    this.character.isHit(0.06);
-                } else {
-                    this.character.isHit(0.03);
-                    // enemy.HP -= 0.1;
-                }
+                    this.character.isHit(enemy.dpf);
+                    // enemy.HP -= 0.04;
+
+
             }
         })
     }
@@ -77,9 +75,9 @@ class World {
         this.checkCollisions()
 
         // mirror rendering if necessary
-        if (mo instanceof Goblin) {
+        if (mo instanceof Goblin && !mo.otherDirection) {
             mo.drawMirroredObjects(this.ctx)
-        } else if (mo instanceof Endboss || (mo instanceof Character && mo.otherDirection) || (mo instanceof ThrowableObject && mo.otherDirection)) {
+        } else if (mo instanceof Endboss && !mo.otherDirection || (mo instanceof Character && mo.otherDirection) || (mo instanceof ThrowableObject && mo.otherDirection)) {
             // mirror rendering for not centered objects
             mo.drawMirroredObjectsNotCentered(this.ctx)
         } else {

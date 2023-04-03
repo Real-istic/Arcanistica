@@ -2,6 +2,7 @@ class Goblin extends MovableObject {
     y = 290;
     width = 164;
     height = 164;
+    dpf = 0.01;
     IMAGES_WALKING = [
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk1.png',
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk2.png',
@@ -35,8 +36,8 @@ class Goblin extends MovableObject {
     offset = {
         top: 0,
         bottom: 0,
-        left: -65,
-        right: -30
+        left: 30,
+        right: -150
     }
     
     constructor() {
@@ -46,7 +47,7 @@ class Goblin extends MovableObject {
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
         this.x = 550 + Math.random() * 2500;
-        this.speed = 0.05 + Math.random() * 1.75;
+        this.speed = 0.1 + Math.random() * 0.075;
 
         this.animate();
     }
@@ -54,17 +55,19 @@ class Goblin extends MovableObject {
     animate() {
        
         setInterval(() => {
-            if (!this.isFinallyDead && this.x - 150> world.character.x) {
+            if (!this.isFinallyDead && this.x - 80> world.character.x) {
             this.x -= this.speed;
+            this.otherDirection = false;
 
-            } else if (!this.isFinallyDead && this.x -50 < world.character.x) {
+            } else if (!this.isFinallyDead && this.x + 80 < world.character.x) {
             this.x += this.speed;
+            this.otherDirection = true;
             }
         }, 1000 / 60);
 
         setInterval(() => {
 
-            console.log('goblinHP', this.HP)
+            // console.log('goblinHP', this.HP)
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
@@ -77,6 +80,6 @@ class Goblin extends MovableObject {
             } else if (!this.isFinallyDead){
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 200);
+        }, 150);
     }
 }

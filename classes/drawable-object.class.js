@@ -28,15 +28,15 @@ class DrawableObject {
 
     drawObjects(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
-        this.drawFrame(ctx)
+        // this.drawFrame(ctx)
     }
 
     drawMirroredObjects(ctx) {
         ctx.save();
         ctx.scale(-1, 1);
-        ctx.translate(this.img.width - 0, 0)
+        ctx.translate(this.img.width - 90, 0)
         ctx.drawImage(this.img, -this.x - this.width, this.y, this.width, this.height);
-        this.drawMirroredFrame(ctx);
+        // this.drawMirroredFrame(ctx);
         ctx.restore();
     }
 
@@ -45,7 +45,7 @@ class DrawableObject {
         ctx.scale(-1, 1);
         ctx.translate(this.img.width - 82, -0)
         ctx.drawImage(this.img, -this.x - this.width, this.y, this.width, this.height);
-        this.drawMirroredFrame(ctx);
+        // this.drawMirroredFrame(ctx);
         ctx.restore();
     }
 

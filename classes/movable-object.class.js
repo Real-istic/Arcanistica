@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     otherDirection = false;
     isFinallyDead = false;
+    dpf = 0.5; // damage per frame
 
 
 
@@ -100,7 +101,7 @@ class MovableObject extends DrawableObject {
         let timepassed = new Date().getTime() - this.lastHit
         timepassed = timepassed / 1000
         // console.log('timepassed = ', timepassed)
-        return timepassed < 0.5;
+        return timepassed < 1;
     }
 }
 
