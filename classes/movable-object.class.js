@@ -7,7 +7,12 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     isFinallyDead = false;
     dpf = 0.5; // damage per frame
-
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    }
 
 
     applyGravity() {
@@ -101,7 +106,7 @@ class MovableObject extends DrawableObject {
         let timepassed = new Date().getTime() - this.lastHit
         timepassed = timepassed / 1000
         // console.log('timepassed = ', timepassed)
-        return timepassed < 1;
+        return timepassed < 0.5;
     }
 }
 

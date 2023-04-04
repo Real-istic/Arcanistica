@@ -6,7 +6,7 @@ class World {
     keyboard;
     camera_x;
     ui = uiElements;
-    throwableObjects = [new ThrowableObject()];
+    throwableObjects = [];
 
     constructor(canvas, keyboard) {
         // canvas.width=900;
@@ -27,12 +27,17 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 // console.log('HP = ', this.character.HP)
+                if (!enemy.isFinallyDead) {
                     this.character.isHit(enemy.dpf);
-                    // enemy.HP -= 0.04;
-
-
+                }
             }
+            this.throwableObjects.forEach((Fireball) => {
+                if (enemy.isColliding(Fireball)) {
+                    enemy.HP -= Fireball.dpf;
+                }
+            });
         })
+
     }
 
     // Draw() wird immer wieder aufgerufen
@@ -77,9 +82,11 @@ class World {
         // mirror rendering if necessary
         if (mo instanceof Goblin && !mo.otherDirection) {
             mo.drawMirroredObjects(this.ctx)
+
         } else if (mo instanceof Endboss && !mo.otherDirection || (mo instanceof Character && mo.otherDirection) || (mo instanceof ThrowableObject && mo.otherDirection)) {
             // mirror rendering for not centered objects
             mo.drawMirroredObjectsNotCentered(this.ctx)
+
         } else {
             // normal rendering
             mo.drawObjects(this.ctx)

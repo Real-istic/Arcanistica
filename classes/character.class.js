@@ -1,13 +1,13 @@
 class Character extends MovableObject {
     x = 50;
-    width = 164
-    height = 164
-    speed = 14
+    width = 164;
+    height = 164;
+    speed = 5;
     idleCounter = 0;
     world;
     walking_sound = new Audio('audio/steps_grass.mp3')
     idleTime = 0;
-    fireballCooldown = 1000;
+    fireballCooldown = 2000;
     fireballStatus = false;
     offset = {
         top: 20,
@@ -15,6 +15,8 @@ class Character extends MovableObject {
         left: 230,
         right: 35
     }
+    HP = 100;
+    MP = 100;
 
     IMAGES_WALKING = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk1.png',
@@ -232,7 +234,7 @@ class Character extends MovableObject {
             } else if (this.isHurt() && !this.fireballStatus ) {
                 this.playAnimation(this.IMAGES_HURT)
 
-            } else if (this.world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) {
+            } else if ((this.world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround()) {
                 // this.jumpAnimation();
                 this.playAnimation(this.IMAGES_JUMPING)
 
@@ -245,7 +247,7 @@ class Character extends MovableObject {
         setInterval(() => {
             // console.log('fireballstatus', this.fireballStatus)
             // console.log('idleTime ', this.idleTime)
-            if (this.isAboveGround() || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || this.isHurt() || this.world.keyboard.arrowRight && this.world.keyboard.SPACE) {
+            if (this.isAboveGround() || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || this.isHurt() || this.world.keyboard.arrowRight && this.world.keyboard.SPACE || this.fireballStatus) {
                 this.idleTime = 0
             }
             if (this.idleTime >= 40) {
@@ -258,16 +260,16 @@ class Character extends MovableObject {
         }, 200);
     }
 
-    jumpAnimation() {
-        if (this.isAboveGround() && !this.isDead() && !this.isHurt() && !this.fireballStatus) {
-            if (Math.random() > 0.5) {
-                this.playAnimation(this.IMAGES_JUMPING)
-            } else {
-                this.playAnimation(this.IMAGES_JUMPING2)
-            }
-        }
-        this.world.keyboard.SPACE = false;
-    }
+    // jumpAnimation() {
+    //     if (this.isAboveGround() && !this.isDead() && !this.isHurt() && !this.fireballStatus) {
+    //         if (Math.random() > 0.5) {
+    //             this.playAnimation(this.IMAGES_JUMPING)
+    //         } else {
+    //             this.playAnimation(this.IMAGES_JUMPING2)
+    //         }
+    //     }
+    //     this.world.keyboard.SPACE = false;
+    // }
 
     async throwFireball() {
         if (this.fireballCooldown <= 0) {
@@ -278,11 +280,11 @@ class Character extends MovableObject {
 
             setTimeout(() => {
                 if (this.otherDirection) {
-                    let fireball = new ThrowableObject(this.x + 100, this.y + 10, this.otherDirection);
+                    let fireball = new Fireball(this.x + 100, this.y + 10, this.otherDirection);
                     world.throwableObjects.push(fireball);
 
                 } else {
-                    let fireball = new ThrowableObject(this.x + 50, this.y + 10, this.otherDirection);
+                    let fireball = new Fireball(this.x + 50, this.y + 10, this.otherDirection);
                     world.throwableObjects.push(fireball);
                 }
             }, 300);

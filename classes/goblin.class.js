@@ -2,7 +2,8 @@ class Goblin extends MovableObject {
     y = 290;
     width = 164;
     height = 164;
-    dpf = 0.01;
+    dpf = 0.02;
+    speed = 0.5;
     IMAGES_WALKING = [
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk1.png',
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk2.png',
@@ -47,7 +48,7 @@ class Goblin extends MovableObject {
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
         this.x = 550 + Math.random() * 2500;
-        this.speed = 0.1 + Math.random() * 0.075;
+        this.speed += Math.random() * 0.075;
 
         this.animate();
     }
@@ -76,6 +77,8 @@ class Goblin extends MovableObject {
             } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
                 this.playAnimation(this.IMAGES_ATTACK);
 
+            } else if ((world.throwableObjects.some(Fireball => Fireball.isColliding(this))) && !this.isFinallyDead) {
+                this.playAnimation(this.IMAGES_HURT);
 
             } else if (!this.isFinallyDead){
                 this.playAnimation(this.IMAGES_WALKING);

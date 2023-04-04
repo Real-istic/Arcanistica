@@ -29,7 +29,7 @@ window.addEventListener('keydown', (e) => {
         keyboard.arrowRight = true;
         world.character.throwFireball()
     }
-    console.log('keyboard.SPACE: ', keyboard.SPACE)
+    // console.log('keyboard.SPACE: ', keyboard.SPACE)
 
     // console.log(e)
 })

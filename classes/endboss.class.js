@@ -3,6 +3,7 @@ class Endboss extends MovableObject {
     width = 364;
     height = 364;
     dpf = 0.01;
+    HP = 300;
     IMAGES_WALKING = [
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk1.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk2.png',
@@ -82,7 +83,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEATH)
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
-        this.speed = 0.5;
+        this.speed = 0.2;
         this.x = 4200;
         this.animate();
     }
@@ -104,15 +105,18 @@ class Endboss extends MovableObject {
 
         setInterval(() => {
 
-            // console.log('BOSS HP: ', this.HP)
+            console.log('BOSS HP: ', this.HP)
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
+            
+            } else if ((world.throwableObjects.some(Fireball => Fireball.isColliding(this))) && !this.isFinallyDead) {
+                this.playAnimation(this.IMAGES_HURT);
+            }
 
-            } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
+            else if (!this.isFinallyDead && world.character.isColliding(this) ) {
                 this.playAnimation(this.IMAGES_ATTACK);
-
 
             } else if (!this.isFinallyDead){
                 this.playAnimation(this.IMAGES_WALKING);
