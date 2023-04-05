@@ -68,7 +68,7 @@ class Goblin extends MovableObject {
 
         setInterval(() => {
 
-            // console.log('goblinHP', this.HP)
+            // console.log('goblinHP', this.hp)
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;

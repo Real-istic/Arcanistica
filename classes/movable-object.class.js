@@ -80,16 +80,19 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(mo) {
-        return this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&
-            this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
-            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+        if (!mo.isFinallyDead && !this.isFinallyDead) {
+            return this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&
+                this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
+                this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+                this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+        }
     }
 
     isHit(intensity) {
         this.HP -= intensity;
-
-        this.setHPbarWidth(this.HP)
+        if (this instanceof Character) {
+            this.setHPbarWidth(this.HP)
+        }
 
         if (this.HP <= 0) {
             this.HP = 0
@@ -103,10 +106,11 @@ class MovableObject extends DrawableObject {
     }
 
     isHurt() {
-        let timepassed = new Date().getTime() - this.lastHit
-        timepassed = timepassed / 1000
+        let timepassed = (new Date().getTime() - this.lastHit) / 1000
         // console.log('timepassed = ', timepassed)
+
         return timepassed < 0.5;
+
     }
 }
 

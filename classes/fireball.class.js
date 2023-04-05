@@ -1,11 +1,13 @@
 class Fireball extends ThrowableObject {
-    dpf = 0.01 + Math.random() * 0.01;
+    dpf = 0.03 + Math.random() * 0.03;
     offset = {
         top: 0,
         bottom: 0,
         left: 170,
         right: 20
     }
+    speed = 20;
+    range = 350;
 
     IMAGES_FIREBALL = [
         // 'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire1.png',
@@ -42,11 +44,11 @@ class Fireball extends ThrowableObject {
         if (this.otherDirection) {
             this.x -= 130
             setInterval(() => {
-                this.x -= 15;
+                this.x -= this.speed;
             }, 50);
         } else {
             setInterval(() => {
-                this.x += 15;
+                this.x += this.speed;
             }, 50);
         }
     }
@@ -54,21 +56,28 @@ class Fireball extends ThrowableObject {
     animate() {
 
         setInterval(() => {
+            let enemyGetsHitByFireball = world.level.enemies.some(enemy => enemy.isColliding(this));
+            let fireballGetsOutOfRange = world.character.x > this.x + this.range || world.character.x < this.x - this.range;
+            // console.log('last hit: ', )
+        // console.log('Fireballs', world.throwableObjects)
 
-            if (world.level.enemies.some(enemy => enemy.isColliding(this))) {
+            if (enemyGetsHitByFireball || fireballGetsOutOfRange) {
                 this.playAnimationOnce(this.IMAGES_FIREBALL_HIT);
-                // setTimeout(() => {
-                // this.deleteFireball();
-                    
-                // }, 500);
+                this.deleteFireball();
 
-            } else if (!(world.level.enemies.some(enemy => enemy.isColliding(this)))){
+            } else if (!enemyGetsHitByFireball) {
                 this.playAnimation(this.IMAGES_FIREBALL);
             }
+
         }, 50);
     }
-    
-    deleteFireball() {
-        world.throwableObjects.splice((world.throwableObjects.indexOf(this)), 1);
+
+    async deleteFireball() {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        let fireballIndex = world.throwableObjects.indexOf(this);
+        
+        if (fireballIndex >= 0) {
+        world.throwableObjects.splice(fireballIndex, 1);
+        }
     }
 }

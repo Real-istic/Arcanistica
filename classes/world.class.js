@@ -25,6 +25,8 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
+            // console.log('enemy is hit status', enemy.isHurt())
+
             if (this.character.isColliding(enemy)) {
                 // console.log('HP = ', this.character.HP)
                 if (!enemy.isFinallyDead) {
@@ -32,8 +34,8 @@ class World {
                 }
             }
             this.throwableObjects.forEach((Fireball) => {
-                if (enemy.isColliding(Fireball)) {
-                    enemy.HP -= Fireball.dpf;
+                if (enemy.isColliding(Fireball) && !enemy.isFinallyDead) {
+                    enemy.isHit(Fireball.dpf);
                 }
             });
         })

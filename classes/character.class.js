@@ -7,7 +7,8 @@ class Character extends MovableObject {
     world;
     walking_sound = new Audio('audio/steps_grass.mp3')
     idleTime = 0;
-    fireballCooldown = 2000;
+    fireballCooldown = 700;
+    resetFireballCooldown = 700;
     fireballStatus = false;
     offset = {
         top: 20,
@@ -201,12 +202,12 @@ class Character extends MovableObject {
         setInterval(() => {
 
             this.walking_sound.pause();
-            if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead) {
+            if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus) {
                 this.moveRight();
                 // this.walking_sound.play();
             }
 
-            if (this.world.keyboard.LEFT && this.x > -45 && !this.isFinallyDead) {
+            if (this.world.keyboard.LEFT && this.x > -45 && !this.isFinallyDead && !this.fireballStatus) {
                 this.moveLeft();
 
             }
@@ -234,7 +235,7 @@ class Character extends MovableObject {
             } else if (this.isHurt() && !this.fireballStatus ) {
                 this.playAnimation(this.IMAGES_HURT)
 
-            } else if ((this.world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround()) {
+            } else if ((this.world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround() && !this.fireballStatus) {
                 // this.jumpAnimation();
                 this.playAnimation(this.IMAGES_JUMPING)
 
@@ -260,21 +261,10 @@ class Character extends MovableObject {
         }, 200);
     }
 
-    // jumpAnimation() {
-    //     if (this.isAboveGround() && !this.isDead() && !this.isHurt() && !this.fireballStatus) {
-    //         if (Math.random() > 0.5) {
-    //             this.playAnimation(this.IMAGES_JUMPING)
-    //         } else {
-    //             this.playAnimation(this.IMAGES_JUMPING2)
-    //         }
-    //     }
-    //     this.world.keyboard.SPACE = false;
-    // }
-
     async throwFireball() {
         if (this.fireballCooldown <= 0) {
             this.fireballStatus = true;
-            this.fireballCooldown = 1000;
+            this.fireballCooldown = this.resetFireballCooldown;
 
             this.playAnimationOnce(this.IMAGES_ATTACKING)
 
