@@ -2,7 +2,7 @@ class Character extends MovableObject {
     x = 50;
     width = 164;
     height = 164;
-    speed = 5;
+    speed = 15;
     idleCounter = 0;
     world;
     walking_sound = new Audio('audio/steps_grass.mp3')
@@ -10,6 +10,7 @@ class Character extends MovableObject {
     fireballCooldown = 700;
     resetFireballCooldown = 700;
     fireballStatus = false;
+    fireballMPcost = 30;
     offset = {
         top: 20,
         bottom: 90,
@@ -18,8 +19,9 @@ class Character extends MovableObject {
     }
     HP = 100;
     MP = 100;
+    manaregen = 0.1;
 
-    IMAGES_WALKING = [
+    IMAGES_WALK = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk1.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk2.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk3.png',
@@ -28,7 +30,7 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk6.png'
     ]
 
-    IMAGES_JUMPING = [
+    IMAGES_JUMP = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Jump/jump1.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Jump/jump2.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Jump/jump3.png',
@@ -40,7 +42,7 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Jump/jump7.png',
     ];
 
-    IMAGES_JUMPING2 = [
+    IMAGES_JUMP2 = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump1.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump2.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump6.png',
@@ -114,10 +116,6 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle2.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle3.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle4.png',
@@ -173,7 +171,7 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Hurt/hurt4.png',
     ]
 
-    IMAGES_ATTACKING = [
+    IMAGES_ATTACK = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack1.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack2.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack3.png',
@@ -184,15 +182,15 @@ class Character extends MovableObject {
     ]
 
     constructor() {
-        super().loadImage(this.IMAGES_WALKING[0]);
-        this.loadImages(this.IMAGES_WALKING);
-        this.loadImages(this.IMAGES_JUMPING);
-        this.loadImages(this.IMAGES_JUMPING2);
+        super().loadImage(this.IMAGES_WALK[0]);
+        this.loadImages(this.IMAGES_WALK);
+        this.loadImages(this.IMAGES_JUMP);
+        this.loadImages(this.IMAGES_JUMP2);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_IDLE_LONG);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
-        this.loadImages(this.IMAGES_ATTACKING);
+        this.loadImages(this.IMAGES_ATTACK);
         this.applyGravity();
         this.animate();
     }
@@ -200,6 +198,11 @@ class Character extends MovableObject {
     animate() {
 
         setInterval(() => {
+            this.setMPbarWidth(this.MP)
+
+            if (this.MP < 100 && !this.isFinallyDead) {
+                this.MP += this.manaregen;
+            }
 
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus) {
@@ -209,11 +212,9 @@ class Character extends MovableObject {
 
             if (this.world.keyboard.LEFT && this.x > -45 && !this.isFinallyDead && !this.fireballStatus) {
                 this.moveLeft();
-
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
-
             }
             this.world.camera_x = -this.x + 200;
             // console.log('this.speedY', this.speedY)
@@ -232,15 +233,15 @@ class Character extends MovableObject {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEAD)
 
-            } else if (this.isHurt() && !this.fireballStatus ) {
+            } else if (this.isHurt() && !this.fireballStatus) {
                 this.playAnimation(this.IMAGES_HURT)
 
             } else if ((this.world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround() && !this.fireballStatus) {
                 // this.jumpAnimation();
-                this.playAnimation(this.IMAGES_JUMPING)
+                this.playAnimation(this.IMAGES_JUMP)
 
             } else if (((this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) && !this.isAboveGround() && !this.fireballStatus && !this.isFinallyDead && !this.isHurt()) {
-                this.playAnimation(this.IMAGES_WALKING)
+                this.playAnimation(this.IMAGES_WALK)
             }
         }, 100);
 
@@ -251,10 +252,10 @@ class Character extends MovableObject {
             if (this.isAboveGround() || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || this.isHurt() || this.world.keyboard.arrowRight && this.world.keyboard.SPACE || this.fireballStatus) {
                 this.idleTime = 0
             }
-            if (this.idleTime >= 40) {
+            if (this.idleTime >= 35) {
                 this.playAnimation(this.IMAGES_IDLE_LONG)
 
-            } else if (!(this.isAboveGround()) && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDead() && !(this.isHurt()) && !(this.world.keyboard.arrowRight) && !(this.isHurt()) && !(this.fireballStatus)) {
+            } else if (!(this.isAboveGround()) && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDead() && !(this.world.keyboard.arrowRight) && !(this.isHurt()) && !(this.fireballStatus) && this.idleTime < 35) {
                 this.playAnimation(this.IMAGES_IDLE)
                 this.idleTime++
             }
@@ -262,11 +263,10 @@ class Character extends MovableObject {
     }
 
     async throwFireball() {
-        if (this.fireballCooldown <= 0) {
+        if (this.fireballCooldown <= 0 && this.MP >= this.fireballMPcost) {
             this.fireballStatus = true;
             this.fireballCooldown = this.resetFireballCooldown;
-
-            this.playAnimationOnce(this.IMAGES_ATTACKING)
+            this.playAnimationOnce(this.IMAGES_ATTACK)
 
             setTimeout(() => {
                 if (this.otherDirection) {
@@ -277,11 +277,14 @@ class Character extends MovableObject {
                     let fireball = new Fireball(this.x + 50, this.y + 10, this.otherDirection);
                     world.throwableObjects.push(fireball);
                 }
+                this.MP -= this.fireballMPcost;
+
             }, 300);
 
             setTimeout(() => {
                 this.fireballStatus = false;
                 this.currentImage = 0;
+
             }, 650);
         }
     }

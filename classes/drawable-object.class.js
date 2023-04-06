@@ -13,6 +13,10 @@ class DrawableObject {
         world.ui.statusbars[2].width = HP;
     }
 
+    setMPbarWidth(MP) {
+        world.ui.statusbars[3].width = MP;
+    }
+
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;

@@ -1,11 +1,12 @@
 class Fireball extends ThrowableObject {
-    dpf = 0.03 + Math.random() * 0.03;
+    dpf = 0.03 + Math.random() * 0.07;
     offset = {
         top: 0,
         bottom: 0,
         left: 170,
         right: 20
     }
+    projectileOffset = 130;
     speed = 20;
     range = 350;
 
@@ -35,22 +36,7 @@ class Fireball extends ThrowableObject {
         this.otherDirection = otherDirection;
         this.width = 150;
         this.height = 150;
-        this.throw();
-    }
-
-    throw() {
-        // this.speedY = 0.12;
-        // this.applyGravity();
-        if (this.otherDirection) {
-            this.x -= 130
-            setInterval(() => {
-                this.x -= this.speed;
-            }, 50);
-        } else {
-            setInterval(() => {
-                this.x += this.speed;
-            }, 50);
-        }
+        this.throw(this.projectileOffset, this.speed);
     }
 
     animate() {
@@ -63,7 +49,7 @@ class Fireball extends ThrowableObject {
 
             if (enemyGetsHitByFireball || fireballGetsOutOfRange) {
                 this.playAnimationOnce(this.IMAGES_FIREBALL_HIT);
-                this.deleteFireball();
+                this.deleteProjectile();
 
             } else if (!enemyGetsHitByFireball) {
                 this.playAnimation(this.IMAGES_FIREBALL);
@@ -72,12 +58,5 @@ class Fireball extends ThrowableObject {
         }, 50);
     }
 
-    async deleteFireball() {
-        await new Promise(resolve => setTimeout(resolve, 300));
-        let fireballIndex = world.throwableObjects.indexOf(this);
-        
-        if (fireballIndex >= 0) {
-        world.throwableObjects.splice(fireballIndex, 1);
-        }
-    }
+
 }
