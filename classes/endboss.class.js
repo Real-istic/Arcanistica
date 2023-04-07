@@ -74,6 +74,9 @@ class Endboss extends MovableObject {
 
     IMAGES_ATTACK_MAGICBLADE = [
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade2.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade3.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade4.png',
@@ -105,11 +108,11 @@ class Endboss extends MovableObject {
 
         setInterval(() => {
             // console.log('magicBladeCooldown: ', this.magicBladeCooldown)
-            if (!this.isFinallyDead && this.x > world.character.x) {
+            if (!this.isFinallyDead && this.x > world.character.x && !this.magicBladeStatus == true) {
                 this.x -= this.speed;
                 this.otherDirection = false;
 
-            } else if (!this.isFinallyDead && this.x < world.character.x - 100) {
+            } else if (!this.isFinallyDead && this.x < world.character.x - 100 && !this.magicBladeStatus == true) {
                 this.x += this.speed;
                 this.otherDirection = true;
             }
@@ -117,11 +120,12 @@ class Endboss extends MovableObject {
 
 
         setInterval(() => {
+            let playerIsTooClose = this.x - world.character.x < 120 && this.x - world.character.x > -180;
             this.magicBladeCooldown -= 50;
             if (this.magicBladeCooldown <= 0) {
                 this.magicBladeCooldown = 0;
             }
-            if (this.magicBladeCooldown <= 0 && !this.magicBladeStatus && !this.isFinallyDead) {
+            if (this.magicBladeCooldown <= 0 && !this.magicBladeStatus && !this.isFinallyDead && !playerIsTooClose) {
                 this.throwMagicBlade();
             }
         }, 100);
@@ -155,20 +159,20 @@ class Endboss extends MovableObject {
 
             setTimeout(() => {
                 if (this.otherDirection) {
-                    let magicBladeProjectile = new MagicBladeProjectile(this.x - 200, this.y + 80, this.otherDirection);
+                    let magicBladeProjectile = new MagicBladeProjectile(this.x - 200, this.y + 60 + Math.random() * 100, this.otherDirection);
                     world.throwableObjects.push(magicBladeProjectile);
 
                 } else {
-                    let magicBladeProjectile = new MagicBladeProjectile(this.x - 100, this.y + 80, this.otherDirection);
+                    let magicBladeProjectile = new MagicBladeProjectile(this.x - 100, this.y + 60 + Math.random() * 100, this.otherDirection);
                     world.throwableObjects.push(magicBladeProjectile);
                 }
 
-            }, 300);
+            }, 600);
 
             setTimeout(() => {
                 this.magicBladeStatus = false;
                 this.currentImage = 0;
-            }, 650);
+            }, 700);
         }
     }
 

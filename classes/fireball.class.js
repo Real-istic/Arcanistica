@@ -1,5 +1,5 @@
 class Fireball extends ThrowableObject {
-    dpf = 0.03 + Math.random() * 0.07;
+    dpf = 0.06 + Math.random() * 0.07;
     offset = {
         top: 0,
         bottom: 0,
@@ -42,7 +42,7 @@ class Fireball extends ThrowableObject {
     animate() {
 
         setInterval(() => {
-            let enemyGetsHitByFireball = world.level.enemies.some(enemy => enemy.isColliding(this));
+            let enemyGetsHitByFireball = world.level.enemies.some(enemy => enemy.isColliding(this) && !enemy.isFinallyDead)
             let fireballGetsOutOfRange = world.character.x > this.x + this.range || world.character.x < this.x - this.range;
             // console.log('last hit: ', )
         // console.log('Fireballs', world.throwableObjects)

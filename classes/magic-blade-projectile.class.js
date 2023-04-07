@@ -1,14 +1,14 @@
 class MagicBladeProjectile extends ThrowableObject {
-    dpf = 0.03 + Math.random() * 0.01;
+    dpf = 0.01 + Math.random() * 0.01;
     offset = {
-        top: 0,
-        bottom: 0,
-        left: 170,
-        right: 20
+        top: 35,
+        bottom: 160,
+        left: 110,
+        right: -80
     }
     projectileOffset = 80;
     speed = -20;
-    range = 250;
+    range = 800;
     
 
     IMAGES_PROJECTILE_MAGICBLADE = [
@@ -41,9 +41,8 @@ class MagicBladeProjectile extends ThrowableObject {
 
         setInterval(() => {
             let endboss = world.level.enemies[2];
-
             let characterGetsHitByMagicBlade = world.character.isColliding(this);
-            let magicBladeGetsOutOfRange = endboss > this.x + this.range || endboss < this.x - this.range;
+            let magicBladeGetsOutOfRange = endboss.x > this.x + this.range || endboss.x < this.x - this.range;
             // console.log('last hit: ', )
             // console.log('Fireballs', world.throwableObjects)
 

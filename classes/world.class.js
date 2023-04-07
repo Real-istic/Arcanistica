@@ -33,13 +33,18 @@ class World {
                     this.character.isHit(enemy.dpf);
                 }
             }
-            this.throwableObjects.forEach((Fireball) => {
-                if (enemy.isColliding(Fireball) && !enemy.isFinallyDead) {
-                    enemy.isHit(Fireball.dpf);
+            this.throwableObjects.forEach((object) => {
+                if (enemy.isColliding(object) && !enemy.isFinallyDead) {
+                    enemy.isHit(object.dpf);
                 }
             });
         })
-
+        this.throwableObjects.forEach((object) => {
+            if (object.isColliding(this.character)) {
+                this.character.isHit(object.dpf);
+            }
+        })
+       
     }
 
     // Draw() wird immer wieder aufgerufen
