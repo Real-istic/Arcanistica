@@ -4,6 +4,7 @@ class Endboss extends MovableObject {
     height = 364;
     dpf = 0.01;
     HP = 300;
+    speed = 0.5;
     magicBladeCooldown = 1000;
     resetMagicBladeCooldown = 1000;
     magicBladeStatus = false;
@@ -98,7 +99,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
         this.loadImages(this.IMAGES_ATTACK_MAGICBLADE)
-        this.speed = 0.2;
+        // this.speed = 2.2;
         this.x = 4200;
         this.animate();
     }
@@ -120,25 +121,29 @@ class Endboss extends MovableObject {
 
 
         setInterval(() => {
-            let playerIsTooClose = this.x - world.character.x < 120 && this.x - world.character.x > -180;
+            let playerIsAtMidRange = this.x - world.character.x > 140 || this.x - world.character.x < -200;
+            let playerIsAtHighRange = this.x - world.character.x > 400 || this.x - world.character.x < -430;
             this.magicBladeCooldown -= 50;
+            
             if (this.magicBladeCooldown <= 0) {
                 this.magicBladeCooldown = 0;
             }
-            if (this.magicBladeCooldown <= 0 && !this.magicBladeStatus && !this.isFinallyDead && !playerIsTooClose) {
+            if (this.magicBladeCooldown <= 0 && !this.magicBladeStatus && !this.isFinallyDead && playerIsAtMidRange && !playerIsAtHighRange) {
                 this.throwMagicBlade();
             }
         }, 100);
 
         setInterval(() => {
 
-            // console.log('BOSS HP: ', this.HP)
+            if (this.HP > 0) {
+                console.log('EndbossHP: ', this.HP)
+            }
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
 
-            } else if ((world.throwableObjects.some(Fireball => Fireball.isColliding(this))) && !this.isFinallyDead && !this.magicBladeStatus) {
+            } else if ((world.throwableObjects.some(projectile => this.isColliding(projectile))) && !this.isFinallyDead && !this.magicBladeStatus) {
                 this.playAnimation(this.IMAGES_HURT);
             }
 

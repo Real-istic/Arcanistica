@@ -2,7 +2,7 @@ class Goblin extends MovableObject {
     y = 290;
     width = 164;
     height = 164;
-    dpf = 0.02;
+    dpf = 0.015;
     speed = 0.5;
     IMAGES_WALK = [
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk1.png',
@@ -22,6 +22,9 @@ class Goblin extends MovableObject {
 
     IMAGES_HURT = [
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt1.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt3.png',
     ]
@@ -48,7 +51,7 @@ class Goblin extends MovableObject {
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
         this.x = 550 + Math.random() * 2500;
-        this.speed += Math.random() * 0.075;
+        this.speed += Math.random() * 0.5;
 
         this.animate();
     }
@@ -56,20 +59,22 @@ class Goblin extends MovableObject {
     animate() {
        
         setInterval(() => {
-            if (!this.isFinallyDead && this.x - 80> world.character.x) {
+            if (!this.isFinallyDead && this.x - 80 > world.character.x && !world.throwableObjects.some(projectile => this.isColliding(projectile))) {
             this.x -= this.speed;
             this.otherDirection = false;
 
-            } else if (!this.isFinallyDead && this.x + 80 < world.character.x) {
+            } else if (!this.isFinallyDead && this.x + 80 < world.character.x && !world.throwableObjects.some(projectile => this.isColliding(projectile))) {
             this.x += this.speed;
             this.otherDirection = true;
             }
         }, 1000 / 60);
 
         setInterval(() => {
+            let goblinGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
+
 
             if (this.HP > 0) {
-            console.log('goblinHP', this.HP)  
+            // console.log('goblinHP', this.HP)  
             }
 
             if (this.isDead() && !this.isFinallyDead) {
@@ -79,7 +84,7 @@ class Goblin extends MovableObject {
             } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
                 this.playAnimation(this.IMAGES_ATTACK);
 
-            } else if ((world.throwableObjects.some(Projectile => Projectile.isColliding(this))) && (world.throwableObjects.some(Projectile => Projectile instanceof Fireball)) && !this.isFinallyDead) {
+            } else if (goblinGetsHitByProjectile && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
 
             } else if (!this.isFinallyDead){

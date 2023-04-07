@@ -87,7 +87,7 @@ class World {
         this.checkCollisions()
 
         // mirror rendering if necessary
-        if (mo instanceof Goblin && !mo.otherDirection) {
+        if ((mo instanceof Goblin || mo instanceof Medusa) && !mo.otherDirection) {
             mo.drawMirroredObjects(this.ctx)
 
         } else if (mo instanceof Endboss && !mo.otherDirection || (mo instanceof Character && mo.otherDirection) || (mo instanceof ThrowableObject && mo.otherDirection)) {

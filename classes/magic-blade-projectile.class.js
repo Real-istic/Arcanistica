@@ -40,7 +40,7 @@ class MagicBladeProjectile extends ThrowableObject {
     animate() {
 
         setInterval(() => {
-            let endboss = world.level.enemies[2];
+            let endboss = world.level.enemies[0];
             let characterGetsHitByMagicBlade = world.character.isColliding(this);
             let magicBladeGetsOutOfRange = endboss.x > this.x + this.range || endboss.x < this.x - this.range;
             // console.log('last hit: ', )

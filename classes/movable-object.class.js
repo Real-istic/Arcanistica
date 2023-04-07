@@ -46,16 +46,16 @@ class MovableObject extends DrawableObject {
     moveRight() {
         this.x += this.speed;
         this.otherDirection = false;
-        this.world.level.backgrounds[0].x += this.speed / 20;
-        this.world.level.backgrounds[1].x += this.speed / 15;
+        this.world.level.backgrounds[0].x += this.speed / 18;
+        this.world.level.backgrounds[1].x += this.speed / 13;
         // this.walking_sound.play();
     }
 
     moveLeft() {
         this.x -= this.speed;
         this.otherDirection = true;
-        this.world.level.backgrounds[0].x -= this.speed / 20;
-        this.world.level.backgrounds[1].x -= this.speed / 15;
+        this.world.level.backgrounds[0].x -= this.speed / 18;
+        this.world.level.backgrounds[1].x -= this.speed / 13;
         // this.walking_sound.play();
     }
 
@@ -76,16 +76,13 @@ class MovableObject extends DrawableObject {
 
 
     jump() {
-        this.speedY = 8;
+        this.speedY = 7;
     }
 
     isColliding(mo) {
-        let endbossIsHitByEnemyProjectile = this instanceof Endboss && mo instanceof MagicBladeProjectile;
-        let goblinIsHitByEnemyProjectile = this instanceof Goblin && mo instanceof MagicBladeProjectile;
+        let enemyIsHitByEnemyProjectile = (this instanceof Goblin || this instanceof Medusa || this instanceof Endboss) && mo instanceof MagicBladeProjectile;
         
-        if (endbossIsHitByEnemyProjectile || goblinIsHitByEnemyProjectile) {
-            return false
-        } else if (!mo.isFinallyDead || !this.isFinallyDead) {
+        if ((!mo.isFinallyDead || !this.isFinallyDead) && !enemyIsHitByEnemyProjectile) {
             return this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&
                 this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
                 this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&

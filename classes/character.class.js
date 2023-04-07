@@ -2,7 +2,7 @@ class Character extends MovableObject {
     x = 50;
     width = 164;
     height = 164;
-    speed = 5;
+    speed = 14;
     idleCounter = 0;
     world;
     walking_sound = new Audio('audio/steps_grass.mp3')
@@ -19,7 +19,7 @@ class Character extends MovableObject {
     }
     HP = 100;
     MP = 100;
-    manaregen = 0.1;
+    manaregen = 0.25;
 
     IMAGES_WALK = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk1.png',
@@ -237,7 +237,6 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT)
 
             } else if ((this.world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround() && !this.fireballStatus) {
-                // this.jumpAnimation();
                 this.playAnimation(this.IMAGES_JUMP)
 
             } else if (((this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) && !this.isAboveGround() && !this.fireballStatus && !this.isFinallyDead && !this.isHurt()) {
