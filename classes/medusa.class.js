@@ -3,11 +3,10 @@ class Medusa extends MovableObject {
     width = 194;
     height = 194;
     dpf = 0.03;
-    speed = 0.7;
+    speed = 3.5;
     HP = 150;
-    rockProjectileCooldown = 1000;
-    resetRockProjectileCooldown = 1000;
-    rockProjectileStatus = false;
+    rockProjectileCooldown = 1600;
+    resetRockProjectileCooldown = 1600
 
     IMAGES_WALK = [
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk1.png',
@@ -32,18 +31,16 @@ class Medusa extends MovableObject {
 
     IMAGES_ATTACK = [
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack1.png',
+        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack1.png',
+        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack2.png',
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack2.png',
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack3.png',
+        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack3.png',
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack4.png',
+        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack4.png',
+        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack6.png',
-    ]
-
-    IMAGES_ATTACK_ROCKPROJECTILE = [
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack4.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack4.png',
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack6.png',
@@ -52,7 +49,7 @@ class Medusa extends MovableObject {
     offset = {
         top: 0,
         bottom: 0,
-        left: 40,
+        left: 70,
         right: -150
     }
     
@@ -62,7 +59,6 @@ class Medusa extends MovableObject {
         this.loadImages(this.IMAGES_DEATH)
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
-        this.loadImages(this.IMAGES_ATTACK_ROCKPROJECTILE)
         this.x = 450 + Math.random() * 2500;
         this.speed += Math.random() * 0.5;
 
@@ -72,22 +68,24 @@ class Medusa extends MovableObject {
     animate() {
        
         setInterval(() => {
-            if (!this.isFinallyDead && this.x - 80 > world.character.x) {
-            this.x -= this.speed;
+            if (!this.isFinallyDead && this.x - world.character.x > 420 && !this.rockProjectileStatus) {
+            this.x -= this.speed * 2;
             this.otherDirection = false;
 
-            } else if (!this.isFinallyDead && this.x + 80 < world.character.x) {
+            } else if (!this.isFinallyDead && this.x - world.character.x < 390 && !this.rockProjectileStatus) {
             this.x += this.speed;
             this.otherDirection = true;
+            } else if ( this.x - world.character.x > 420) {
+                this.otherDirection = false;
             }
         }, 1000 / 60);
 
         setInterval(() => {
             let medusaGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
 
-            if (this.HP > 0) {
-            console.log('MedusaHP: ', this.HP)  
-            }
+            // if (this.HP > 0) {
+            // console.log('MedusaHP: ', this.HP)  
+            // }
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
@@ -98,36 +96,53 @@ class Medusa extends MovableObject {
 
             } else if (medusaGetsHitByProjectile && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
-
-            } else if (!this.isFinallyDead){
+                
+            } else if (!this.isFinallyDead && !this.rockProjectileStatus){
                 this.playAnimation(this.IMAGES_WALK);
             }
         }, 150);
+
+        setInterval(() => {
+            this.rockProjectileCooldown -= 50;
+
+            let characterIsAtHighRange = this.x - world.character.x > 350;
+            
+            if (this.rockProjectileCooldown <= 0) {
+                this.rockProjectileCooldown = 0;
+            }
+            if (this.rockProjectileCooldown <= 0 && !this.rockProjectileStatus && !this.isFinallyDead && characterIsAtHighRange && !this.otherDirection && !this.rockProjectileStatus) {
+                this.throwRockProjectile();
+            }
+        }, 100);
+
     }
     
-    async throwrockProjectile() {
+    async throwRockProjectile() {
         if (this.rockProjectileCooldown <= 0) {
             this.rockProjectileStatus = true;
             this.rockProjectileCooldown = this.resetRockProjectileCooldown;
-            this.playAnimationOnce(this.IMAGES_ATTACK_ROCKPROJECTILE);
+            
+            this.playAnimationOnce(this.IMAGES_ATTACK);
+
             let characterPositionX = world.character.x;
             let characterPositionY = world.character.y;
+            
             setTimeout(() => {
                 if (this.otherDirection) {
-                    let rockProjectile = new RockProjectile(characterPositionX - 200, characterPositionY + 60, this.otherDirection);
+                    let rockProjectile = new RockProjectile(characterPositionX - 10, characterPositionY - 50, this.otherDirection);
                     world.throwableObjects.push(rockProjectile);
 
                 } else {
-                    let rockProjectile = new RockProjectile(characterPositionX - 100, characterPositionY + 60, this.otherDirection);
+                    let rockProjectile = new RockProjectile(characterPositionX - 80, characterPositionY - 50, this.otherDirection);
                     world.throwableObjects.push(rockProjectile);
                 }
 
-            }, 600);
+            }, 100);
 
             setTimeout(() => {
                 this.rockProjectileStatus = false;
                 this.currentImage = 0;
-            }, 700);
+            }, 2000);
         }
     }
 

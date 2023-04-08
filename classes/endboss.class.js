@@ -164,11 +164,11 @@ class Endboss extends MovableObject {
 
             setTimeout(() => {
                 if (this.otherDirection) {
-                    let magicBladeProjectile = new MagicBladeProjectile(this.x - 200, this.y + 60 + Math.random() * 100, this.otherDirection);
+                    let magicBladeProjectile = new MagicBladeProjectile(this.x - 300, this.y + 60 + Math.random() * 100, this.otherDirection);
                     world.throwableObjects.push(magicBladeProjectile);
 
                 } else {
-                    let magicBladeProjectile = new MagicBladeProjectile(this.x - 100, this.y + 60 + Math.random() * 100, this.otherDirection);
+                    let magicBladeProjectile = new MagicBladeProjectile(this.x + 50, this.y + 60 + Math.random() * 100, this.otherDirection);
                     world.throwableObjects.push(magicBladeProjectile);
                 }
 

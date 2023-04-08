@@ -3,8 +3,8 @@ class MagicBladeProjectile extends ThrowableObject {
     offset = {
         top: 35,
         bottom: 160,
-        left: 110,
-        right: -80
+        left: -80,
+        right: -150
     }
     projectileOffset = 80;
     speed = -20;
@@ -48,7 +48,7 @@ class MagicBladeProjectile extends ThrowableObject {
 
             if (characterGetsHitByMagicBlade || magicBladeGetsOutOfRange) {
                 this.playAnimationOnce(this.IMAGES_PROJECTILE_MAGICBLADE_HIT);
-                this.deleteProjectile();
+                this.deleteProjectile(300);
 
             } else if (!characterGetsHitByMagicBlade) {
                 this.playAnimation(this.IMAGES_PROJECTILE_MAGICBLADE);

@@ -49,7 +49,7 @@ class Fireball extends ThrowableObject {
 
             if (enemyGetsHitByFireball || fireballGetsOutOfRange) {
                 this.playAnimationOnce(this.IMAGES_FIREBALL_HIT);
-                this.deleteProjectile();
+                this.deleteProjectile(300);
 
             } else if (!enemyGetsHitByFireball) {
                 this.playAnimation(this.IMAGES_FIREBALL);

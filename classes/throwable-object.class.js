@@ -32,8 +32,8 @@ class ThrowableObject extends MovableObject {
 
 
 
-    async deleteProjectile() {
-        await new Promise(resolve => setTimeout(resolve, 300));
+    async deleteProjectile(timeout) {
+        await new Promise(resolve => setTimeout(resolve, timeout));
         let projectileIndex = world.throwableObjects.indexOf(this);
 
         if (projectileIndex >= 0) {
@@ -44,7 +44,7 @@ class ThrowableObject extends MovableObject {
     animate() {
 
         setInterval(() => {
-            this.playAnimation(images);
+            this.playAnimation();
         }, 50);
     }
 }
