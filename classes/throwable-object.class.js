@@ -1,21 +1,22 @@
 class ThrowableObject extends MovableObject {
 
-    throw(projectileOffsetX, speed) {
+    throw(projectileOffsetX, speed, speedY) {
         // this.speedY = 0.12;
         // this.applyGravity();
 
-        if (this instanceof MagicBladeProjectile) {
+        if (this instanceof MagicBladeProjectile || this instanceof FirecircleProjectile) {
             if (this.otherDirection) {
                 this.x += projectileOffsetX + 350
                 setInterval(() => {
-                    this.x -= speed;
+                    this.x += speed;
                 }, 50);
             } else {
                 this.x -= projectileOffsetX
                 setInterval(() => {
-                    this.x += speed;
+                    this.x -= speed;
                 }, 50);
             }
+            
         } else {
             if (this.otherDirection) {
                 this.x -= projectileOffsetX
@@ -42,7 +43,6 @@ class ThrowableObject extends MovableObject {
     }
 
     animate() {
-
         setInterval(() => {
             this.playAnimation();
         }, 50);

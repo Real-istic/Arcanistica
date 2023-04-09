@@ -10,6 +10,7 @@ class RockProjectile extends ThrowableObject {
     speed = 0;
     range = 800;
     hitdelay = false
+    clearProjectileTime = 1500;
     
 
     IMAGES_PROJECTILE_ROCK = [
@@ -54,7 +55,7 @@ class RockProjectile extends ThrowableObject {
             // console.log('Fireballs', world.throwableObjects)
 
             if (characterGetsHitByRockProjectile) {
-                this.deleteProjectile(1500);
+                this.deleteProjectile(this.clearProjectileTime);
             } 
             
         }, 50);

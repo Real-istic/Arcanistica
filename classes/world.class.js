@@ -54,6 +54,12 @@ class World {
         this.addObjectsToMap(this.level.backgrounds);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+
+        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.translate(this.camera_x, 0);
+        this.addToMap(this.character);
+        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
 
@@ -62,10 +68,6 @@ class World {
         this.addObjectsToMap(this.ui.statusbars);
 
         // --- space for fixed objects above 
-        this.ctx.translate(this.camera_x, 0);
-        this.addToMap(this.character);
-        this.ctx.translate(-this.camera_x, 0);
-
 
         let self = this;
 
@@ -87,7 +89,7 @@ class World {
         this.checkCollisions()
 
         // mirror rendering if necessary
-        if ((mo instanceof Goblin || mo instanceof Medusa || mo instanceof MagicBladeProjectile) && !mo.otherDirection) {
+        if ((mo instanceof Goblin || mo instanceof Medusa || mo instanceof MagicBladeProjectile || mo instanceof FirecircleProjectile) && !mo.otherDirection) {
             mo.drawMirroredObjects(this.ctx)
 
         } else if ((mo instanceof Endboss && !mo.otherDirection) || (mo instanceof Character && mo.otherDirection) || (mo instanceof Fireball && mo.otherDirection)) {

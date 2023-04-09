@@ -4,10 +4,14 @@ class Endboss extends MovableObject {
     height = 364;
     dpf = 0.01;
     HP = 300;
-    speed = 0.5;
-    magicBladeCooldown = 1000;
+    speed = 1.5;
+    magicBladeCooldown = 0;
     resetMagicBladeCooldown = 1000;
     magicBladeStatus = false;
+    firecircleCooldown = 0;
+    resetFirecircleCooldown = 2000;
+    firecircleStatus = false;
+
     IMAGES_WALK = [
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk1.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk2.png',
@@ -84,6 +88,14 @@ class Endboss extends MovableObject {
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade5.png',
     ]
 
+    IMAGES_ATTACK_FIRECIRCLE = [
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire1.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire2.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire3.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire4.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire5.png',
+    ]
+
     offset = {
         top: 85,
         bottom: 0,
@@ -99,7 +111,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
         this.loadImages(this.IMAGES_ATTACK_MAGICBLADE)
-        // this.speed = 2.2;
+        this.loadImages(this.IMAGES_ATTACK_FIRECIRCLE)
         this.x = 4200;
         this.animate();
     }
@@ -121,15 +133,25 @@ class Endboss extends MovableObject {
 
 
         setInterval(() => {
-            let playerIsAtMidRange = this.x - world.character.x > 140 || this.x - world.character.x < -200;
-            let playerIsAtHighRange = this.x - world.character.x > 400 || this.x - world.character.x < -430;
+
+            let playerIsAtMidRange = this.x - world.character.x > 150 && this.x - world.character.x < 370 || this.x - world.character.x < -250 && this.x - world.character.x > -470;
+
+            let playerIsAtHighRange = this.x - world.character.x > 380 && this.x - world.character.x < 1200 || this.x - world.character.x < -480 && this.x - world.character.x > -1300;
+
+            this.firecircleCooldown -= 50;
             this.magicBladeCooldown -= 50;
             
             if (this.magicBladeCooldown <= 0) {
                 this.magicBladeCooldown = 0;
             }
-            if (this.magicBladeCooldown <= 0 && !this.magicBladeStatus && !this.isFinallyDead && playerIsAtMidRange && !playerIsAtHighRange) {
+            if (this.firecircleCooldown <= 0) {
+                this.firecircleCooldown = 0;
+            }
+            if (this.magicBladeCooldown <= 0 && !this.magicBladeStatus && !this.isFinallyDead && playerIsAtMidRange && !playerIsAtHighRange && !this.firecircleStatus) {
                 this.throwMagicBlade();
+            }
+            if (this.firecircleCooldown <= 0 && !this.firecircleStatus && !this.isFinallyDead && !playerIsAtMidRange && playerIsAtHighRange) {
+                this.throwFirecircle()
             }
         }, 100);
 
@@ -147,10 +169,10 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT);
             }
 
-            else if (!this.isFinallyDead && world.character.isColliding(this) && !this.magicBladeStatus) {
+            else if (!this.isFinallyDead && world.character.isColliding(this) && !this.magicBladeStatus && !this.firecircleStatus) {
                 this.playAnimation(this.IMAGES_ATTACK);
 
-            } else if (!this.isFinallyDead && !this.magicBladeStatus) {
+            } else if (!this.isFinallyDead && !this.magicBladeStatus && !this.firecircleStatus) {
                 this.playAnimation(this.IMAGES_WALK);
             }
         }, 180);
@@ -172,12 +194,37 @@ class Endboss extends MovableObject {
                     world.throwableObjects.push(magicBladeProjectile);
                 }
 
-            }, 600);
+            }, 600); // delay to ensure that the magic blade is thrown after the animation
 
             setTimeout(() => {
                 this.magicBladeStatus = false;
                 this.currentImage = 0;
-            }, 700);
+            }, 700); // delay to ensure that the animation is finished
+        }
+    }
+
+    async throwFirecircle() {
+        if (this.firecircleCooldown <= 0) {
+            this.firecircleStatus = true;
+            this.firecircleCooldown = this.resetFirecircleCooldown;
+            this.playAnimationOnce(this.IMAGES_ATTACK_FIRECIRCLE);
+
+            setTimeout(() => {
+                if (this.otherDirection) {
+                    let firecircleProjectile = new FirecircleProjectile(this.x - 300, this.y + 60 + Math.random() * 100, this.otherDirection);
+                    world.throwableObjects.push(firecircleProjectile);
+
+                } else {
+                    let firecircleProjectile = new FirecircleProjectile(this.x + 50, this.y + 60 + Math.random() * 100, this.otherDirection);
+                    world.throwableObjects.push(firecircleProjectile);
+                }
+
+            }, 600); // delay to ensure that the Firecircle is thrown after the animation
+
+            setTimeout(() => {
+                this.firecircleStatus = false;
+                this.currentImage = 0;
+            }, 800); // delay to ensure that the animation is finished
         }
     }
 

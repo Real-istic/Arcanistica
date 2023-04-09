@@ -6,7 +6,7 @@ const level1 = new Level(
         // new Goblin(),
         // new Goblin(),
         // new Goblin(),
-        new Medusa(),
+        // new Medusa(),
         // new Medusa()
     ],
 

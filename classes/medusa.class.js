@@ -3,10 +3,11 @@ class Medusa extends MovableObject {
     width = 194;
     height = 194;
     dpf = 0.03;
-    speed = 3.5;
+    speed = 3.0;
     HP = 150;
-    rockProjectileCooldown = 1600;
-    resetRockProjectileCooldown = 1600
+    rockProjectileCooldown = 0;
+    resetRockProjectileCooldown = 2500
+    rockProjectileStatus = false
 
     IMAGES_WALK = [
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk1.png',
@@ -61,7 +62,6 @@ class Medusa extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK)
         this.x = 450 + Math.random() * 2500;
         this.speed += Math.random() * 0.5;
-
         this.animate();
     }
 
@@ -72,20 +72,14 @@ class Medusa extends MovableObject {
             this.x -= this.speed * 2;
             this.otherDirection = false;
 
-            } else if (!this.isFinallyDead && this.x - world.character.x < 390 && !this.rockProjectileStatus) {
+            } else if (!this.isFinallyDead && this.x - world.character.x < 410 && !this.rockProjectileStatus) {
             this.x += this.speed;
             this.otherDirection = true;
-            } else if ( this.x - world.character.x > 420) {
-                this.otherDirection = false;
-            }
+            } 
         }, 1000 / 60);
 
         setInterval(() => {
             let medusaGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
-
-            // if (this.HP > 0) {
-            // console.log('MedusaHP: ', this.HP)  
-            // }
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
@@ -103,14 +97,14 @@ class Medusa extends MovableObject {
         }, 150);
 
         setInterval(() => {
+            let characterIsAtHighRange = this.x - world.character.x > 330 && this.x - world.character.x < 500;
             this.rockProjectileCooldown -= 50;
-
-            let characterIsAtHighRange = this.x - world.character.x > 350;
             
             if (this.rockProjectileCooldown <= 0) {
                 this.rockProjectileCooldown = 0;
             }
-            if (this.rockProjectileCooldown <= 0 && !this.rockProjectileStatus && !this.isFinallyDead && characterIsAtHighRange && !this.otherDirection && !this.rockProjectileStatus) {
+            if (!this.isFinallyDead && characterIsAtHighRange && !this.rockProjectileStatus && this.rockProjectileCooldown <= 0) {
+                this.otherDirection = false;
                 this.throwRockProjectile();
             }
         }, 100);
@@ -121,28 +115,23 @@ class Medusa extends MovableObject {
         if (this.rockProjectileCooldown <= 0) {
             this.rockProjectileStatus = true;
             this.rockProjectileCooldown = this.resetRockProjectileCooldown;
-            
             this.playAnimationOnce(this.IMAGES_ATTACK);
 
-            let characterPositionX = world.character.x;
-            let characterPositionY = world.character.y;
-            
             setTimeout(() => {
                 if (this.otherDirection) {
-                    let rockProjectile = new RockProjectile(characterPositionX - 10, characterPositionY - 50, this.otherDirection);
+                    let rockProjectile = new RockProjectile(world.character.x - 10, this.yGround - 45, this.otherDirection);
                     world.throwableObjects.push(rockProjectile);
 
                 } else {
-                    let rockProjectile = new RockProjectile(characterPositionX - 80, characterPositionY - 50, this.otherDirection);
+                    let rockProjectile = new RockProjectile(world.character.x - 80, this.yGround - 45, this.otherDirection);
                     world.throwableObjects.push(rockProjectile);
                 }
-
-            }, 100);
+            }, 200); // short delay before the projectile is thrown
 
             setTimeout(() => {
                 this.rockProjectileStatus = false;
                 this.currentImage = 0;
-            }, 2000);
+            }, 1500); // delay to ensure the animation is finished and no longer blocks ohther animations
         }
     }
 

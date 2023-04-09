@@ -2,12 +2,12 @@ class Character extends MovableObject {
     x = 50;
     width = 164;
     height = 164;
-    speed = 4;
+    speed = 14;
     idleCounter = 0;
     world;
     walking_sound = new Audio('audio/steps_grass.mp3')
     idleTime = 0;
-    fireballCooldown = 700;
+    fireballCooldown = 0;
     resetFireballCooldown = 700;
     fireballStatus = false;
     fireballMPcost = 30;
@@ -198,6 +198,8 @@ class Character extends MovableObject {
     animate() {
 
         setInterval(() => {
+            let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
+
             this.setMPbarWidth(this.MP)
 
             if (this.MP < 100 && !this.isFinallyDead) {
@@ -205,15 +207,15 @@ class Character extends MovableObject {
             }
 
             this.walking_sound.pause();
-            if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus) {
+            if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock)  {
                 this.moveRight();
                 // this.walking_sound.play();
             }
 
-            if (this.world.keyboard.LEFT && this.x > -45 && !this.isFinallyDead && !this.fireballStatus) {
+            if (this.world.keyboard.LEFT && this.x > -45 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock) {
                 this.moveLeft();
             }
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            if (this.world.keyboard.SPACE && !this.isAboveGround() && !characterCollidesWithRock) {
                 this.jump();
             }
             this.world.camera_x = -this.x + 200;
@@ -262,7 +264,9 @@ class Character extends MovableObject {
     }
 
     async throwFireball() {
-        if (this.fireballCooldown <= 0 && this.MP >= this.fireballMPcost) {
+        let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
+
+        if (this.fireballCooldown <= 0 && this.MP >= this.fireballMPcost && !characterCollidesWithRock) {
             this.fireballStatus = true;
             this.fireballCooldown = this.resetFireballCooldown;
             this.playAnimationOnce(this.IMAGES_ATTACK)

@@ -1,15 +1,14 @@
 class MagicBladeProjectile extends ThrowableObject {
     dpf = 0.01 + Math.random() * 0.01;
-    offset = {
-        top: 35,
-        bottom: 160,
-        left: -80,
-        right: -150
-    }
+
+    offset = world.level.enemies[0].otherDirection ?
+    { top: 35, bottom: 160, left: 150, right: -150}:
+    { top: 35, bottom: 160, left: -70, right: 50 };
+
     projectileOffset = 80;
-    speed = -20;
+    speed = 20;
     range = 800;
-    
+    clearProjectileTime = 300;
 
     IMAGES_PROJECTILE_MAGICBLADE = [
         'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/blade1.png',
@@ -48,7 +47,7 @@ class MagicBladeProjectile extends ThrowableObject {
 
             if (characterGetsHitByMagicBlade || magicBladeGetsOutOfRange) {
                 this.playAnimationOnce(this.IMAGES_PROJECTILE_MAGICBLADE_HIT);
-                this.deleteProjectile(300);
+                this.deleteProjectile(this.clearProjectileTime);
 
             } else if (!characterGetsHitByMagicBlade) {
                 this.playAnimation(this.IMAGES_PROJECTILE_MAGICBLADE);
