@@ -21,8 +21,8 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY
                 this.speedY -= this.acceleration;
             } else {
-                // this.y = this.yGround;
-            }
+                this.y = this.yGround;
+            } 
         }, 1000 / 100);
     }
 
@@ -80,7 +80,7 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(mo) {
-        let enemyIsHitByEnemyProjectile = (this instanceof Goblin || this instanceof Medusa || this instanceof Endboss) && mo instanceof MagicBladeProjectile;
+        let enemyIsHitByEnemyProjectile = (this instanceof Goblin || this instanceof Medusa || this instanceof Endboss) && (mo instanceof MagicBladeProjectile || mo instanceof FirecircleProjectile);
         
         if ((!mo.isFinallyDead || !this.isFinallyDead) && !enemyIsHitByEnemyProjectile) {
             return this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&

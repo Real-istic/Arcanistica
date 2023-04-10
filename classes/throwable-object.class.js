@@ -1,6 +1,6 @@
 class ThrowableObject extends MovableObject {
 
-    throw(projectileOffsetX, speed, speedY) {
+    throw(projectileOffsetX, speed) {
         // this.speedY = 0.12;
         // this.applyGravity();
 
@@ -9,11 +9,17 @@ class ThrowableObject extends MovableObject {
                 this.x += projectileOffsetX + 350
                 setInterval(() => {
                     this.x += speed;
+                    if (this instanceof FirecircleProjectile) {
+                        this.applyGravity()
+                    }
                 }, 50);
             } else {
                 this.x -= projectileOffsetX
                 setInterval(() => {
                     this.x -= speed;
+                    if (this instanceof FirecircleProjectile) {
+                        this.applyGravity()
+                    }
                 }, 50);
             }
             

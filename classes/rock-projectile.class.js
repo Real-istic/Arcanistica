@@ -49,14 +49,7 @@ class RockProjectile extends ThrowableObject {
 
         setInterval(() => {
 
-            let characterGetsHitByRockProjectile = world.character.isColliding(this);
-
-            // console.log('last hit: ', )
-            // console.log('Fireballs', world.throwableObjects)
-
-            if (characterGetsHitByRockProjectile) {
                 this.deleteProjectile(this.clearProjectileTime);
-            } 
             
         }, 50);
     }

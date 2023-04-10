@@ -4,7 +4,7 @@ class Endboss extends MovableObject {
     height = 364;
     dpf = 0.01;
     HP = 300;
-    speed = 1.5;
+    speed = 2.5;
     magicBladeCooldown = 0;
     resetMagicBladeCooldown = 1000;
     magicBladeStatus = false;
@@ -112,7 +112,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK)
         this.loadImages(this.IMAGES_ATTACK_MAGICBLADE)
         this.loadImages(this.IMAGES_ATTACK_FIRECIRCLE)
-        this.x = 4200;
+        this.x = 3200;
         this.animate();
     }
 
@@ -211,11 +211,11 @@ class Endboss extends MovableObject {
 
             setTimeout(() => {
                 if (this.otherDirection) {
-                    let firecircleProjectile = new FirecircleProjectile(this.x - 300, this.y + 60 + Math.random() * 100, this.otherDirection);
+                    let firecircleProjectile = new FirecircleProjectile(this.x - 300, this.y + 40 + Math.random() * 100, this.otherDirection);
                     world.throwableObjects.push(firecircleProjectile);
 
                 } else {
-                    let firecircleProjectile = new FirecircleProjectile(this.x + 50, this.y + 60 + Math.random() * 100, this.otherDirection);
+                    let firecircleProjectile = new FirecircleProjectile(this.x + 50, this.y + 40 + Math.random() * 100, this.otherDirection);
                     world.throwableObjects.push(firecircleProjectile);
                 }
 
@@ -224,7 +224,7 @@ class Endboss extends MovableObject {
             setTimeout(() => {
                 this.firecircleStatus = false;
                 this.currentImage = 0;
-            }, 800); // delay to ensure that the animation is finished
+            }, 700); // delay to ensure that the animation is finished
         }
     }
 

@@ -2,13 +2,20 @@ class FirecircleProjectile extends ThrowableObject {
     dpf = 0.01 + Math.random() * 0.01;
     offset = {
         top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
+        bottom: 150,
+        left: -20,
+        right: -120
     }
+
+    offset = world.level.enemies[0].otherDirection ?
+    { top: 0, bottom: 150, left: 100, right: -120}:
+    { top: 0, bottom: 150, left: -20, right: 50 };
+
+    yGround = 240;
     projectileOffset = 100;
-    speed = 30;
-    speedY = 5;
+    speed = 25;
+    speedY = 0.5;
+    acceleration = 0.0005;
     range = 1200;
     clearProjectileTime = 10;
 
@@ -32,9 +39,9 @@ class FirecircleProjectile extends ThrowableObject {
         this.x = x;
         this.y = y;
         this.otherDirection = otherDirection;
-        this.width = 350;
-        this.height = 350;
-        this.throw(this.projectileOffset, this.speed, this.speedY);
+        this.width = 246;
+        this.height = 246;
+        this.throw(this.projectileOffset, this.speed);
     }
 
     animate() {

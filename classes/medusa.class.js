@@ -68,12 +68,12 @@ class Medusa extends MovableObject {
     animate() {
        
         setInterval(() => {
-            if (!this.isFinallyDead && (this.x - world.character.x > 420 || this.x - world.character.x < -420) && !this.rockProjectileStatus) {
+            if (!this.isFinallyDead && (this.x - world.character.x > 420 || this.x - world.character.x < -200 && this.x - world.character.x > -380) && !this.rockProjectileStatus) {
             this.x -= this.speed * 2;
             this.otherDirection = false;
 
-            } else if (!this.isFinallyDead && (this.x - world.character.x < -100) && !this.rockProjectileStatus) {
-            this.x += this.speed * 2;
+            } else if (!this.isFinallyDead && (this.x - world.character.x < 400) && !this.rockProjectileStatus) {
+            this.x += this.speed * 1.05;
             this.otherDirection = true;
             } 
         }, 1000 / 60);
@@ -97,7 +97,7 @@ class Medusa extends MovableObject {
         }, 150);
 
         setInterval(() => {
-            let characterIsAtHighRange = this.x - world.character.x > 330 && this.x - world.character.x < 500;
+            let characterIsAtHighRange = this.x - world.character.x > 250 && this.x - world.character.x < 500 || this.x - world.character.x < -250 && this.x - world.character.x > -500;
             this.rockProjectileCooldown -= 50;
             
             if (this.rockProjectileCooldown <= 0) {
