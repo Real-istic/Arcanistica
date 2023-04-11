@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     isFinallyDead = false;
     dpf = 0.5; // damage per frame
+    HP = 100;
     offset = {
         top: 0,
         bottom: 0,
@@ -17,7 +18,7 @@ class MovableObject extends DrawableObject {
 
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY >= 0) {
+            if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY
                 this.speedY -= this.acceleration;
             } else {
@@ -74,7 +75,6 @@ class MovableObject extends DrawableObject {
         }
     }
 
-
     jump() {
         this.speedY = 7;
     }
@@ -113,6 +113,10 @@ class MovableObject extends DrawableObject {
 
         return timepassed < 0.5;
 
+    }
+
+    spawnManaCrystal(enemy) {
+        world.collectableObjects.push(new ManaCrystal(enemy));
     }
 }
 

@@ -1,5 +1,5 @@
 class RockProjectile extends ThrowableObject {
-    dpf = 0.002 + Math.random() * 0.002;
+    dpf = 0.005 + Math.random() * 0.005;
     offset = {
         top: 0,
         bottom: 0,

@@ -6,7 +6,6 @@ class DrawableObject {
     img;
     imageCache = {};
     currentImage = 0;
-    HP = 100;
 
 
     setHPbarWidth(HP) {

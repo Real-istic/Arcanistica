@@ -1,5 +1,5 @@
 class MagicBladeProjectile extends ThrowableObject {
-    dpf = 0.01 + Math.random() * 0.01;
+    dpf = 0.02 + Math.random() * 0.02;
 
     offset = world.level.enemies[0].otherDirection ?
     { top: 35, bottom: 160, left: 150, right: -150}:

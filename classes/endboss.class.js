@@ -4,13 +4,19 @@ class Endboss extends MovableObject {
     height = 364;
     dpf = 0.01;
     HP = 300;
-    speed = 2.5;
+    speed = 0.0;
     magicBladeCooldown = 0;
     resetMagicBladeCooldown = 1000;
     magicBladeStatus = false;
     firecircleCooldown = 0;
     resetFirecircleCooldown = 2000;
     firecircleStatus = false;
+    offset = {
+        top: 85,
+        bottom: 0,
+        left: 10,
+        right: -50
+    }
 
     IMAGES_WALK = [
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk1.png',
@@ -96,12 +102,7 @@ class Endboss extends MovableObject {
         'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire5.png',
     ]
 
-    offset = {
-        top: 85,
-        bottom: 0,
-        left: 10,
-        right: -50
-    }
+
 
 
     constructor() {
@@ -165,8 +166,10 @@ class Endboss extends MovableObject {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
 
-            } else if ((world.throwableObjects.some(projectile => this.isColliding(projectile))) && !this.isFinallyDead && !this.magicBladeStatus) {
+            } else if ((world.throwableObjects.some(projectile => this.isColliding(projectile))) && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
+                this.spawnManaCrystal(this);
+
             }
 
             else if (!this.isFinallyDead && world.character.isColliding(this) && !this.magicBladeStatus && !this.firecircleStatus) {

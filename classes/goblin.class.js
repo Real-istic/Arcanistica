@@ -71,25 +71,29 @@ class Goblin extends MovableObject {
 
         setInterval(() => {
             let goblinGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
-
-
+            
             // if (this.HP > 0) {
             // console.log('goblinHP', this.HP)  
-            // }
 
+            // }
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
+                this.spawnManaCrystal(this);
 
             } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
                 this.playAnimation(this.IMAGES_ATTACK);
 
             } else if (goblinGetsHitByProjectile && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
+                this.spawnManaCrystal(this);
+
 
             } else if (!this.isFinallyDead){
                 this.playAnimation(this.IMAGES_WALK);
             }
         }, 150);
     }
+
+    
 }

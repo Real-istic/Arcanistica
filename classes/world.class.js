@@ -7,6 +7,7 @@ class World {
     camera_x;
     ui = uiElements;
     throwableObjects = [];
+    collectableObjects = [];
 
     constructor(canvas, keyboard) {
         // canvas.width=900;
@@ -55,12 +56,11 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
 
-        this.ctx.translate(-this.camera_x, 0);
-        this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.collectableObjects);
         this.ctx.translate(-this.camera_x, 0);
 
         // --- space for fixed objects below 
@@ -85,6 +85,7 @@ class World {
         });
     }
 
+    
     addToMap(mo) {
         this.checkCollisions()
 
