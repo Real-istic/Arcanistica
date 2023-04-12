@@ -1,12 +1,18 @@
-class ManaCrystal extends MovableObject {
-    MPgain = 30;
-    speedY = 5;
-    speedX = 4 + this.getRndInteger(4, 5);
+class ManaCrystal extends CollectableObject {
+    MPgain = 8;
+    MPgainBonus = 25;
+    speedY = 8;
+    speedX = 1 + this.getRndInteger(3, 7);
     acceleration = 0.3;
     accelerationX = 0.001;
     yGround = this.getRndInteger(140, 360)
     enemy;
-
+    offset = {
+        top: -50,
+        bottom: 60,
+        left: 60,
+        right: -220
+    }
 
     IMAGES = [
         'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal1.png',
@@ -36,32 +42,22 @@ class ManaCrystal extends MovableObject {
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES);
-        }, 100);
+        }, 200);
     }
 
-    getRndInteger(min, max) {
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
+    gatherManaCrystal(character) {
+        	let crystal = world.collectableObjects.indexOf(this);
 
-    applyGravityToCollectable() {
-        setInterval(() => {
-            // let enemyToTheRight = this.x - 100 > world.character.x;
-            // let enemyToTheLeft = this.x + 100 < world.character.x;
-
-            if ((this.isAboveGround() || this.speedY > 0) && !this.enemy.otherDirection) {
-                this.y -= this.speedY
-                this.x -= this.speedX
-                this.speedY -= this.acceleration;
-                this.speedX += this.accelerationX;
-            } else if ((this.isAboveGround() || this.speedY > 0) && this.enemy.otherDirection) {
-                this.y -= this.speedY
-                this.x += this.speedX
-                this.speedY -= this.acceleration;
-                this.speedX -= this.accelerationX;
-            } else {
-                this.y = this.yGround;
+            if (character.MP + this.MPgain > character.maxMP) {
+                character.MP = character.maxMP;
+            } else if (character.MP + this.MPgain < character.maxMP) {
+                if (this.enemy.isFinallyDead && (character.MP + this.MPgain + this.MPgainBonus < character.maxMP)) {
+                character.MP += this.MPgain + this.MPgainBonus;   
+                } else {
+                character.MP += this.MPgain;
+                }
             }
-        }, 1000 / 100);
+            world.collectableObjects.splice(crystal, 1);
     }
 
 }

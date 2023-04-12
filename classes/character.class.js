@@ -18,8 +18,10 @@ class Character extends MovableObject {
         right: 35
     }
     HP = 100;
+    maxHP = 100;
     MP = 100;
-    manaregen = 0.25;
+    maxMP = 100;
+    manaregen = 0.2;
 
     IMAGES_WALK = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk1.png',
@@ -201,8 +203,9 @@ class Character extends MovableObject {
             let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
 
             this.setMPbarWidth(this.MP)
+            this.setHPbarWidth(this.HP)
 
-            if (this.MP < 100 && !this.isFinallyDead) {
+            if (this.MP <= this.maxMP && !this.isFinallyDead) {
                 this.MP += this.manaregen;
             }
 

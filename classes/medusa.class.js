@@ -3,7 +3,7 @@ class Medusa extends MovableObject {
     width = 194;
     height = 194;
     dpf = 0.03;
-    speed = 3.0;
+    speed = 2.5;
     HP = 150;
     rockProjectileCooldown = 0;
     resetRockProjectileCooldown = 2500
@@ -84,6 +84,8 @@ class Medusa extends MovableObject {
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
+                this.spawnManaCrystal(this);
+                this.spawnHealthPotion(this);
 
             } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
                 this.playAnimation(this.IMAGES_ATTACK);
@@ -97,7 +99,7 @@ class Medusa extends MovableObject {
         }, 150);
 
         setInterval(() => {
-            let characterIsAtHighRange = this.x - world.character.x > 250 && this.x - world.character.x < 500 || this.x - world.character.x < -250 && this.x - world.character.x > -500;
+            let characterIsAtHighRange = this.x - world.character.x > 300 && this.x - world.character.x < 500 || this.x - world.character.x < -300 && this.x - world.character.x > -500;
             this.rockProjectileCooldown -= 50;
             
             if (this.rockProjectileCooldown <= 0) {

@@ -92,10 +92,6 @@ class MovableObject extends DrawableObject {
 
     isHit(intensity) {
         this.HP -= intensity;
-        if (this instanceof Character) {
-            this.setHPbarWidth(this.HP)
-        }
-
         if (this.HP <= 0) {
             this.HP = 0
         } else {
@@ -117,6 +113,10 @@ class MovableObject extends DrawableObject {
 
     spawnManaCrystal(enemy) {
         world.collectableObjects.push(new ManaCrystal(enemy));
+    }
+
+    spawnHealthPotion(enemy) {
+        world.collectableObjects.push(new HealthPotion(enemy));
     }
 }
 

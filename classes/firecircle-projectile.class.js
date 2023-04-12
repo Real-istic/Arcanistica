@@ -13,9 +13,9 @@ class FirecircleProjectile extends ThrowableObject {
 
     yGround = 240;
     projectileOffset = 100;
-    speed = 25;
-    speedY = 0.5;
-    acceleration = 0.0006;
+    speed = 20;
+    speedY = 3;
+    acceleration = 0.03;
     range = 1200;
     clearProjectileTime = 10;
 
@@ -27,6 +27,12 @@ class FirecircleProjectile extends ThrowableObject {
         'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire5.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire6.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire7.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
+        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
         'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
@@ -44,6 +50,23 @@ class FirecircleProjectile extends ThrowableObject {
         this.throw(this.projectileOffset, this.speed);
     }
 
+
+    applyFireCircleGravity() {
+        const interval = setInterval(() => {
+          if (this.isAboveGround() || this.speedY > 0) {
+            this.y -= this.speedY
+            this.speedY -= this.acceleration;
+          } else {
+            this.y = this.yGround;
+          }
+        }, 50);
+      
+        
+        setTimeout(() => {
+          clearInterval(interval);
+        }, 1000);
+      }
+
     animate() {
 
         setInterval(() => {
@@ -56,7 +79,7 @@ class FirecircleProjectile extends ThrowableObject {
             } else {
                 this.playAnimationOnce(this.IMAGES_FIRECIRCLE);
             }
-        }, 50);
+        }, 100);
     }
 
 }

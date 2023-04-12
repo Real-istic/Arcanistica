@@ -45,6 +45,13 @@ class World {
                 this.character.isHit(object.dpf);
             }
         })
+        this.collectableObjects.forEach((object) => {
+            if (object.isColliding(this.character) && object instanceof ManaCrystal) {
+                object.gatherManaCrystal(this.character);
+            } else if (object.isColliding(this.character) && object instanceof HealthPotion) {
+                object.gatherHealthPotion(this.character);
+            }
+        })
        
     }
 

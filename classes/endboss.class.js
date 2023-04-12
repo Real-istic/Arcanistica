@@ -4,7 +4,7 @@ class Endboss extends MovableObject {
     height = 364;
     dpf = 0.01;
     HP = 300;
-    speed = 0.0;
+    speed = 0.5;
     magicBladeCooldown = 0;
     resetMagicBladeCooldown = 1000;
     magicBladeStatus = false;
@@ -113,7 +113,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK)
         this.loadImages(this.IMAGES_ATTACK_MAGICBLADE)
         this.loadImages(this.IMAGES_ATTACK_FIRECIRCLE)
-        this.x = 3200;
+        this.x = 4200;
         this.animate();
     }
 
@@ -122,11 +122,11 @@ class Endboss extends MovableObject {
 
         setInterval(() => {
             // console.log('magicBladeCooldown: ', this.magicBladeCooldown)
-            if (!this.isFinallyDead && this.x > world.character.x && !this.magicBladeStatus == true) {
+            if (!this.isFinallyDead && this.x > world.character.x && !this.magicBladeStatus && !this.firecircleStatus) {
                 this.x -= this.speed;
                 this.otherDirection = false;
 
-            } else if (!this.isFinallyDead && this.x < world.character.x - 100 && !this.magicBladeStatus == true) {
+            } else if (!this.isFinallyDead && this.x < world.character.x - 100 && !this.magicBladeStatus && !this.firecircleStatus) {
                 this.x += this.speed;
                 this.otherDirection = true;
             }
@@ -141,7 +141,7 @@ class Endboss extends MovableObject {
 
             this.firecircleCooldown -= 50;
             this.magicBladeCooldown -= 50;
-            
+
             if (this.magicBladeCooldown <= 0) {
                 this.magicBladeCooldown = 0;
             }
@@ -157,19 +157,25 @@ class Endboss extends MovableObject {
         }, 100);
 
         setInterval(() => {
+            let projectileHitsEndboss = world.throwableObjects.some(projectile => this.isColliding(projectile));
 
             if (this.HP > 0) {
-                console.log('EndbossHP: ', this.HP)
+                // console.log('EndbossHP: ', this.HP)
             }
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
 
-            } else if ((world.throwableObjects.some(projectile => this.isColliding(projectile))) && !this.isFinallyDead) {
+            } else if (projectileHitsEndboss && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
-                this.spawnManaCrystal(this);
 
+                if (Math.random() < 0.3) {
+                    this.spawnManaCrystal(this);
+                }
+                if (Math.random() < 0.3) {
+                    this.spawnHealthPotion(this);
+                }
             }
 
             else if (!this.isFinallyDead && world.character.isColliding(this) && !this.magicBladeStatus && !this.firecircleStatus) {
@@ -197,7 +203,7 @@ class Endboss extends MovableObject {
                     world.throwableObjects.push(magicBladeProjectile);
                 }
 
-            }, 600); // delay to ensure that the magic blade is thrown after the animation
+            }, 600); // delay to ensure that the magic blade is thrown at the end of the animation
 
             setTimeout(() => {
                 this.magicBladeStatus = false;
@@ -222,7 +228,7 @@ class Endboss extends MovableObject {
                     world.throwableObjects.push(firecircleProjectile);
                 }
 
-            }, 600); // delay to ensure that the Firecircle is thrown after the animation
+            }, 600); // delay to ensure that the Firecircle is thrown at the end of the animation
 
             setTimeout(() => {
                 this.firecircleStatus = false;

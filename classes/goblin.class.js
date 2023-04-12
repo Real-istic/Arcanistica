@@ -80,14 +80,13 @@ class Goblin extends MovableObject {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
                 this.spawnManaCrystal(this);
+                this.spawnHealthPotion(this);
 
             } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
                 this.playAnimation(this.IMAGES_ATTACK);
 
             } else if (goblinGetsHitByProjectile && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
-                this.spawnManaCrystal(this);
-
 
             } else if (!this.isFinallyDead){
                 this.playAnimation(this.IMAGES_WALK);
