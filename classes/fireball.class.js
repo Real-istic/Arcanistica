@@ -54,6 +54,9 @@ class Fireball extends ThrowableObject {
             } else if (!enemyGetsHitByFireball) {
                 this.playAnimation(this.IMAGES_FIREBALL);
             }
+            if (this.isAboveGround()) {
+                this.y += 15;
+            }
 
         }, 50);
     }
