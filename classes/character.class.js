@@ -7,10 +7,17 @@ class Character extends MovableObject {
     world;
     walking_sound = new Audio('audio/steps_grass.mp3')
     idleTime = 0;
+
     fireballCooldown = 0;
     resetFireballCooldown = 700;
     fireballStatus = false;
     fireballMPcost = 30;
+
+    firewallCooldown = 0;
+    resetFirewallCooldown = 2500
+    firewallStatus = false
+    firewallMPcost = 60;
+
     offset = {
         top: 20,
         bottom: 90,
@@ -22,6 +29,8 @@ class Character extends MovableObject {
     MP = 100;
     maxMP = 100;
     manaregen = 0.2;
+    cameraOffset = 190;
+
 
     IMAGES_WALK = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Walk/walk1.png',
@@ -183,6 +192,16 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack7.png',
     ]
 
+    IMAGES_SPECIAL_ATTACK = [
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack_Extra/attack_extra0.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack_Extra/attack_extra1.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack_Extra/attack_extra2.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack_Extra/attack_extra3.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack_Extra/attack_extra4.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack_Extra/attack_extra5.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack_Extra/attack_extra5.png',
+    ]
+
     constructor() {
         super().loadImage(this.IMAGES_WALK[0]);
         this.loadImages(this.IMAGES_WALK);
@@ -193,6 +212,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_SPECIAL_ATTACK);
         this.applyGravity();
         this.animate();
     }
@@ -200,39 +220,45 @@ class Character extends MovableObject {
     animate() {
 
         setInterval(() => {
+
             let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
 
             this.setMPbarWidth(this.MP)
             this.setHPbarWidth(this.HP)
+            this.setCameraPosition();
 
             if (this.MP <= this.maxMP && !this.isFinallyDead) {
                 this.MP += this.manaregen;
             }
 
-            this.walking_sound.pause();
-            if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock)  {
+            // this.walking_sound.pause();
+            if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
                 this.moveRight();
                 // this.walking_sound.play();
             }
 
-            if (this.world.keyboard.LEFT && this.x > -45 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock) {
+            if (this.world.keyboard.LEFT && this.x > -45 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
                 this.moveLeft();
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround() && !characterCollidesWithRock) {
                 this.jump();
             }
-            this.world.camera_x = -this.x + 200;
-            // console.log('this.speedY', this.speedY)
-            // console.log('this.speedY', this.y)
         }, 1000 / 60);
 
         setInterval(() => {
+            let characterIsAbleToWalk = ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) && !this.isAboveGround() && !this.fireballStatus && !this.isFinallyDead && !this.isHurt() && !this.firewallStatus
+            let characterIsAbleToJump = (this.world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround() && !this.fireballStatus && !this.firewallStatus
+            
             this.fireballCooldown -= 100;
+            this.firewallCooldown -= 100;
+
             if (this.fireballCooldown <= 0) {
                 this.fireballCooldown = 0;
             }
 
-            // console.log('fireballCooldown', this.fireballCooldown)
+            if (this.firewallCooldown <= 0) {
+                this.firewallCooldown = 0;
+            }
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
@@ -241,29 +267,43 @@ class Character extends MovableObject {
             } else if (this.isHurt() && !this.fireballStatus) {
                 this.playAnimation(this.IMAGES_HURT)
 
-            } else if ((this.world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround() && !this.fireballStatus) {
+            } else if (characterIsAbleToJump) {
                 this.playAnimation(this.IMAGES_JUMP)
 
-            } else if (((this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) && !this.isAboveGround() && !this.fireballStatus && !this.isFinallyDead && !this.isHurt()) {
+            } else if (characterIsAbleToWalk) {
                 this.playAnimation(this.IMAGES_WALK)
             }
         }, 100);
 
 
         setInterval(() => {
+            let nothingHappensToCharacter = !(this.isAboveGround()) && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDead() && !(this.world.keyboard.arrowRight) && !(this.isHurt()) && !(this.fireballStatus) && this.idleTime < 35 && !this.firewallStatus
+
+            let somethingHappensToCharacter = this.isAboveGround() || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || this.isHurt() || this.world.keyboard.arrowRight && this.world.keyboard.SPACE || this.fireballStatus || this.firewallStatus
+
             // console.log('fireballstatus', this.fireballStatus)
             // console.log('idleTime ', this.idleTime)
-            if (this.isAboveGround() || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || this.isHurt() || this.world.keyboard.arrowRight && this.world.keyboard.SPACE || this.fireballStatus) {
+            if (somethingHappensToCharacter) {
                 this.idleTime = 0
             }
             if (this.idleTime >= 35) {
                 this.playAnimation(this.IMAGES_IDLE_LONG)
 
-            } else if (!(this.isAboveGround()) && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDead() && !(this.world.keyboard.arrowRight) && !(this.isHurt()) && !(this.fireballStatus) && this.idleTime < 35) {
+            } else if (nothingHappensToCharacter) {
                 this.playAnimation(this.IMAGES_IDLE)
                 this.idleTime++
             }
         }, 200);
+    }
+
+    setCameraPosition() {
+        if (!this.otherDirection) {
+            this.cameraOffset >= 200 ? this.cameraOffset -= 2 : this.cameraOffset -= 0;
+            this.world.camera_x = -this.x + this.cameraOffset;
+        } else {
+             this.cameraOffset <= 400 ? this.cameraOffset += 2 : this.cameraOffset -= 0;
+            this.world.camera_x = -this.x + this.cameraOffset;
+        }
     }
 
     async throwFireball() {
@@ -292,6 +332,35 @@ class Character extends MovableObject {
                 this.currentImage = 0;
 
             }, 650);
+        }
+    }
+
+    async castFirewall() {
+        let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
+
+        if (this.firewallCooldown <= 0 && this.MP >= this.firewallMPcost && !characterCollidesWithRock) {
+            this.firewallStatus = true;
+            this.firewallCooldown = this.resetFirewallCooldown;
+            this.playAnimationOnce(this.IMAGES_SPECIAL_ATTACK)
+
+            setTimeout(() => {
+                if (this.otherDirection) {
+                    let firewall = new Firewall(this.x - 250, this.yGround + 80, this.otherDirection);
+                    world.throwableObjects.push(firewall);
+
+                } else {
+                    let firewall = new Firewall(this.x + 150, this.yGround + 80, this.otherDirection);
+                    world.throwableObjects.push(firewall);
+                }
+                this.MP -= this.firewallMPcost;
+
+            }, 300);
+
+            setTimeout(() => {
+                this.firewallStatus = false;
+                this.currentImage = 0;
+
+            }, 700);
         }
     }
 }

@@ -68,11 +68,15 @@ class Medusa extends MovableObject {
     animate() {
        
         setInterval(() => {
-            if (!this.isFinallyDead && (this.x - world.character.x > 420 || this.x - world.character.x < -200 && this.x - world.character.x > -380) && !this.rockProjectileStatus) {
+            let medusaGetsHitByFirewall = world.throwableObjects.some(firewall => this.isColliding(firewall));
+            let characterIsToTheLeft = !this.isFinallyDead && (this.x - world.character.x > 420 || this.x - world.character.x < -200 && this.x - world.character.x > -380) && !this.rockProjectileStatus && !medusaGetsHitByFirewall
+            let characterIsToTheRight = !this.isFinallyDead && (this.x - world.character.x < 420 || this.x - world.character.x > 200 && this.x - world.character.x < 380) && !this.rockProjectileStatus && !medusaGetsHitByFirewall
+
+            if (characterIsToTheLeft) {
             this.x -= this.speed * 2;
             this.otherDirection = false;
 
-            } else if (!this.isFinallyDead && (this.x - world.character.x < 400) && !this.rockProjectileStatus) {
+            } else if (characterIsToTheRight) {
             this.x += this.speed * 1.05;
             this.otherDirection = true;
             } 
@@ -88,7 +92,7 @@ class Medusa extends MovableObject {
                 this.spawnHealthPotion(this);
 
             } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
-                this.playAnimation(this.IMAGES_ATTACK);
+                // this.playAnimation(this.IMAGES_ATTACK);
 
             } else if (medusaGetsHitByProjectile && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
@@ -99,7 +103,7 @@ class Medusa extends MovableObject {
         }, 150);
 
         setInterval(() => {
-            let characterIsAtHighRange = this.x - world.character.x > 300 && this.x - world.character.x < 500 || this.x - world.character.x < -300 && this.x - world.character.x > -500;
+            let characterIsAtHighRange = this.x - world.character.x > 250 && this.x - world.character.x < 500 || this.x - world.character.x < -220 && this.x - world.character.x > -500;
             this.rockProjectileCooldown -= 50;
             
             if (this.rockProjectileCooldown <= 0) {

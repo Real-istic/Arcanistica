@@ -30,7 +30,7 @@ class World {
 
             if (this.character.isColliding(enemy)) {
                 // console.log('HP = ', this.character.HP)
-                if (!enemy.isFinallyDead) {
+                if (!enemy.isFinallyDead && !enemy instanceof Medusa) {
                     this.character.isHit(enemy.dpf);
                 }
             }

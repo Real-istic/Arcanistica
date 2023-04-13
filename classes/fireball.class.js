@@ -45,7 +45,7 @@ class Fireball extends ThrowableObject {
             let enemyGetsHitByFireball = world.level.enemies.some(enemy => enemy.isColliding(this) && !enemy.isFinallyDead)
             let fireballGetsOutOfRange = world.character.x > this.x + this.range || world.character.x < this.x - this.range;
             // console.log('last hit: ', )
-        // console.log('Fireballs', world.throwableObjects)
+            // console.log('Fireballs', world.throwableObjects)
 
             if (enemyGetsHitByFireball || fireballGetsOutOfRange) {
                 this.playAnimationOnce(this.IMAGES_FIREBALL_HIT);

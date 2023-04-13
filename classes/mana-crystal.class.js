@@ -25,6 +25,12 @@ class ManaCrystal extends CollectableObject {
         'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal8.png',
         'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal9.png',
         'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
     ]
 
     constructor(enemy) {
@@ -42,7 +48,7 @@ class ManaCrystal extends CollectableObject {
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES);
-        }, 200);
+        }, 150);
     }
 
     gatherManaCrystal(character) {

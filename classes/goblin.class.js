@@ -72,10 +72,10 @@ class Goblin extends MovableObject {
         setInterval(() => {
             let goblinGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
             
-            // if (this.HP > 0) {
-            // console.log('goblinHP', this.HP)  
+            if (this.HP > 0) {
+            console.log('goblinHP', this.HP)  
+            }
 
-            // }
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);

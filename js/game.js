@@ -27,7 +27,10 @@ window.addEventListener('keydown', (e) => {
  
     } else if (e.key.toLowerCase() == 'arrowright') {
         keyboard.arrowRight = true;
-        world.character.throwFireball()
+        world.character.throwFireball();
+    } else if (e.key.toLowerCase() == 'arrowleft') {
+        keyboard.arrowLeft = true;
+        world.character.castFirewall();
     }
     // console.log('keyboard.SPACE: ', keyboard.SPACE)
 
