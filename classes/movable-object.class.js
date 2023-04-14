@@ -80,7 +80,7 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(mo) {
-        let enemyIsHitByEnemyProjectile = (this instanceof Goblin || this instanceof Medusa || this instanceof Endboss) && (mo instanceof MagicBladeProjectile || mo instanceof FirecircleProjectile);
+        let enemyIsHitByEnemyProjectile = (this instanceof Goblin || this instanceof Medusa || this instanceof Endboss || this instanceof Medusa) && (mo instanceof MagicBladeProjectile || mo instanceof FirecircleProjectile || mo instanceof RockProjectile);
         
         if ((!mo.isFinallyDead || !this.isFinallyDead) && !enemyIsHitByEnemyProjectile) {
             return this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&

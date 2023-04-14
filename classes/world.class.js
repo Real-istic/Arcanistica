@@ -30,7 +30,7 @@ class World {
 
             if (this.character.isColliding(enemy)) {
                 // console.log('HP = ', this.character.HP)
-                if (!enemy.isFinallyDead && !enemy instanceof Medusa) {
+                if (!enemy.isFinallyDead && !(enemy instanceof Medusa) && !this.character.isAboveGround()) {
                     this.character.isHit(enemy.dpf);
                 }
             }
@@ -46,13 +46,13 @@ class World {
             }
         })
         this.collectableObjects.forEach((object) => {
-            if (object.isColliding(this.character) && object instanceof ManaCrystal) {
+            if (object.isColliding(this.character) && (object instanceof ManaCrystal)) {
                 object.gatherManaCrystal(this.character);
             } else if (object.isColliding(this.character) && object instanceof HealthPotion) {
                 object.gatherHealthPotion(this.character);
             }
         })
-       
+
     }
 
     // Draw() wird immer wieder aufgerufen
@@ -74,6 +74,11 @@ class World {
 
         this.addObjectsToMap(this.ui.statusbars);
 
+        // this.ctx.font = '24px Sans-Serif';
+        // this.ctx.fillStyle = 'white';
+        // this.ctx.fillText(`HP`, 140, 49);
+        // this.ctx.fillText(`MP`, 140, 78);
+
         // --- space for fixed objects above 
 
         let self = this;
@@ -92,7 +97,7 @@ class World {
         });
     }
 
-    
+
     addToMap(mo) {
         this.checkCollisions()
 

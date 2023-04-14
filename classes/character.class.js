@@ -53,19 +53,6 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Jump/jump7.png',
     ];
 
-    IMAGES_JUMP2 = [
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump1.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump2.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump6.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump7.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump8.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump9.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump10.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump11.png',
-        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/High_Jump/high_jump12.png',
-
-    ]
-
     IMAGES_IDLE = [
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Idle/idle13.png',
@@ -173,6 +160,7 @@ class Character extends MovableObject {
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death8.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death9.png',
         'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death10.png',
+        'assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death11.png',
     ]
 
     IMAGES_HURT = [
@@ -206,7 +194,6 @@ class Character extends MovableObject {
         super().loadImage(this.IMAGES_WALK[0]);
         this.loadImages(this.IMAGES_WALK);
         this.loadImages(this.IMAGES_JUMP);
-        this.loadImages(this.IMAGES_JUMP2);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_IDLE_LONG);
         this.loadImages(this.IMAGES_DEAD);
@@ -237,7 +224,7 @@ class Character extends MovableObject {
                 // this.walking_sound.play();
             }
 
-            if (this.world.keyboard.LEFT && this.x > -45 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
+            if (this.world.keyboard.LEFT && this.x > -150 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
                 this.moveLeft();
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround() && !characterCollidesWithRock) {
@@ -345,11 +332,11 @@ class Character extends MovableObject {
 
             setTimeout(() => {
                 if (this.otherDirection) {
-                    let firewall = new Firewall(this.x - 250, this.yGround + 80, this.otherDirection);
+                    let firewall = new Firewall(this.x - 250, this.yGround + 90, this.otherDirection);
                     world.throwableObjects.push(firewall);
 
                 } else {
-                    let firewall = new Firewall(this.x + 150, this.yGround + 80, this.otherDirection);
+                    let firewall = new Firewall(this.x + 150, this.yGround + 90, this.otherDirection);
                     world.throwableObjects.push(firewall);
                 }
                 this.MP -= this.firewallMPcost;

@@ -9,7 +9,7 @@ class HealthPotion extends CollectableObject {
     enemy;
     offset = {
         top: -50,
-        bottom: 60,
+        bottom: 50,
         left: 60,
         right: -220
     }

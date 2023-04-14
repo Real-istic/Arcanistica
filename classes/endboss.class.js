@@ -2,9 +2,9 @@ class Endboss extends MovableObject {
     y = 110;
     width = 364;
     height = 364;
-    dpf = 0.01;
+    dpf = 0.02;
     HP = 300;
-    speed = 0.5;
+    speed = 1.5;
     magicBladeCooldown = 0;
     resetMagicBladeCooldown = 1000;
     magicBladeStatus = false;
@@ -122,11 +122,11 @@ class Endboss extends MovableObject {
 
         setInterval(() => {
             // console.log('magicBladeCooldown: ', this.magicBladeCooldown)
-            if (!this.isFinallyDead && this.x > world.character.x && !this.magicBladeStatus && !this.firecircleStatus) {
+            if (!this.isFinallyDead && this.x > world.character.x && !this.magicBladeStatus) {
                 this.x -= this.speed;
                 this.otherDirection = false;
 
-            } else if (!this.isFinallyDead && this.x < world.character.x - 100 && !this.magicBladeStatus && !this.firecircleStatus) {
+            } else if (!this.isFinallyDead && this.x < world.character.x - 100 && !this.magicBladeStatus) {
                 this.x += this.speed;
                 this.otherDirection = true;
             }
@@ -157,7 +157,8 @@ class Endboss extends MovableObject {
         }, 100);
 
         setInterval(() => {
-            let projectileHitsEndboss = world.throwableObjects.some(projectile => this.isColliding(projectile));
+            let fireballHitsEndboss = world.throwableObjects.some(projectile => (this.isColliding(projectile) && projectile instanceof Fireball));
+            let fireWallHitsEndboss = world.throwableObjects.some(projectile => (this.isColliding(projectile) && projectile instanceof Firewall));
 
             if (this.HP > 0) {
                 // console.log('EndbossHP: ', this.HP)
@@ -167,16 +168,24 @@ class Endboss extends MovableObject {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
 
-            } else if (projectileHitsEndboss && !this.isFinallyDead) {
+            } else if ((fireballHitsEndboss || fireWallHitsEndboss) && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
 
-                if (Math.random() < 0.3) {
+                if (Math.random() < 0.3 && fireballHitsEndboss) {
                     this.spawnManaCrystal(this);
+                    this.spawnHealthPotion(this)
                 }
-                if (Math.random() < 0.3) {
-                    this.spawnHealthPotion(this);
+                if (Math.random() < 0.1 && fireWallHitsEndboss) {
+                    this.spawnManaCrystal(this);
+                    this.spawnHealthPotion(this)
                 }
             }
+            // if (Math.random() < 0.3) {
+            //     this.spawnHealthPotion(this);
+            // } else if (Math.random() < 0.1) {
+            //     this.spawnHealthPotion(this);
+
+            // }
 
             else if (!this.isFinallyDead && world.character.isColliding(this) && !this.magicBladeStatus && !this.firecircleStatus) {
                 this.playAnimation(this.IMAGES_ATTACK);

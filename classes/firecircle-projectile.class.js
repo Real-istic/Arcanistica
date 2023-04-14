@@ -1,5 +1,5 @@
 class FirecircleProjectile extends ThrowableObject {
-    dpf = 0.04 + Math.random() * 0.04;
+    dpf = 0.05 + Math.random() * 0.05;
     offset = {
         top: 0,
         bottom: 150,

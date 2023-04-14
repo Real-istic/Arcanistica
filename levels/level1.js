@@ -1,12 +1,12 @@
 const level1 = new Level(
 
     [
-        // new Endboss(),
+        new Endboss(),
         // new Goblin(), 
         // new Goblin(),
         // new Goblin(),
         // new Goblin(),
-        new Medusa(),
+        // new Medusa(),
         // new Medusa()
     ],
 
@@ -23,7 +23,7 @@ const level1 = new Level(
     ],
 
     [
-        new Background('assets/pixel-art-forest-platformer-tileset/Background/Modded/Background1.png', -300),
+        new Background('assets/pixel-art-forest-platformer-tileset/Background/Modded/Background1.png', -400),
         new Background('assets/pixel-art-forest-platformer-tileset/Background/Modded/Background2.png', -230),
         new Background('assets/pixel-art-forest-platformer-tileset/Background/Modded/Background3.png', -100),
     ]
