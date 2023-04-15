@@ -37,13 +37,17 @@ class World {
             this.throwableObjects.forEach((object) => {
                 if (enemy.isColliding(object) && !enemy.isFinallyDead) {
                     enemy.isHit(object.dpf);
+                    if (object instanceof Fireball) {
+                        enemy.sound_hitByFireball.play();
+                    }
                 }
             });
         })
         this.throwableObjects.forEach((object) => {
-            if (object.isColliding(this.character)) {
+            if (this.character.isColliding(object)) {
                 this.character.isHit(object.dpf);
             }
+         
         })
         this.collectableObjects.forEach((object) => {
             if (object.isColliding(this.character) && (object instanceof ManaCrystal)) {

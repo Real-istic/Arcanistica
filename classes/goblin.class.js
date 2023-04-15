@@ -4,6 +4,9 @@ class Goblin extends MovableObject {
     height = 164;
     dpf = 0.015;
     speed = 0.5;
+    sound_attack = new Audio('audio/hit_by_goblin_slower.mp3');
+    sound_hurt = new Audio('audio/goblin_hurt.mp3');
+    sound_death = new Audio('audio/goblin_death.mp3');
     IMAGES_WALK = [
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk1.png',
         'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk2.png',
@@ -43,7 +46,6 @@ class Goblin extends MovableObject {
         left: 30,
         right: -150
     }
-    
     constructor() {
         super().loadImage(this.IMAGES_WALK[0])
         this.loadImages(this.IMAGES_WALK)
@@ -79,20 +81,22 @@ class Goblin extends MovableObject {
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
+                this.sound_death.play();
                 this.spawnManaCrystal(this);
                 this.spawnHealthPotion(this);
 
             } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
                 this.playAnimation(this.IMAGES_ATTACK);
+                this.sound_attack.play();
 
             } else if (goblinGetsHitByProjectile && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
+                this.sound_hurt.play();
 
             } else if (!this.isFinallyDead){
                 this.playAnimation(this.IMAGES_WALK);
             }
         }, 150);
     }
-
     
 }

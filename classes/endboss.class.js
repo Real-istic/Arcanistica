@@ -171,7 +171,7 @@ class Endboss extends MovableObject {
             } else if ((fireballHitsEndboss || fireWallHitsEndboss) && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
 
-                if (Math.random() < 0.3 && fireballHitsEndboss) {
+                if (Math.random() < 0.25 && fireballHitsEndboss) {
                     this.spawnManaCrystal(this);
                     this.spawnHealthPotion(this)
                 }

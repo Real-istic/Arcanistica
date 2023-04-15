@@ -8,6 +8,8 @@ class Medusa extends MovableObject {
     rockProjectileCooldown = 0;
     resetRockProjectileCooldown = 2500
     rockProjectileStatus = false
+    sound_hurt = new Audio('audio/medusa_hurt.mp3');
+    sound_death = new Audio('audio/medusa_death.mp3');
 
     IMAGES_WALK = [
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk1.png',
@@ -88,6 +90,7 @@ class Medusa extends MovableObject {
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
+                this.sound_death.play();
                 this.spawnManaCrystal(this);
                 this.spawnHealthPotion(this);
 
@@ -96,6 +99,7 @@ class Medusa extends MovableObject {
 
             } else if (medusaGetsHitByProjectile && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
+                this.sound_hurt.play();
 
             } else if (!this.isFinallyDead && !this.rockProjectileStatus) {
                 this.playAnimation(this.IMAGES_WALK);
