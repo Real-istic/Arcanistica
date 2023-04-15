@@ -2,7 +2,7 @@ class Character extends MovableObject {
     x = 50;
     width = 164;
     height = 164;
-    speed = 14;
+    speed = 4;
     idleCounter = 0;
     world;
     idleTime = 0;
@@ -10,7 +10,9 @@ class Character extends MovableObject {
     sound_hit1 = new Audio('audio/character_hit1.mp3');
     sound_hit2 = new Audio('audio/character_hit2.mp3');
     sound_jump = new Audio('audio/jump.mp3');
-    sound_jump2 = new Audio('audio/jump2.mp3');
+    sound_death = new Audio('audio/character_death.mp3');
+    sound_specialAttack = new Audio('audio/firewall_cast.mp3');
+
     // fireBALL
     fireballCooldown = 0;
     resetFireballCooldown = 800;
@@ -259,6 +261,7 @@ class Character extends MovableObject {
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
+                this.sound_death.play();
                 this.playAnimationOnce(this.IMAGES_DEAD)
 
             } else if (this.isHurt() && !this.fireballStatus) {
@@ -367,7 +370,7 @@ class Character extends MovableObject {
                     world.throwableObjects.push(firewall);
                 }
                 this.MP -= this.firewallMPcost;
-
+                this.sound_specialAttack.play();
                 this.sound_hitByFirewall.play();
 
             }, 300);

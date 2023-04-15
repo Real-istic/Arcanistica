@@ -2,8 +2,8 @@ class Goblin extends MovableObject {
     y = 290;
     width = 164;
     height = 164;
-    dpf = 0.015;
-    speed = 0.5;
+    dpf = 0.012;
+    speed = 1.5;
     sound_attack = new Audio('audio/hit_by_goblin_slower.mp3');
     sound_hurt = new Audio('audio/goblin_hurt.mp3');
     sound_death = new Audio('audio/goblin_death.mp3');
@@ -52,31 +52,34 @@ class Goblin extends MovableObject {
         this.loadImages(this.IMAGES_DEATH)
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
-        this.x = 550 + Math.random() * 2500;
-        this.speed += Math.random() * 0.5;
+        this.x = 650 + Math.random() * 3000;
+        this.speed += Math.random() * 1;
 
         this.animate();
     }
 
     animate() {
-       
-        setInterval(() => {
-            if (!this.isFinallyDead && this.x - 80 > world.character.x && !world.throwableObjects.some(projectile => this.isColliding(projectile))) {
-            this.x -= this.speed;
-            this.otherDirection = false;
 
-            } else if (!this.isFinallyDead && this.x + 80 < world.character.x && !world.throwableObjects.some(projectile => this.isColliding(projectile))) {
-            this.x += this.speed;
-            this.otherDirection = true;
+        setInterval(() => {
+            if (this.x - world.character.x <= this.aggroRange) {
+                
+                if (!this.isFinallyDead && this.x - 80 > world.character.x && !world.throwableObjects.some(projectile => this.isColliding(projectile))) {
+                    this.x -= this.speed;
+                    this.otherDirection = false;
+
+                } else if (!this.isFinallyDead && this.x + 80 < world.character.x && !world.throwableObjects.some(projectile => this.isColliding(projectile))) {
+                    this.x += this.speed;
+                    this.otherDirection = true;
+                }
             }
         }, 1000 / 60);
 
         setInterval(() => {
             let goblinGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
-            
-            if (this.HP > 0) {
-            console.log('goblinHP', this.HP)  
-            }
+
+            // if (this.HP > 0) {
+            // console.log('goblinHP', this.HP)  
+            // }
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
@@ -85,7 +88,7 @@ class Goblin extends MovableObject {
                 this.spawnManaCrystal(this);
                 this.spawnHealthPotion(this);
 
-            } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
+            } else if (!this.isFinallyDead && world.character.isColliding(this)) {
                 this.playAnimation(this.IMAGES_ATTACK);
                 this.sound_attack.play();
 
@@ -93,10 +96,10 @@ class Goblin extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT);
                 this.sound_hurt.play();
 
-            } else if (!this.isFinallyDead){
+            } else if (!this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_WALK);
             }
         }, 150);
     }
-    
+
 }

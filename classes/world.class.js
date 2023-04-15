@@ -46,8 +46,14 @@ class World {
         this.throwableObjects.forEach((object) => {
             if (this.character.isColliding(object)) {
                 this.character.isHit(object.dpf);
+                if (object instanceof FirecircleProjectile) {
+                    this.character.sound_hitByFirecircle.play();
+                }
+                if (object instanceof MagicBladeProjectile) {
+                    this.character.sound_hitByMagicBlade.play();
+                }
             }
-         
+
         })
         this.collectableObjects.forEach((object) => {
             if (object.isColliding(this.character) && (object instanceof ManaCrystal)) {
@@ -77,6 +83,9 @@ class World {
         // --- space for fixed objects below 
 
         this.addObjectsToMap(this.ui.statusbars);
+        this.addObjectsToMap(this.ui.icons);
+        this.addObjectsToMap(this.ui.frames);
+
 
         // this.ctx.font = '24px Sans-Serif';
         // this.ctx.fillStyle = 'white';

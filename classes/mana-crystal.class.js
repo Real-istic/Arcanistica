@@ -13,6 +13,9 @@ class ManaCrystal extends CollectableObject {
         left: 60,
         right: -220
     }
+    sound_drop = new Audio('audio/drop_crystal.mp3');
+    sound_collect = new Audio('audio/collect_crystal.mp3');
+
 
     IMAGES = [
         'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal1.png',
@@ -43,6 +46,7 @@ class ManaCrystal extends CollectableObject {
         this.enemy = enemy;
         this.animate();
         this.applyGravityToCollectable();
+        this.sound_drop.play();
     }
 
     animate() {
@@ -54,15 +58,21 @@ class ManaCrystal extends CollectableObject {
     gatherManaCrystal(character) {
         	let crystal = world.collectableObjects.indexOf(this);
 
-            if (character.MP + this.MPgain > character.maxMP) {
+            if (((character.MP + this.MPgain) || (character.MP + this.MPgain + this.MPgainBonus)) >= character.maxMP) {
                 character.MP = character.maxMP;
-            } else if (character.MP + this.MPgain < character.maxMP) {
-                if (this.enemy.isFinallyDead && (character.MP + this.MPgain + this.MPgainBonus < character.maxMP)) {
-                character.MP += this.MPgain + this.MPgainBonus;   
+    
+            } else if (((character.MP + this.MPgain) || (character.MP + this.MPgain + this.MPgainBonus)) <= character.maxMP) {
+                if (this.enemy.isFinallyDead && ((character.MP + this.MPgain + this.MPgainBonus) < character.maxMP)) {
+                    character.MP += this.MPgain + this.MPgainBonus;
+    
+                } else if (this.enemy.isFinallyDead && ((character.MP + this.MPgain + this.MPgainBonus) > character.maxMP)) {
+                    character.MP = character.maxMP;
+    
                 } else {
-                character.MP += this.MPgain;
+                    character.MP += this.MPgain;
                 }
             }
+            this.sound_collect.play();
             world.collectableObjects.splice(crystal, 1);
     }
 

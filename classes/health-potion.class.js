@@ -1,5 +1,5 @@
 class HealthPotion extends CollectableObject {
-    HPgain = 8;
+    HPgain = 10;
     HPgainBonus = 25;
     speedY = 8;
     speedX = 3 + this.getRndInteger(5, 9);
@@ -13,6 +13,8 @@ class HealthPotion extends CollectableObject {
         left: 60,
         right: -220
     }
+    sound_drop = new Audio('audio/drop_potion.mp3');
+    sound_collect = new Audio('audio/collect_potion.mp3');
 
     IMAGES = [
         'assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle1.png',
@@ -32,6 +34,7 @@ class HealthPotion extends CollectableObject {
         this.enemy = enemy;
         this.animate();
         this.applyGravityToCollectable();
+        this.sound_drop.play();
     }
 
     animate() {
@@ -41,18 +44,24 @@ class HealthPotion extends CollectableObject {
     }
 
     gatherHealthPotion(character) {
-        	let potion = world.collectableObjects.indexOf(this);
+        let potion = world.collectableObjects.indexOf(this);
 
-            if (character.HP + this.HPgain > character.maxHP) {
+        if (((character.HP + this.HPgain) || (character.HP + this.HPgain + this.HPgainBonus)) >= character.maxHP) {
+            character.HP = character.maxHP;
+
+        } else if (((character.HP + this.HPgain) || (character.HP + this.HPgain + this.HPgainBonus)) <= character.maxHP) {
+            if (this.enemy.isFinallyDead && ((character.HP + this.HPgain + this.HPgainBonus) < character.maxHP)) {
+                character.HP += this.HPgain + this.HPgainBonus;
+
+            } else if (this.enemy.isFinallyDead && ((character.HP + this.HPgain + this.HPgainBonus) > character.maxHP)) {
                 character.HP = character.maxHP;
-            } else if (character.HP + this.HPgain < character.maxHP) {
-                if (this.enemy.isFinallyDead && (character.HP + this.HPgain + this.HPgainBonus < character.maxHP)) {
-                character.HP += this.HPgain + this.HPgainBonus;   
-                } else {
+
+            } else {
                 character.HP += this.HPgain;
-                }
             }
-            world.collectableObjects.splice(potion, 1);
+        }
+        this.sound_collect.play();
+        world.collectableObjects.splice(potion, 1);
     }
 
 }

@@ -1,10 +1,10 @@
 class Firewall extends ThrowableObject {
-    dpf = 0.012 + Math.random() * 0.012;
+    dpf = 0.015 + Math.random() * 0.005;
     offset = {
         top: 0,
         bottom: 0,
-        left: 220,
-        right: 10
+        left: 230,
+        right: 20
     }
     projectileOffsetX = 0;
     speed = 0;

@@ -62,7 +62,7 @@ class Medusa extends MovableObject {
         this.loadImages(this.IMAGES_DEATH)
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
-        this.x = 450 + Math.random() * 2500;
+        this.x = 650 + Math.random(0.3, 1) * 3200;
         this.speed += Math.random() * 0.5;
         this.animate();
     }
@@ -74,13 +74,15 @@ class Medusa extends MovableObject {
             let characterGetsTooFarAway = !this.isFinallyDead && (this.x - world.character.x > 420 || this.x - world.character.x < -350 && this.x - world.character.x > -380) && !this.rockProjectileStatus && !medusaGetsHitByFirewall
             let characterGetsTooClose = !this.isFinallyDead && (this.x - world.character.x < 400 || this.x - world.character.x > 350 && this.x - world.character.x < 380) && !this.rockProjectileStatus && !medusaGetsHitByFirewall && (this.x - this.width) < world.level.level_end_x - 200
 
-            if (characterGetsTooFarAway) {
-                this.x -= this.speed * 1.5;
-                this.otherDirection = false;
+            if (this.x - world.character.x <= this.aggroRange) {
+                if (characterGetsTooFarAway) {
+                    this.x -= this.speed * 1.5;
+                    this.otherDirection = false;
 
-            } else if (characterGetsTooClose) {
-                this.x += this.speed * 1.1;
-                this.otherDirection = true;
+                } else if (characterGetsTooClose) {
+                    this.x += this.speed * 1.1;
+                    this.otherDirection = true;
+                }
             }
         }, 1000 / 60);
 
@@ -118,10 +120,10 @@ class Medusa extends MovableObject {
 
                 this.throwRockProjectile();
             }
-            if (this.HP > 0) {
-            console.log('Medusa HP: ', this.HP)
-                
-            }
+
+            // if (this.HP > 0) {
+            // console.log('Medusa HP: ', this.HP) 
+            // }
         }, 100);
 
     }

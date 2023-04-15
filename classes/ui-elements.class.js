@@ -1,12 +1,12 @@
 class UiElements {
 statusbars;
-// statusbars2;
-// statusbars3;
+icons;
+frames;
 
 
-    constructor(statusbars, statusbars2, statusbars3){
+    constructor(statusbars, icons, frames){
         this.statusbars = statusbars;
-        // this.statusbars2 = statusbars2;
-        // this.statusbars3 = statusbars3;
+        this.icons = icons;
+        this.frames = frames;
     }
 }
