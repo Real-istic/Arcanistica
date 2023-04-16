@@ -1,5 +1,5 @@
 class RockProjectile extends ThrowableObject {
-    dpf = 0.006 + Math.random() * 0.003;
+    dpf = 0.004 + Math.random() * 0.003;
     offset = {
         top: 0,
         bottom: 0,
@@ -11,7 +11,7 @@ class RockProjectile extends ThrowableObject {
     range = 800;
     hitdelay = false
     clearProjectileTime = 1500;
-    sound_hitByRock = new Audio('audio/hit_by_rock3.mp3');
+    sound_hitByRock = new Audio('audio/hit_by_rock.mp3');
 
     IMAGES_PROJECTILE_ROCK = [
         'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone8.png',
@@ -42,7 +42,7 @@ class RockProjectile extends ThrowableObject {
         this.height = 250;
         this.throw(this.projectileOffsetX, this.speed);
         this.playAnimationOnce(this.IMAGES_PROJECTILE_ROCK);
-        this.sound_hitByRock.play();
+        if (!isMuted) this.sound_hitByRock.play();
 
     }
 

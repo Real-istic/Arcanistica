@@ -38,8 +38,56 @@
 <body onload="init()">
 
     <div class="frame-div" id="frameDiv">
+
+        <div id="overlayScreen">
+            <div id="menuScreen">
+                <div id="startGameDiv">
+                    <div class="doorDiv" onclick="startGame()" style="z-index: 1; cursor: pointer;">
+                        <span>Start Game</span>
+                        <div id="door"></div>
+                    </div>
+                </div>
+                <div id="settingsArea">
+                    <div id="settingSound">
+                        <img onclick="muteSound(this)"
+                            src="assets/fantasy-platformer-game-ui/PNG/17Icons/yellow/off_yellow.png" alt="">
+                        <span>Sound on/off</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gameOverScreen" id="gameOverScreen">
+            <div class="gameOverSprites">
+                <img class="gameOverSpriteLeft"
+                    src="assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death5.png" alt="">
+                <img class="gameOverSpriteRight" src="assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Anger5.png"
+                    alt="">
+            </div>
+            <span style="margin-left: 8%;">Game Over...</span>
+            <span>Thanks for playing!</span>
+            <span class="restart" onclick="restartGame()">Main-Menu</span>
+        </div>
+
+        <div class="gameOverScreen" id="gameOverScreen2">
+            <div class="gameOverSprites">
+                <img class="gameOverSpriteLeft"
+                    src="assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack5.png" alt="">
+                <img class="gameOverSpriteRight" src="assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png"
+                    alt="">
+            </div>
+            <span>You won!</span>
+            <span>Thanks for playing!</span>
+            <span class="restart" onclick="restartGame()">Main-Menu</span>
+        </div>
+
         <canvas id="canvas" width="720" height="480"></canvas>
+
     </div>
+
+
+
+
 </body>
 
 </html>

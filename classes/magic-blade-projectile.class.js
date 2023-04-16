@@ -1,5 +1,5 @@
 class MagicBladeProjectile extends ThrowableObject {
-    dpf = 0.02 + Math.random() * 0.01;
+    dpf = 0.02 + Math.random() * 0.02;
 
     offset = world.level.enemies[0].otherDirection ?
     { top: 35, bottom: 160, left: 150, right: -150}:
@@ -9,6 +9,7 @@ class MagicBladeProjectile extends ThrowableObject {
     speed = 20;
     range = 800;
     clearProjectileTime = 300;
+    sound_castMagicBlade = new Audio('audio/endboss_cast_magic_blade.mp3');
 
     IMAGES_PROJECTILE_MAGICBLADE = [
         'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/blade1.png',
@@ -34,6 +35,8 @@ class MagicBladeProjectile extends ThrowableObject {
         this.width = 250;
         this.height = 250;
         this.throw(this.projectileOffset, this.speed);
+        if (!isMuted) this.sound_castMagicBlade.play();
+
     }
 
     animate() {

@@ -9,6 +9,7 @@ class Fireball extends ThrowableObject {
     projectileOffset = 130;
     speed = 20;
     range = 350;
+    sound_castFireball = new Audio('audio/fireball_cast.mp3');
 
     IMAGES_FIREBALL = [
         // 'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire1.png',
@@ -37,6 +38,7 @@ class Fireball extends ThrowableObject {
         this.width = 150;
         this.height = 150;
         this.throw(this.projectileOffset, this.speed);
+        if (!isMuted) this.sound_castFireball.play();
     }
 
     animate() {

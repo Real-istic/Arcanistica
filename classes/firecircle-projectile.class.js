@@ -1,5 +1,5 @@
 class FirecircleProjectile extends ThrowableObject {
-    dpf = 0.05 + Math.random() * 0.05;
+    dpf = 0.03 + Math.random() * 0.03;
     offset = {
         top: 0,
         bottom: 150,
@@ -18,6 +18,7 @@ class FirecircleProjectile extends ThrowableObject {
     acceleration = 0.03;
     range = 1200;
     clearProjectileTime = 10;
+    sound_castFirecircle = new Audio('audio/endboss_cast_firecircle.mp3');
 
     IMAGES_FIRECIRCLE = [
         'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire1.png',
@@ -48,6 +49,7 @@ class FirecircleProjectile extends ThrowableObject {
         this.width = 246;
         this.height = 246;
         this.throw(this.projectileOffset, this.speed);
+        if (!isMuted) this.sound_castFirecircle.play();
     }
 
 

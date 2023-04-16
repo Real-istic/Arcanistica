@@ -34,7 +34,7 @@ class HealthPotion extends CollectableObject {
         this.enemy = enemy;
         this.animate();
         this.applyGravityToCollectable();
-        this.sound_drop.play();
+        if (!isMuted) this.sound_drop.play();
     }
 
     animate() {
@@ -60,7 +60,7 @@ class HealthPotion extends CollectableObject {
                 character.HP += this.HPgain;
             }
         }
-        this.sound_collect.play();
+        if (!isMuted) this.sound_collect.play();
         world.collectableObjects.splice(potion, 1);
     }
 

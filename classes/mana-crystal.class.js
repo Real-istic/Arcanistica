@@ -46,7 +46,7 @@ class ManaCrystal extends CollectableObject {
         this.enemy = enemy;
         this.animate();
         this.applyGravityToCollectable();
-        this.sound_drop.play();
+        if (!isMuted) this.sound_drop.play();
     }
 
     animate() {
@@ -72,7 +72,7 @@ class ManaCrystal extends CollectableObject {
                     character.MP += this.MPgain;
                 }
             }
-            this.sound_collect.play();
+            if (!isMuted) this.sound_collect.play();
             world.collectableObjects.splice(crystal, 1);
     }
 

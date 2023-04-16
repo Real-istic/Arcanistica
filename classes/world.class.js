@@ -38,7 +38,7 @@ class World {
                 if (enemy.isColliding(object) && !enemy.isFinallyDead) {
                     enemy.isHit(object.dpf);
                     if (object instanceof Fireball) {
-                        enemy.sound_hitByFireball.play();
+                        if (!isMuted) enemy.sound_hitByFireball.play();
                     }
                 }
             });
@@ -47,10 +47,10 @@ class World {
             if (this.character.isColliding(object)) {
                 this.character.isHit(object.dpf);
                 if (object instanceof FirecircleProjectile) {
-                    this.character.sound_hitByFirecircle.play();
+                    if (!isMuted) this.character.sound_hitByFirecircle.play();
                 }
                 if (object instanceof MagicBladeProjectile) {
-                    this.character.sound_hitByMagicBlade.play();
+                    if (!isMuted) this.character.sound_hitByMagicBlade.play();
                 }
             }
 
@@ -67,41 +67,36 @@ class World {
 
     // Draw() wird immer wieder aufgerufen
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.backgrounds);
-        this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.enemies);
 
-        this.addToMap(this.character);
-        this.ctx.translate(-this.camera_x, 0);
-        this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.collectableObjects);
-        this.ctx.translate(-this.camera_x, 0);
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.translate(this.camera_x, 0);
+            this.addObjectsToMap(this.level.backgrounds);
+            this.addObjectsToMap(this.level.clouds);
+            this.addObjectsToMap(this.level.enemies);
 
-        // --- space for fixed objects below 
+            this.addToMap(this.character);
+            this.ctx.translate(-this.camera_x, 0);
+            this.ctx.translate(this.camera_x, 0);
+            this.addObjectsToMap(this.throwableObjects);
+            this.addObjectsToMap(this.collectableObjects);
+            this.ctx.translate(-this.camera_x, 0);
 
-        this.addObjectsToMap(this.ui.statusbars);
-        this.addObjectsToMap(this.ui.icons);
-        this.addObjectsToMap(this.ui.frames);
+            // --- space for fixed objects below 
 
+            this.addObjectsToMap(this.ui.statusbars);
+            this.addObjectsToMap(this.ui.icons);
+            this.addObjectsToMap(this.ui.frames);
 
-        // this.ctx.font = '24px Sans-Serif';
-        // this.ctx.fillStyle = 'white';
-        // this.ctx.fillText(`HP`, 140, 49);
-        // this.ctx.fillText(`MP`, 140, 78);
-
-        // --- space for fixed objects above 
+            // --- space for fixed objects above 
 
         let self = this;
-
         // Performance? -> check
         setTimeout(() => {
             requestAnimationFrame(function () {
                 self.draw();
             });
         }, 1000 / 60);
+
     }
 
     addObjectsToMap(objects) {

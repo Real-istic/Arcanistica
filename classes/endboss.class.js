@@ -22,8 +22,6 @@ class Endboss extends MovableObject {
     sound_hurt = new Audio('audio/endboss_hurt.mp3');
     sound_death = new Audio('audio/endboss_death.mp3');
     sound_taunt = new Audio('audio/endboss_taunt.mp3');
-    sound_castMagicBlade = new Audio('audio/endboss_cast_magic_blade.mp3');
-    sound_castFirecircle = new Audio('audio/endboss_cast_firecircle.mp3');
     sound_taunt = new Audio('audio/endboss_taunt.mp3');
     soundSwitchTaunt = false;
 
@@ -176,17 +174,17 @@ class Endboss extends MovableObject {
             }
             if ((this.x - world.character.x <= 650) && !this.soundSwitchTaunt) {
                 this.soundSwitchTaunt = true;
-                this.sound_taunt.play();
+                if (!isMuted) this.sound_taunt.play();
             }
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
-                this.sound_death.play();
+                if (!isMuted) this.sound_death.play();
 
             } else if ((fireballHitsEndboss || fireWallHitsEndboss) && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
-                this.sound_hurt.play();
+                if (!isMuted) this.sound_hurt.play();
 
                 if (Math.random() < 0.25 && fireballHitsEndboss) {
                     this.spawnManaCrystal(this);
@@ -200,7 +198,7 @@ class Endboss extends MovableObject {
 
             else if (!this.isFinallyDead && world.character.isColliding(this) && !this.magicBladeStatus && !this.firecircleStatus) {
                 this.playAnimation(this.IMAGES_ATTACK);
-                this.sound_attack.play();
+                if (!isMuted) this.sound_attack.play();
 
             } else if (!this.isFinallyDead && !this.magicBladeStatus && !this.firecircleStatus) {
                 this.playAnimation(this.IMAGES_WALK);
@@ -223,7 +221,6 @@ class Endboss extends MovableObject {
                     let magicBladeProjectile = new MagicBladeProjectile(this.x + 50, this.y + 60 + Math.random() * 100, this.otherDirection);
                     world.throwableObjects.push(magicBladeProjectile);
                 }
-                this.sound_castMagicBlade.play();
             }, 600); // delay to ensure that the magic blade is thrown at the end of the animation
 
             setTimeout(() => {
@@ -248,7 +245,6 @@ class Endboss extends MovableObject {
                     let firecircleProjectile = new FirecircleProjectile(this.x + 50, this.y + 40 + Math.random() * 100, this.otherDirection);
                     world.throwableObjects.push(firecircleProjectile);
                 }
-                this.sound_castFirecircle.play();
             }, 600); // delay to ensure that the Firecircle is thrown at the end of the animation
 
             setTimeout(() => {

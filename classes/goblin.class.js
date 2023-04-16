@@ -61,7 +61,7 @@ class Goblin extends MovableObject {
     animate() {
 
         setInterval(() => {
-            if (this.x - world.character.x <= this.aggroRange) {
+            if ((this.x - world.character.x <= this.aggroRange) && gameStarted) {
                 
                 if (!this.isFinallyDead && this.x - 80 > world.character.x && !world.throwableObjects.some(projectile => this.isColliding(projectile))) {
                     this.x -= this.speed;
@@ -90,11 +90,11 @@ class Goblin extends MovableObject {
 
             } else if (!this.isFinallyDead && world.character.isColliding(this)) {
                 this.playAnimation(this.IMAGES_ATTACK);
-                this.sound_attack.play();
+                if (!isMuted) this.sound_attack.play();
 
             } else if (goblinGetsHitByProjectile && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
-                this.sound_hurt.play();
+                if (!isMuted) this.sound_hurt.play();
 
             } else if (!this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_WALK);

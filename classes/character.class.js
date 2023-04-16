@@ -2,7 +2,7 @@ class Character extends MovableObject {
     x = 50;
     width = 164;
     height = 164;
-    speed = 4;
+    speed = 14;
     idleCounter = 0;
     world;
     idleTime = 0;
@@ -18,7 +18,6 @@ class Character extends MovableObject {
     resetFireballCooldown = 800;
     fireballStatus = false;
     fireballMPcost = 30;
-    sound_castFireball = new Audio('audio/fireball_cast.mp3');
 
     // fireWALL
     firewallCooldown = 0;
@@ -226,21 +225,18 @@ class Character extends MovableObject {
                 this.MP += this.manaregen;
             }
 
-            this.sound_walk.pause();
             if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
                 this.moveRight();
-                // this.sound_walk.play();
+
             }
 
             if (this.world.keyboard.LEFT && this.x > -150 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
                 this.moveLeft();
-                // this.sound_walk.play();
 
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround() && !characterCollidesWithRock) {
                 this.jump();
-                this.sound_jump.play();
-     
+                if (!isMuted) this.sound_jump.play();
             }
         }, 1000 / 60);
 
@@ -261,7 +257,7 @@ class Character extends MovableObject {
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
-                this.sound_death.play();
+                if (!isMuted) this.sound_death.play();
                 this.playAnimationOnce(this.IMAGES_DEAD)
 
             } else if (this.isHurt() && !this.fireballStatus) {
@@ -301,9 +297,9 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isHurt() && !this.fireballStatus) {
                 if (Math.random() < 0.5) {
-                    this.sound_hit1.play();
+                    if (!isMuted) this.sound_hit1.play();
                 } else {
-                    this.sound_hit2.play();
+                    if (!isMuted) this.sound_hit2.play();
                 }
             }
         }, 400);
@@ -313,10 +309,10 @@ class Character extends MovableObject {
 
     setCameraPosition() {
         if (!this.otherDirection) {
-            this.cameraOffset >= 200 ? this.cameraOffset -= 2 : this.cameraOffset -= 0;
+            this.cameraOffset >= 200 ? this.cameraOffset -= 3 : this.cameraOffset -= 0;
             this.world.camera_x = -this.x + this.cameraOffset;
         } else {
-            this.cameraOffset <= 400 ? this.cameraOffset += 2 : this.cameraOffset -= 0;
+            this.cameraOffset <= 400 ? this.cameraOffset += 3 : this.cameraOffset -= 0;
             this.world.camera_x = -this.x + this.cameraOffset;
         }
     }
@@ -328,9 +324,7 @@ class Character extends MovableObject {
             this.fireballStatus = true;
             this.fireballCooldown = this.resetFireballCooldown;
             this.playAnimationOnce(this.IMAGES_ATTACK)
-            setTimeout(() => {
-                this.sound_castFireball.play();
-            }, 250);
+   
             setTimeout(() => {
                 if (this.otherDirection) {
                     let fireball = new Fireball(this.x + 100, this.y + 10, this.otherDirection);
@@ -370,8 +364,7 @@ class Character extends MovableObject {
                     world.throwableObjects.push(firewall);
                 }
                 this.MP -= this.firewallMPcost;
-                this.sound_specialAttack.play();
-                this.sound_hitByFirewall.play();
+                if (!isMuted) this.sound_specialAttack.play();
 
             }, 300);
 

@@ -11,8 +11,7 @@ class Firewall extends ThrowableObject {
     range = 1800;
     hitdelay = false
     clearProjectileTime = 3000;
-
-
+    sound_hitByFirewall = new Audio('audio/hit_by_firewall.mp3');
     IMAGES_FIREWALL = [
         'assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall1.png',
         'assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall2.png',
@@ -20,7 +19,6 @@ class Firewall extends ThrowableObject {
         'assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall4.png',
 
     ]
-
 
     constructor(x, y, otherDirection) {
         super().loadImage(this.IMAGES_FIREWALL[0]);
@@ -32,7 +30,7 @@ class Firewall extends ThrowableObject {
         this.width = 196;
         this.height = 64;
         this.throw(this.projectileOffsetX, this.speed);
-
+        if (!isMuted) this.sound_hitByFirewall.play();
     }
 
     animate() {
