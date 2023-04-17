@@ -6,32 +6,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="classes/drawable-object.class.js"></script>
-    <script src="classes/movable-object.class.js"></script>
-    <script src="classes/background.class.js"></script>
-    <script src="classes/cloud.class.js"></script>
-    <script src="classes/character.class.js"></script>
-    <script src="classes/goblin.class.js"></script>
-    <script src="classes/medusa.class.js"></script>
-    <script src="classes/endboss.class.js"></script>
-    <script src="classes/level.class.js"></script>
-    <script src="levels/level1.js"></script>
-    <script src="classes/ui-elements.class.js"></script>
-    <script src="classes/ui.class.js"></script>
-    <script src="js/ui-elements.js"></script>
-    <script src="classes/throwable-object.class.js"></script>
-    <script src="classes/fireball.class.js"></script>
-    <script src="classes/firewall.class.js"></script>
-    <script src="classes/magic-blade-projectile.class.js"></script>
-    <script src="classes/rock-projectile.class.js"></script>
-    <script src="classes/firecircle-projectile.class.js"></script>
-    <script src="classes/collectable-object.class.js"></script>
-    <script src="classes/mana-crystal.class.js"></script>
-    <script src="classes/health-potion.class.js"></script>
-    <script src="classes/world.class.js"></script>
-    <script src="classes/keyboard.class.js"></script>
-    <script src="js/game.js"></script>
-    <link rel="shortcut icon" href="assets/treasure-icons-pixel-art/PNG/Transperent/ruby.png" type="image/x-icon">
+    <script src="./classes/drawable-object.class.js"></script>
+    <script src="./classes/movable-object.class.js"></script>
+    <script src="./classes/background.class.js"></script>
+    <script src="./classes/cloud.class.js"></script>
+    <script src="./classes/character.class.js"></script>
+    <script src="./classes/goblin.class.js"></script>
+    <script src="./classes/medusa.class.js"></script>
+    <script src="./classes/endboss.class.js"></script>
+    <script src="./classes/level.class.js"></script>
+    <script src="./levels/level1.js"></script>
+    <script src="./classes/ui-elements.class.js"></script>
+    <script src="./classes/ui.class.js"></script>
+    <script src="./js/ui-elements.js"></script>
+    <script src="./classes/throwable-object.class.js"></script>
+    <script src="./classes/fireball.class.js"></script>
+    <script src="./classes/firewall.class.js"></script>
+    <script src="./classes/magic-blade-projectile.class.js"></script>
+    <script src="./classes/rock-projectile.class.js"></script>
+    <script src="./classes/firecircle-projectile.class.js"></script>
+    <script src="./classes/collectable-object.class.js"></script>
+    <script src="./classes/mana-crystal.class.js"></script>
+    <script src="./classes/health-potion.class.js"></script>
+    <script src="./classes/world.class.js"></script>
+    <script src="./classes/keyboard.class.js"></script>
+    <!-- <script src="js/joystick.js"></script> -->
+    <script src="./js/game.js"></script>
+    <link rel="shortcut icon" href="./assets/treasure-icons-pixel-art/PNG/Transperent/ruby.png" type="image/x-icon">
     <title>Arcanistica</title>
 </head>
 
@@ -42,15 +43,14 @@
         <div id="overlayScreen">
             <div id="menuScreen">
                 <div id="startGameDiv">
-                    <div class="doorDiv" onclick="startGame()" style="z-index: 1; cursor: pointer;">
+                    <div class="doorDiv">
                         <span>Start Game</span>
-                        <div id="door"></div>
+                        <div id="door"  onclick="startGame()" style="z-index: 1; cursor: pointer;"></div>
                     </div>
                 </div>
                 <div id="settingsArea">
                     <div id="settingSound">
-                        <img onclick="muteSound(this)"
-                            src="assets/fantasy-platformer-game-ui/PNG/17Icons/yellow/off_yellow.png" alt="">
+                        <img onclick="muteSound(this)" src="./assets/fantasy-platformer-game-ui/PNG/17Icons/yellow/off_yellow.png" alt="">
                         <span>Sound on/off</span>
                     </div>
                 </div>
@@ -60,8 +60,8 @@
         <div class="gameOverScreen" id="gameOverScreen">
             <div class="gameOverSprites">
                 <img class="gameOverSpriteLeft"
-                    src="assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death5.png" alt="">
-                <img class="gameOverSpriteRight" src="assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Anger5.png"
+                    src="./assets/pixel-art-characters-for-platformer-games/PNG/Mage/Death/death5.png" alt="">
+                <img class="gameOverSpriteRight" src="./assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Anger5.png"
                     alt="">
             </div>
             <span style="margin-left: 8%;">Game Over...</span>
@@ -72,8 +72,8 @@
         <div class="gameOverScreen" id="gameOverScreen2">
             <div class="gameOverSprites">
                 <img class="gameOverSpriteLeft"
-                    src="assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack5.png" alt="">
-                <img class="gameOverSpriteRight" src="assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png"
+                    src="./assets/pixel-art-characters-for-platformer-games/PNG/Mage/Attack/attack5.png" alt="">
+                <img class="gameOverSpriteRight" src="./assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png"
                     alt="">
             </div>
             <span>You won!</span>

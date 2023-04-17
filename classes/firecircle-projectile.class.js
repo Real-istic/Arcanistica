@@ -18,25 +18,25 @@ class FirecircleProjectile extends ThrowableObject {
     acceleration = 0.03;
     range = 1200;
     clearProjectileTime = 10;
-    sound_castFirecircle = new Audio('audio/endboss_cast_firecircle.mp3');
+    sound_castFirecircle = new Audio('./audio/endboss_cast_firecircle.mp3');
 
     IMAGES_FIRECIRCLE = [
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire1.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire2.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire5.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire6.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire7.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire5.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire6.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire7.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire9.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Magic_Attacks/fire8.png',
     ]
 
     constructor(x, y, otherDirection) {

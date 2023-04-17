@@ -13,27 +13,27 @@ class ManaCrystal extends CollectableObject {
         left: 60,
         right: -220
     }
-    sound_drop = new Audio('audio/drop_crystal.mp3');
-    sound_collect = new Audio('audio/collect_crystal.mp3');
+    sound_drop = new Audio('./audio/drop_crystal.mp3');
+    sound_collect = new Audio('./audio/collect_crystal.mp3');
 
 
     IMAGES = [
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal1.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal2.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal3.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal4.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal5.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal6.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal7.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal8.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal9.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
-        'assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal1.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal2.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal3.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal4.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal5.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal6.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal7.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal8.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal9.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
+        './assets/castle-platformer-pixel-art-tileset/PNG/Items/crystal10.png',
     ]
 
     constructor(enemy) {

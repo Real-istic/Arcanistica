@@ -13,15 +13,15 @@ class HealthPotion extends CollectableObject {
         left: 60,
         right: -220
     }
-    sound_drop = new Audio('audio/drop_potion.mp3');
-    sound_collect = new Audio('audio/collect_potion.mp3');
+    sound_drop = new Audio('./audio/drop_potion.mp3');
+    sound_collect = new Audio('./audio/collect_potion.mp3');
 
     IMAGES = [
-        'assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle1.png',
-        'assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle2.png',
-        'assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle3.png',
-        'assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle4.png',
-        'assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle5.png',
+        './assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle1.png',
+        './assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle2.png',
+        './assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle3.png',
+        './assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle4.png',
+        './assets/dungeon-platformer-pixel-art-tileset/PNG/Items/bottle5.png',
     ]
 
     constructor(enemy) {

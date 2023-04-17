@@ -5,11 +5,16 @@ let gameOver = false;
 let gameStarted = false;
 let isMuted = false;
 let intervalIDs = [];
-let music_gameOver = new Audio('audio/music_game_over.mp3');
-let music_game = new Audio('audio/music_game.mp3');
-let music_victory = new Audio('audio/music_victory.mp3');
-let music_endboss = new Audio('audio/music_endboss.mp3');
-
+let music_gameOver = new Audio('./audio/music_game_over.mp3');
+let music_game = new Audio('./audio/music_game.mp3');
+let music_victory = new Audio('./audio/music_victory.mp3');
+let music_endboss = new Audio('./audio/music_endboss.mp3');
+// var joystick = new JoyStick({
+// 	radius: 80,
+// 	x: window.innerWidth / 2,
+// 	y: window.innerHeight /2,
+// 	inner_radius: 70
+// });
 
 function startGame() {
     let overlayScreen = document.getElementById('overlayScreen');
@@ -33,7 +38,7 @@ function muteSound(div) {
     } else {
         div.setAttribute('data-original-src', div.src);
         isMuted = true;
-        div.src = 'assets/fantasy-platformer-game-ui/PNG/17Icons/brown/off.png';
+        div.src = './assets/fantasy-platformer-game-ui/PNG/17Icons/brown/off.png';
     }
 }
 

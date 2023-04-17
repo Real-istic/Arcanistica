@@ -8,45 +8,45 @@ class Medusa extends MovableObject {
     rockProjectileCooldown = 0;
     resetRockProjectileCooldown = 2500
     rockProjectileStatus = false
-    sound_hurt = new Audio('audio/medusa_hurt.mp3');
-    sound_death = new Audio('audio/medusa_death.mp3');
+    sound_hurt = new Audio('./audio/medusa_hurt.mp3');
+    sound_death = new Audio('./audio/medusa_death.mp3');
 
     IMAGES_WALK = [
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk1.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk2.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk3.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk4.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk2.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk3.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk1.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Walk4.png',
     ]
 
     IMAGES_DEATH = [
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death1.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death2.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death3.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death4.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death5.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death6.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death1.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death2.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death3.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death4.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death5.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Death6.png',
     ]
 
     IMAGES_HURT = [
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Hurt1.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Hurt2.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Hurt1.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Hurt2.png',
     ]
 
     IMAGES_ATTACK = [
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack1.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack1.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack2.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack2.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack3.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack3.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack4.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack4.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack6.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack6.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack1.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack1.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack2.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack2.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack3.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack3.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack4.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack4.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack6.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack5.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Attack6.png',
     ]
 
     offset = {

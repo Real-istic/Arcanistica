@@ -15,9 +15,9 @@ class MovableObject extends DrawableObject {
         right: 0
     }
     aggroRange = 800;
-    sound_hitByFireball = new Audio('audio/hit_by_fireball.mp3');
-    sound_hitByFirecircle = new Audio('audio/hit_by_firecircle.mp3');
-    sound_hitByMagicBlade = new Audio('audio/hit_by_magic_blade_projectile.mp3');
+    sound_hitByFireball = new Audio('./audio/hit_by_fireball.mp3');
+    sound_hitByFirecircle = new Audio('./audio/hit_by_firecircle.mp3');
+    sound_hitByMagicBlade = new Audio('./audio/hit_by_magic_blade_projectile.mp3');
 
 
     applyGravity() {

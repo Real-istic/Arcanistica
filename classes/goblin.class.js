@@ -4,40 +4,40 @@ class Goblin extends MovableObject {
     height = 164;
     dpf = 0.012;
     speed = 1.5;
-    sound_attack = new Audio('audio/hit_by_goblin_slower.mp3');
-    sound_hurt = new Audio('audio/goblin_hurt.mp3');
-    sound_death = new Audio('audio/goblin_death.mp3');
+    sound_attack = new Audio('./audio/hit_by_goblin_slower.mp3');
+    sound_hurt = new Audio('./audio/goblin_hurt.mp3');
+    sound_death = new Audio('./audio/goblin_death.mp3');
     IMAGES_WALK = [
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk1.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk2.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk3.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk4.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk5.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk6.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk1.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk3.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk4.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk5.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk6.png',
     ]
 
     IMAGES_DEATH = [
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death1.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death2.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death3.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death4.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death1.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death3.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death4.png',
     ]
 
     IMAGES_HURT = [
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt1.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt3.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt1.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt3.png',
     ]
 
     IMAGES_ATTACK = [
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack1.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack2.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack3.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack4.png',
-        'assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack5.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack1.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack3.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack4.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack5.png',
     ]
 
     offset = {

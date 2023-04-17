@@ -9,22 +9,22 @@ class Fireball extends ThrowableObject {
     projectileOffset = 130;
     speed = 20;
     range = 350;
-    sound_castFireball = new Audio('audio/fireball_cast.mp3');
+    sound_castFireball = new Audio('./audio/fireball_cast.mp3');
 
     IMAGES_FIREBALL = [
-        // 'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire1.png',
-        // 'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire2.png',
-        'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire3.png',
-        'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire4.png',
-        'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire5.png',
-        'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire6.png'
+        // './assets/10-magic-effects-pixel-art-pack/PNG/fire/fire1.png',
+        // './assets/10-magic-effects-pixel-art-pack/PNG/fire/fire2.png',
+        './assets/10-magic-effects-pixel-art-pack/PNG/fire/fire3.png',
+        './assets/10-magic-effects-pixel-art-pack/PNG/fire/fire4.png',
+        './assets/10-magic-effects-pixel-art-pack/PNG/fire/fire5.png',
+        './assets/10-magic-effects-pixel-art-pack/PNG/fire/fire6.png'
     ];
 
     IMAGES_FIREBALL_HIT = [
-        'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire7.png',
-        'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire8.png',
-        'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire9.png',
-        'assets/10-magic-effects-pixel-art-pack/PNG/fire/fire10.png',
+        './assets/10-magic-effects-pixel-art-pack/PNG/fire/fire7.png',
+        './assets/10-magic-effects-pixel-art-pack/PNG/fire/fire8.png',
+        './assets/10-magic-effects-pixel-art-pack/PNG/fire/fire9.png',
+        './assets/10-magic-effects-pixel-art-pack/PNG/fire/fire10.png',
     ]
 
     constructor(x, y, otherDirection) {

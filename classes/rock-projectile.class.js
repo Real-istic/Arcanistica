@@ -11,23 +11,23 @@ class RockProjectile extends ThrowableObject {
     range = 800;
     hitdelay = false
     clearProjectileTime = 1500;
-    sound_hitByRock = new Audio('audio/hit_by_rock.mp3');
+    sound_hitByRock = new Audio('./audio/hit_by_rock.mp3');
 
     IMAGES_PROJECTILE_ROCK = [
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone8.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone7.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone6.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone5.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone4.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone3.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone2.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone2.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone2.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone1.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone2.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone1.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone2.png',
-        'assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone1.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone8.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone7.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone6.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone5.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone4.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone3.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone2.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone2.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone2.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone1.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone2.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone1.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone2.png',
+        './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone1.png',
     ]
 
 

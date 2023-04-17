@@ -18,95 +18,95 @@ class Endboss extends MovableObject {
         right: -50
     }
 
-    sound_attack = new Audio('audio/endboss_attack.mp3');
-    sound_hurt = new Audio('audio/endboss_hurt.mp3');
-    sound_death = new Audio('audio/endboss_death.mp3');
-    sound_taunt = new Audio('audio/endboss_taunt.mp3');
-    sound_taunt = new Audio('audio/endboss_taunt.mp3');
+    sound_attack = new Audio('./audio/endboss_attack.mp3');
+    sound_hurt = new Audio('./audio/endboss_hurt.mp3');
+    sound_death = new Audio('./audio/endboss_death.mp3');
+    sound_taunt = new Audio('./audio/endboss_taunt.mp3');
+    sound_taunt = new Audio('./audio/endboss_taunt.mp3');
     soundSwitchTaunt = false;
 
     IMAGES_WALK = [
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk1.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk2.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk5.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk6.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk5.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk6.png',
     ]
 
     IMAGES_DEATH = [
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death1.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
     ]
 
     IMAGES_HURT = [
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Hurt1.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Hurt2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Hurt1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Hurt2.png',
     ]
 
     IMAGES_ATTACK = [
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack2.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack1.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack2.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack5.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack6.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack7.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack5.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack6.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack7.png',
     ]
 
     IMAGES_ATTACK_MAGICBLADE = [
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade2.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade5.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade5.png',
     ]
 
     IMAGES_ATTACK_FIRECIRCLE = [
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire1.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire2.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire3.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire4.png',
-        'assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire5.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire5.png',
     ]
 
 

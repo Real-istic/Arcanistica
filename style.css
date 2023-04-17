@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  background-image: url("assets/FancyBackground2.png");
+  background-image: url("../assets/FancyBackground2.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   margin: 0;
@@ -37,7 +37,7 @@ canvas {
   align-items: center;
   width: 758px;
   height: 518px;
-  background-image: url("assets/fantasy-platformer-game-ui/PNG/15Character/beige_border.png");
+  background-image: url("../assets/fantasy-platformer-game-ui/PNG/15Character/beige_border.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -50,7 +50,7 @@ canvas {
   height: 93%;
   z-index: 1;
   overflow: hidden;
-  background-image: url("assets/FancyBackground2.png");
+  background-image: url("../assets/FancyBackground2.png");
   background-size: 100% 100%;
   font-size: 20px;
   font-weight: bold;
@@ -65,7 +65,7 @@ canvas {
   /* margin-left: 31vw; */
   height: 100%;
   width: 100%;
-  background-image: url("assets/startscreen.png");
+  background-image: url("../assets/startscreen.png");
   background-size: cover;
   font-size: 25px;
   font-weight: bold;
@@ -118,7 +118,7 @@ canvas {
   width: 95px;
   height: 80px;
   margin-bottom: 25px;
-  background-image: url("assets/fantasy-platformer-game-ui/PNG/06Level_select/door.png");
+  background-image: url("../assets/fantasy-platformer-game-ui/PNG/06Level_select/door.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -190,7 +190,7 @@ canvas {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
-  background-image: url("assets/fantasy-platformer-game-ui/PNG/01main/buttons1_yellow.png");
+  background-image: url("../assets/fantasy-platformer-game-ui/PNG/01main/buttons1_yellow.png");
   transition: all 200ms ease-in-out;
   text-align: center;
   color: black !important;
@@ -245,7 +245,6 @@ canvas {
   #canvas {
     height: 100%;
     height: 100vh;
-
     position: absolute;
     top: 0;
   }

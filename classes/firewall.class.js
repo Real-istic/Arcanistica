@@ -11,12 +11,12 @@ class Firewall extends ThrowableObject {
     range = 1800;
     hitdelay = false
     clearProjectileTime = 3000;
-    sound_hitByFirewall = new Audio('audio/hit_by_firewall.mp3');
+    sound_hitByFirewall = new Audio('./audio/hit_by_firewall.mp3');
     IMAGES_FIREWALL = [
-        'assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall1.png',
-        'assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall2.png',
-        'assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall3.png',
-        'assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall4.png',
+        './assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall1.png',
+        './assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall2.png',
+        './assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall3.png',
+        './assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Firewall/Firewall4.png',
 
     ]
 
