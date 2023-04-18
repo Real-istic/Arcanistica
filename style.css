@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  background-image: url("../assets/FancyBackground2.png");
+  background-image: url("./assets/FancyBackground2.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   margin: 0;
@@ -37,7 +37,7 @@ canvas {
   align-items: center;
   width: 758px;
   height: 518px;
-  background-image: url("../assets/fantasy-platformer-game-ui/PNG/15Character/beige_border.png");
+  background-image: url("./assets/fantasy-platformer-game-ui/PNG/15Character/beige_border.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -50,7 +50,7 @@ canvas {
   height: 93%;
   z-index: 1;
   overflow: hidden;
-  background-image: url("../assets/FancyBackground2.png");
+  background-image: url("./assets/FancyBackground2.png");
   background-size: 100% 100%;
   font-size: 20px;
   font-weight: bold;
@@ -65,7 +65,7 @@ canvas {
   /* margin-left: 31vw; */
   height: 100%;
   width: 100%;
-  background-image: url("../assets/startscreen.png");
+  background-image: url("./assets/startscreen.png");
   background-size: cover;
   font-size: 25px;
   font-weight: bold;
@@ -80,21 +80,15 @@ canvas {
 }
 
 #startGameDiv {
+  position: absolute;
+  left: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   flex-direction: column;
   margin-left: -110px;
   margin-top: 18px;
-}
-
-.doorDiv {
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 #settingsArea {
@@ -118,7 +112,7 @@ canvas {
   width: 95px;
   height: 80px;
   margin-bottom: 25px;
-  background-image: url("../assets/fantasy-platformer-game-ui/PNG/06Level_select/door.png");
+  background-image: url("./assets/fantasy-platformer-game-ui/PNG/06Level_select/door.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -163,6 +157,7 @@ canvas {
 }
 
 .gameOverSprites {
+  margin-top: -20px;
   height: 200px;
   display: flex;
   justify-content: center;
@@ -190,7 +185,7 @@ canvas {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
-  background-image: url("../assets/fantasy-platformer-game-ui/PNG/01main/buttons1_yellow.png");
+  background-image: url("./assets/fantasy-platformer-game-ui/PNG/01main/buttons1_yellow.png");
   transition: all 200ms ease-in-out;
   text-align: center;
   color: black !important;
@@ -229,15 +224,56 @@ canvas {
     top: 0;
   }
   .frame-div {
-    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: unset;
+    width: unset;
     margin-top: 0;
   }
 
-  #overlayScreen {
+  .gameOverScreen {
+    position: absolute;
     top: 0;
+    bottom: 0;
     left: 0;
+    right: 0;
+    height: unset;
+    width: unset;
+    margin-top: 0;
+    gap: 5px;
+  }
+
+  #overlayScreen {
+    position: static;
     width: 100%;
     height: 100%;
+  }
+
+  #menuScreen {
+    background-size: 100% 100%;
+  }
+
+  #startGameDiv {
+    left: 23.5%;
+  }
+
+  #door {
+    width: 65%;
+    height: 65px;
+    margin-bottom: 34px;
+    margin-left: 10px;
+  }
+
+  #settingSound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 71px;
+    margin-left: 237px;
   }
 }
 
@@ -255,56 +291,40 @@ canvas {
   }
 
   #overlayScreen {
-    top: 0;
-    left: 0;
+    position: static;
     width: 100%;
     height: 100%;
   }
-}
 
-/* @media (max-width: 750px) {
-  body {
-    transform: rotateZ(90deg);
-    width: 100%;
-    height: 100%;
-    background-image: none;
+  #menuScreen {
+    background-size: 100% 100%;
   }
 
-  #frameDiv {
-    margin-top: 0;
-    width: 100%;
-    height: 100vh;
-  }
-
-  body::before {
-    content: "";
+  .gameOverScreen {
     position: absolute;
-    width: 385%;
-    height: 80%;
-    top: 10%;
-    left: -143%;
-    right: 0;
+    top: 0;
     bottom: 0;
-    background-image: url(assets/FancyBackground2.png);
-    background-size: inherit;
-    z-index: -1;
+    left: 0;
+    right: 0;
+    height: unset;
+    width: unset;
+    margin-top: 0;
+    gap: 5px;
   }
 
-} */
+  #door {
+    width: 65%;
+    height: 65px;
+    margin-bottom: 34px;
+    margin-left: 10px;
+  }
 
-/* @media (max-width: 550px) {
-  body {
-    position: relative;
-    transform: rotateZ(90deg) scale(0.8);
+  #settingSound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 71px;
+    margin-left: 237px;
   }
 }
-
-@media (max-width: 430px) {
-  body {
-    transform: rotateZ(90deg) scale(0.7);
-  }
-  .frame-div {
-    margin-top: 0;
-  }
-} */
-

@@ -84,7 +84,7 @@ class Goblin extends MovableObject {
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
-                this.sound_death.play();
+                if (!isMuted) this.sound_death.play();
                 this.spawnManaCrystal(this);
                 this.spawnHealthPotion(this);
 

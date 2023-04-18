@@ -1,2 +1,0 @@
-# Arcanistica
- crazy game :)

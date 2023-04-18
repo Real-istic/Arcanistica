@@ -28,8 +28,8 @@
     <script src="./classes/collectable-object.class.js"></script>
     <script src="./classes/mana-crystal.class.js"></script>
     <script src="./classes/health-potion.class.js"></script>
-    <script src="./classes/world.class.js"></script>
     <script src="./classes/keyboard.class.js"></script>
+    <script src="./classes/world.class.js"></script>
     <script src="./js/game.js"></script>
     <link rel="shortcut icon" href="./assets/treasure-icons-pixel-art/PNG/Transperent/ruby.png" type="image/x-icon">
     <title>Arcanistica</title>
@@ -38,18 +38,16 @@
 <body onload="init()">
 
     <div class="frame-div" id="frameDiv">
-
         <div id="overlayScreen">
             <div id="menuScreen">
                 <div id="startGameDiv">
-                    <div class="doorDiv">
-                        <span>Start Game</span>
-                        <div id="door"  onclick="startGame()" style="z-index: 1; cursor: pointer;"></div>
-                    </div>
+                    <span>Start Game</span>
+                    <div id="door" onclick="startGame()" style="z-index: 1; cursor: pointer;"></div>
                 </div>
                 <div id="settingsArea">
                     <div id="settingSound">
-                        <img id="muteButton" onclick="muteSound()" src="./assets/fantasy-platformer-game-ui/PNG/17Icons/yellow/off_yellow.png" alt="">
+                        <img id="muteButton" onclick="muteSound()"
+                            src="./assets/fantasy-platformer-game-ui/PNG/17Icons/yellow/off_yellow.png" alt="">
                         <span>Sound on/off</span>
                     </div>
                 </div>

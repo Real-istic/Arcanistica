@@ -10,6 +10,9 @@ let music_game = new Audio('./audio/music_game.mp3');
 let music_victory = new Audio('./audio/music_victory.mp3');
 let music_endboss = new Audio('./audio/music_endboss.mp3');
 
+
+
+
 function startGame() {
     let overlayScreen = document.getElementById('overlayScreen');
     overlayScreen.style.display = 'none';
@@ -38,7 +41,7 @@ function muteSound() {
         localStorage.setItem("isMuted", JSON.stringify(isMuted));
         muteButton.src = './assets/fantasy-platformer-game-ui/PNG/17Icons/brown/off.png';
     }
-    
+
 }
 
 function gameIntervals() {
