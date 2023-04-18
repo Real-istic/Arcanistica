@@ -9,12 +9,6 @@ let music_gameOver = new Audio('./audio/music_game_over.mp3');
 let music_game = new Audio('./audio/music_game.mp3');
 let music_victory = new Audio('./audio/music_victory.mp3');
 let music_endboss = new Audio('./audio/music_endboss.mp3');
-// var joystick = new JoyStick({
-// 	radius: 80,
-// 	x: window.innerWidth / 2,
-// 	y: window.innerHeight /2,
-// 	inner_radius: 70
-// });
 
 function startGame() {
     let overlayScreen = document.getElementById('overlayScreen');
@@ -26,20 +20,25 @@ function startGame() {
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+    isMuted = JSON.parse(localStorage.getItem("isMuted"));
+    let muteButton = document.getElementById('muteButton');
+    muteButton.src = isMuted == false ? './assets/fantasy-platformer-game-ui/PNG/17Icons/yellow/off_yellow.png' : './assets/fantasy-platformer-game-ui/PNG/17Icons/brown/off.png';
 }
 
-function muteSound(div) {
-    const originalSrc = div.getAttribute('data-original-src');
+function muteSound() {
+    let muteButton = document.getElementById('muteButton');
 
-    if (div.src.endsWith('/off.png')) {
+    if (isMuted == true) {
         isMuted = false;
-        div.src = originalSrc;
+        localStorage.setItem("isMuted", JSON.stringify(isMuted));
+        muteButton.src = './assets/fantasy-platformer-game-ui/PNG/17Icons/yellow/off_yellow.png';
 
     } else {
-        div.setAttribute('data-original-src', div.src);
         isMuted = true;
-        div.src = './assets/fantasy-platformer-game-ui/PNG/17Icons/brown/off.png';
+        localStorage.setItem("isMuted", JSON.stringify(isMuted));
+        muteButton.src = './assets/fantasy-platformer-game-ui/PNG/17Icons/brown/off.png';
     }
+    
 }
 
 function gameIntervals() {
