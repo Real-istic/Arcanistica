@@ -2,7 +2,7 @@ class Character extends MovableObject {
     x = 50;
     width = 164;
     height = 164;
-    speed = 6;
+    speed = 5;
     idleCounter = 0;
     world;
     idleTime = 0;

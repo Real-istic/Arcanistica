@@ -52,7 +52,7 @@ class Goblin extends MovableObject {
         this.loadImages(this.IMAGES_DEATH)
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
-        this.x = 650 + Math.random() * 3000;
+        this.x = 750 + Math.random() * 3000;
         this.speed += Math.random() * 1;
 
         this.animate();

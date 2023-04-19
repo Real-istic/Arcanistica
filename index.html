@@ -31,13 +31,16 @@
     <script src="./classes/keyboard.class.js"></script>
     <script src="./classes/world.class.js"></script>
     <script src="./js/game.js"></script>
+    <script src="./js/joy.js"></script>
     <link rel="shortcut icon" href="./assets/treasure-icons-pixel-art/PNG/Transperent/ruby.png" type="image/x-icon">
     <title>Arcanistica</title>
 </head>
 
 <body onload="init()">
 
-    <div class="frame-div" id="frameDiv">
+    <div id="joyDiv" style="width:150px;height:150px;"></div>
+
+    <div class="frame-div">
         <div id="overlayScreen">
             <div id="menuScreen">
                 <div id="startGameDiv">
@@ -86,5 +89,7 @@
 
 
 </body>
+
+<script src="js/touchControl.js"></script>
 
 </html>

@@ -26,7 +26,7 @@ body {
 
 canvas {
   display: block;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .frame-div {
@@ -198,6 +198,11 @@ canvas {
   transform: translateX(5px);
 }
 
+#joyDiv {
+  position: absolute;
+  z-index: -1;
+ }
+
 @keyframes open {
   0% {
     transform: perspective(50px) rotateY(0deg);
@@ -275,6 +280,14 @@ canvas {
     margin-top: 71px;
     margin-left: 237px;
   }
+
+  #joyDiv {
+    position: absolute;
+    z-index: 1;
+    bottom: 1%;
+    left: 1%;
+   }
+
 }
 
 @media screen and (max-heigth: 490px) {
@@ -327,4 +340,9 @@ canvas {
     margin-top: 71px;
     margin-left: 237px;
   }
+
+  .test {
+    color: rgba(128, 128, 128, 0.319);
+  }
+
 }

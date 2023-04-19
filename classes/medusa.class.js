@@ -62,7 +62,7 @@ class Medusa extends MovableObject {
         this.loadImages(this.IMAGES_DEATH)
         this.loadImages(this.IMAGES_HURT)
         this.loadImages(this.IMAGES_ATTACK)
-        this.x = 650 + Math.random(0.5, 1) * 3200;
+        this.x = 850 + Math.random(0.5, 1) * 3200;
         this.speed += Math.random() * 0.5;
         this.animate();
     }
