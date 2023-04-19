@@ -201,7 +201,29 @@ canvas {
 #joyDiv {
   position: absolute;
   z-index: -1;
- }
+}
+
+.spell-icons {
+  position: absolute;
+  display: flex;
+  top: 5%;
+  right: 5%;
+  gap: 25px;
+}
+
+.fireball-icon {
+  cursor: pointer;
+  border: 2px outset gold;
+  border-radius: 50%;
+  box-shadow: 2px 2px 10px 2px #000000;
+}
+
+.firewall-icon {
+  cursor: pointer;
+  border: 2px outset gold;
+  border-radius: 50%;
+  box-shadow: 2px 2px 10px 2px #000000;
+}
 
 @keyframes open {
   0% {
@@ -286,8 +308,7 @@ canvas {
     z-index: 1;
     bottom: 1%;
     left: 1%;
-   }
-
+  }
 }
 
 @media screen and (max-heigth: 490px) {
@@ -344,5 +365,4 @@ canvas {
   .test {
     color: rgba(128, 128, 128, 0.319);
   }
-
 }
