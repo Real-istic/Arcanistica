@@ -89,6 +89,18 @@ function restartGame() {
     window.location.href = window.location.href;
 }
 
+function openFullscreen() {
+    var elem = document.getElementById("frameDiv");
+
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+    }
+}
+
 window.addEventListener('keydown', (e) => {
     if (gameStarted) {
 

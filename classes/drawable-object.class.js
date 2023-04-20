@@ -7,7 +7,6 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
-
     setHPbarWidth(HP) {
         world.ui.statusbars[2].width = HP;
     }

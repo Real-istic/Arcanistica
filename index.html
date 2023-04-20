@@ -38,9 +38,12 @@
 
 <body onload="init()">
 
-    <div id="joyDiv" style="width:150px;height:150px;"></div>
 
-    <div class="frame-div">
+    <div class="frame-div" id="frameDiv">
+        <div id="joyDiv" style="width:200px;height:200px;"></div>
+
+        <img id="fullscreenIcon" onclick="openFullscreen()"
+            src="assets/fantasy-platformer-game-ui/PNG/01main/fullscreen.png" alt="">
         <div id="overlayScreen">
             <div id="menuScreen">
                 <div id="startGameDiv">
@@ -84,9 +87,15 @@
         <canvas id="canvas" width="720" height="480"></canvas>
 
         <div class="spell-icons">
-            
-            <img class="fireball-icon" src="assets/10-magic-effects-pixel-art-pack/PNG/icons/fire.png" alt="">
-            <img class="firewall-icon" src="assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Icon/Icon7.png" alt="">
+            <img id="firewallButton" onclick="world.character.castFirewall()"
+                src="assets/pixel-art-magic-sprite-effects-and-icons-pack/PNG/Icon/Icon7.png" alt="">
+            <img id="fireballButton" onclick="world.character.throwFireball()"
+                src="assets/10-magic-effects-pixel-art-pack/PNG/icons/fire.png" alt="">
+        </div>
+        <div class="control-icons">
+            <img class="control-wasd" src="assets/fantasy-platformer-game-ui/PNG/01main/wasd-keys.png" alt="">
+            <img src="assets/fantasy-platformer-game-ui/PNG/01main/arrow-left.png" alt="">
+            <img src="assets/fantasy-platformer-game-ui/PNG/01main/arrow-right.png" alt="">
         </div>
     </div>
 

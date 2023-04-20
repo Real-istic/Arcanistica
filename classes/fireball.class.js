@@ -62,6 +62,4 @@ class Fireball extends ThrowableObject {
 
         }, 50);
     }
-
-
 }
