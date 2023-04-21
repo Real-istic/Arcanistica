@@ -1,5 +1,10 @@
 class Background extends MovableObject {
 
+    /**
+     * 
+     * @param {*} path /* imagepath
+     * @param {*} x /* x-Position
+     */
     constructor(path, x) {
         super().loadImage(path);
         this.y = -305

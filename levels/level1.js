@@ -1,8 +1,11 @@
 const level1 = new Level(
 
+    /**
+     * Enemies
+     */
     [
         new Endboss(),
-        new Goblin(), 
+        new Goblin(),
         new Goblin(),
         new Goblin(),
         new Goblin(),
@@ -12,6 +15,9 @@ const level1 = new Level(
         new Medusa()
     ],
 
+    /**
+     * Cloud-Backgrounds (path, X-Position)
+     */
     [
         new Cloud('./assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds-small.png', 50),
         new Cloud('./assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds-small.png', 500),
@@ -24,6 +30,9 @@ const level1 = new Level(
         new Cloud('./assets/pixel-art-forest-platformer-tileset/Background/Bright/clouds-small.png', 500 * 14)
     ],
 
+    /**
+     * Backgrounds (path, X-Position)
+     */
     [
         new Background('./assets/pixel-art-forest-platformer-tileset/Background/Modded/background2.png', -230),
         new Background('./assets/pixel-art-forest-platformer-tileset/Background/Modded/background1.png', -400),

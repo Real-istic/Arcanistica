@@ -1,4 +1,32 @@
-class Character extends MovableObject {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: character.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: character.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class Character extends MovableObject {
     x = 50;
     width = 164;
     height = 164;
@@ -226,16 +254,16 @@ class Character extends MovableObject {
             this.setHPbarWidth(this.HP)
             this.setCameraPosition();
 
-            if (this.MP <= this.maxMP && !this.isFinallyDead) {
+            if (this.MP &lt;= this.maxMP &amp;&amp; !this.isFinallyDead) {
                 this.MP += this.manaregen;
             }
-            if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
+            if (this.world.keyboard.RIGHT &amp;&amp; this.x &lt; world.level.level_end_x &amp;&amp; !this.isFinallyDead &amp;&amp; !this.fireballStatus &amp;&amp; !characterCollidesWithRock &amp;&amp; !this.firewallStatus) {
                 this.moveRight();
             }
-            if (this.world.keyboard.LEFT && this.x > -150 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
+            if (this.world.keyboard.LEFT &amp;&amp; this.x > -150 &amp;&amp; !this.isFinallyDead &amp;&amp; !this.fireballStatus &amp;&amp; !characterCollidesWithRock &amp;&amp; !this.firewallStatus) {
                 this.moveLeft();
             }
-            if (this.world.keyboard.SPACE && !this.isAboveGround() && !characterCollidesWithRock) {
+            if (this.world.keyboard.SPACE &amp;&amp; !this.isAboveGround() &amp;&amp; !characterCollidesWithRock) {
                 this.jump();
                 if (!isMuted) this.sound_jump.play();
             }
@@ -245,26 +273,26 @@ class Character extends MovableObject {
          * character animations and cooldownchecks
          */
         setInterval(() => {
-            let characterIsAbleToWalk = ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) && !this.isAboveGround() && !this.fireballStatus && !this.isFinallyDead && !this.isHurt() && !this.firewallStatus
-            let characterIsAbleToJump = (this.world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround() && !this.fireballStatus && !this.firewallStatus
+            let characterIsAbleToWalk = ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) &amp;&amp; !this.isAboveGround() &amp;&amp; !this.fireballStatus &amp;&amp; !this.isFinallyDead &amp;&amp; !this.isHurt() &amp;&amp; !this.firewallStatus
+            let characterIsAbleToJump = (this.world.keyboard.SPACE &amp;&amp; !this.fireballStatus &amp;&amp; !this.isFinallyDead) || this.isAboveGround() &amp;&amp; !this.fireballStatus &amp;&amp; !this.firewallStatus
 
             this.fireballCooldown -= 100;
             this.firewallCooldown -= 100;
 
-            if (this.fireballCooldown <= 0) {
+            if (this.fireballCooldown &lt;= 0) {
                 this.fireballCooldown = 0;
             }
 
-            if (this.firewallCooldown <= 0) {
+            if (this.firewallCooldown &lt;= 0) {
                 this.firewallCooldown = 0;
             }
 
-            if (this.isDead() && !this.isFinallyDead) {
+            if (this.isDead() &amp;&amp; !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 if (!isMuted) this.sound_death.play();
                 this.playAnimationOnce(this.IMAGES_DEAD)
 
-            } else if (this.isHurt() && !this.fireballStatus) {
+            } else if (this.isHurt() &amp;&amp; !this.fireballStatus) {
                 this.playAnimation(this.IMAGES_HURT)
 
             } else if (characterIsAbleToJump) {
@@ -279,9 +307,9 @@ class Character extends MovableObject {
          * character idle functionalities and animations
          */
         setInterval(() => {
-            let nothingHappensToCharacter = !(this.isAboveGround()) && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDead() && !(this.world.keyboard.arrowRight) && !(this.isHurt()) && !(this.fireballStatus) && this.idleTime < 35 && !this.firewallStatus
+            let nothingHappensToCharacter = !(this.isAboveGround()) &amp;&amp; !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) &amp;&amp; !this.isDead() &amp;&amp; !(this.world.keyboard.arrowRight) &amp;&amp; !(this.isHurt()) &amp;&amp; !(this.fireballStatus) &amp;&amp; this.idleTime &lt; 35 &amp;&amp; !this.firewallStatus
 
-            let somethingHappensToCharacter = this.isAboveGround() || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || this.isHurt() || this.world.keyboard.arrowRight && this.world.keyboard.SPACE || this.fireballStatus || this.firewallStatus
+            let somethingHappensToCharacter = this.isAboveGround() || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || this.isHurt() || this.world.keyboard.arrowRight &amp;&amp; this.world.keyboard.SPACE || this.fireballStatus || this.firewallStatus
 
             // console.log('fireballstatus', this.fireballStatus)
             // console.log('idleTime ', this.idleTime)
@@ -301,8 +329,8 @@ class Character extends MovableObject {
          * character hurt sounds
          */
         setInterval(() => {
-            if (this.isHurt() && !this.fireballStatus) {
-                if (Math.random() < 0.5) {
+            if (this.isHurt() &amp;&amp; !this.fireballStatus) {
+                if (Math.random() &lt; 0.5) {
                     if (!isMuted) this.sound_hit1.play();
                 } else {
                     if (!isMuted) this.sound_hit2.play();
@@ -320,7 +348,7 @@ class Character extends MovableObject {
             this.cameraOffset >= 200 ? this.cameraOffset -= 3 : this.cameraOffset -= 0;
             this.world.camera_x = -this.x + this.cameraOffset;
         } else {
-            this.cameraOffset <= 400 ? this.cameraOffset += 3 : this.cameraOffset -= 0;
+            this.cameraOffset &lt;= 400 ? this.cameraOffset += 3 : this.cameraOffset -= 0;
             this.world.camera_x = -this.x + this.cameraOffset;
         }
     }
@@ -331,7 +359,7 @@ class Character extends MovableObject {
     async throwFireball() {
         let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
 
-        if (this.fireballCooldown <= 0 && this.MP >= this.fireballMPcost && !characterCollidesWithRock) {
+        if (this.fireballCooldown &lt;= 0 &amp;&amp; this.MP >= this.fireballMPcost &amp;&amp; !characterCollidesWithRock) {
             this.fireballStatus = true;
             this.fireballCooldown = this.resetFireballCooldown;
             this.playAnimationOnce(this.IMAGES_ATTACK)
@@ -363,7 +391,7 @@ class Character extends MovableObject {
     async castFirewall() {
         let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
 
-        if (this.firewallCooldown <= 0 && this.MP >= this.firewallMPcost && !characterCollidesWithRock) {
+        if (this.firewallCooldown &lt;= 0 &amp;&amp; this.MP >= this.firewallMPcost &amp;&amp; !characterCollidesWithRock) {
             this.firewallStatus = true;
             this.firewallCooldown = this.resetFirewallCooldown;
             this.playAnimationOnce(this.IMAGES_SPECIAL_ATTACK)
@@ -389,4 +417,26 @@ class Character extends MovableObject {
             }, 700);
         }
     }
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Background.html">Background</a></li><li><a href="Cloud.html">Cloud</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Apr 21 2023 10:08:31 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
