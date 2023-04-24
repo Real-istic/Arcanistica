@@ -52,7 +52,9 @@ class FirecircleProjectile extends ThrowableObject {
         if (!isMuted) this.sound_castFirecircle.play();
     }
 
-
+    /**
+     * applies gravity to the firecircle projectile
+     */
     applyFireCircleGravity() {
         const interval = setInterval(() => {
           if (this.isAboveGround() || this.speedY > 0) {
@@ -63,14 +65,17 @@ class FirecircleProjectile extends ThrowableObject {
           }
         }, 50);
       
-        
+        // removes unnecessary intervals
         setTimeout(() => {
           clearInterval(interval);
         }, 1000);
       }
 
     animate() {
-
+        /**
+         * firecircle animation and removal
+         * 
+         */
         setInterval(() => {
             let endboss = world.level.enemies[0];
             let firecircleGetsOutOfRange = endboss.x > this.x + this.range || endboss.x < this.x - this.range;

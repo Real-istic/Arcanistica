@@ -1,11 +1,19 @@
 class CollectableObject extends MovableObject {
 
-    dropSwitch = false;
-
+    /**
+     * used for the random y drop-coordinate
+     * 
+     * @param {*} min minimum value
+     * @param {*} max maximum value
+     * @returns 
+     */
     getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
+    /**
+     * used for the x- and y-drop speed to make the collectables fall in a random way
+     */
     applyGravityToCollectable() {
         setInterval(() => {
             {

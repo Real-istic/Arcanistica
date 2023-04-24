@@ -43,6 +43,9 @@ class Fireball extends ThrowableObject {
 
     animate() {
 
+        /**
+         * This interval determines the animation of the fireball.
+         */
         setInterval(() => {
             let enemyGetsHitByFireball = world.level.enemies.some(enemy => enemy.isColliding(this) && !enemy.isFinallyDead)
             let fireballGetsOutOfRange = world.character.x > this.x + this.range || world.character.x < this.x - this.range;
@@ -56,7 +59,7 @@ class Fireball extends ThrowableObject {
             } else if (!enemyGetsHitByFireball) {
                 this.playAnimation(this.IMAGES_FIREBALL);
             }
-            if (this.isAboveGround()) {
+            if (this.isAboveGround()) { // if fireball is above ground, it will fall down
                 this.y += 15;
             }
 

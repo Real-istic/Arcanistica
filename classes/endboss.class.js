@@ -5,12 +5,17 @@ class Endboss extends MovableObject {
     dpf = 0.02;
     HP = 350;
     speed = 2;
+
+    // magicBlade
     magicBladeCooldown = 0;
     resetMagicBladeCooldown = 1000;
     magicBladeStatus = false;
+
+    // firecircle
     firecircleCooldown = 0;
     resetFirecircleCooldown = 2000;
     firecircleStatus = false;
+
     offset = {
         top: 85,
         bottom: 0,
@@ -109,9 +114,6 @@ class Endboss extends MovableObject {
         './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire5.png',
     ]
 
-
-
-
     constructor() {
         super().loadImage(this.IMAGES_WALK[0])
         this.loadImages(this.IMAGES_WALK)
@@ -126,9 +128,11 @@ class Endboss extends MovableObject {
 
     animate() {
 
-
+        /**
+         * endboss movement mechanics
+         */
         setInterval(() => {
-            // console.log('magicBladeCooldown: ', this.magicBladeCooldown)
+           // waits for the player to be in range
             if (this.x - world.character.x <= this.aggroRange) {
                 if (!this.isFinallyDead && this.x > world.character.x && !this.magicBladeStatus) {
                     this.x -= this.speed;
@@ -141,9 +145,11 @@ class Endboss extends MovableObject {
             }
         }, 1000 / 60);
 
-
+        /**
+         * attack-mechanics of the Endboss depends on the Range to the player
+         * 
+         */
         setInterval(() => {
-
             let playerIsAtMidRange = this.x - world.character.x > 150 && this.x - world.character.x < 370 || this.x - world.character.x < -250 && this.x - world.character.x > -470;
 
             let playerIsAtHighRange = this.x - world.character.x > 380 && this.x - world.character.x < 1200 || this.x - world.character.x < -480 && this.x - world.character.x > -1300;
@@ -165,18 +171,17 @@ class Endboss extends MovableObject {
             }
         }, 100);
 
+        /**
+         * endboss animations
+         */
         setInterval(() => {
             let fireballHitsEndboss = world.throwableObjects.some(projectile => (this.isColliding(projectile) && projectile instanceof Fireball));
             let fireWallHitsEndboss = world.throwableObjects.some(projectile => (this.isColliding(projectile) && projectile instanceof Firewall));
 
-            if (this.HP > 0) {
-                // console.log('EndbossHP: ', this.HP)
-            }
             if ((this.x - world.character.x <= 650) && !this.soundSwitchTaunt) {
-                this.soundSwitchTaunt = true;
+                this.soundSwitchTaunt = true; // taunt only once if the player is in range
                 if (!isMuted) this.sound_taunt.play();
             }
-
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
@@ -186,11 +191,11 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT);
                 if (!isMuted) this.sound_hurt.play();
 
-                if (Math.random() < 0.25 && fireballHitsEndboss) {
+                if (Math.random() < 0.25 && fireballHitsEndboss) { // reduced dropchance
                     this.spawnManaCrystal(this);
                     this.spawnHealthPotion(this)
                 }
-                if (Math.random() < 0.1 && fireWallHitsEndboss) {
+                if (Math.random() < 0.1 && fireWallHitsEndboss) { // heavily reduced dropchance
                     this.spawnManaCrystal(this);
                     this.spawnHealthPotion(this)
                 }
@@ -206,6 +211,9 @@ class Endboss extends MovableObject {
         }, 180);
     }
 
+    /**
+     * throws a magic blade at the player
+     */
     async throwMagicBlade() {
         if (this.magicBladeCooldown <= 0) {
             this.magicBladeStatus = true;
@@ -230,6 +238,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * throws a firecircle at the player
+     */
     async throwFirecircle() {
         if (this.firecircleCooldown <= 0) {
             this.firecircleStatus = true;

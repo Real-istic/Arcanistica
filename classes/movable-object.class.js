@@ -19,7 +19,9 @@ class MovableObject extends DrawableObject {
     sound_hitByFirecircle = new Audio('./audio/hit_by_firecircle.mp3');
     sound_hitByMagicBlade = new Audio('./audio/hit_by_magic_blade_projectile.mp3');
 
-
+    /**
+     * applies gravity to the object
+     */
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -31,23 +33,19 @@ class MovableObject extends DrawableObject {
         }, 1000 / 100);
     }
 
+    /**
+     * checks if the object is above the ground
+     * 
+     * @returns true if the object is above the ground
+     */
     isAboveGround() {
         return (this.y < this.yGround);
     }
 
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
-    }
-
+    /**
+     * moves the character to the right
+     * 
+     */
     moveRight() {
         this.x += this.speed;
         this.otherDirection = false;
@@ -56,6 +54,10 @@ class MovableObject extends DrawableObject {
         // this.walking_sound.play();
     }
 
+    /**
+     * moves the character to the left
+     * 
+     */
     moveLeft() {
         this.x -= this.speed;
         this.otherDirection = true;
@@ -64,6 +66,11 @@ class MovableObject extends DrawableObject {
         // this.walking_sound.play();
     }
 
+    /**
+     * loops through the images-array
+     * 
+     * @param {*} images // array of images
+     */
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -71,6 +78,11 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+    /**
+     * loops through the images-array once
+     * 
+     * @param {*} images // array of images
+     */
     async playAnimationOnce(images) {
         for (let i = 0; i < images.length; i++) {
             let path = images[i];
@@ -79,10 +91,19 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /**
+     * let the character jump
+     */
     jump() {
         this.speedY = 7;
     }
 
+    /**
+     * detects and prioritizes collisions
+     * 
+     * @param {*} mo moveable object
+     * @returns true or false
+     */
     isColliding(mo) {
         let enemyIsHitByEnemyProjectile = (this instanceof Goblin || this instanceof Medusa || this instanceof Endboss || this instanceof Medusa) && (mo instanceof MagicBladeProjectile || mo instanceof FirecircleProjectile || mo instanceof RockProjectile);
         
@@ -94,8 +115,12 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /**
+     * defines the damage per frame that the object takes
+     * 
+     * @param {*} intensity // determines the damage
+     */
     isHit(intensity) {
-
         this.HP -= intensity;
         if (this.HP <= 0) {
             this.HP = 0
@@ -104,22 +129,38 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /**
+     * checks if the objects HP is 0
+     * 
+     * @returns true if the objects HP is 0
+     */
     isDead() {
         return this.HP <= 0;
     }
 
+    /**
+     * determines how long the object is hurt
+     * @returns true if the object is hurt
+     */
     isHurt() {
         let timepassed = (new Date().getTime() - this.lastHit) / 1000
-        // console.log('timepassed = ', timepassed)
-
         return timepassed < 0.2;
-
     }
 
+    /**
+     * spawns a mana crystal at the position of the enemy
+     * 
+     * @param {*} enemy // enemy object
+     */
     spawnManaCrystal(enemy) {
         world.collectableObjects.push(new ManaCrystal(enemy));
     }
 
+    /**
+     * spawns a health potion at the position of the enemy
+     * 
+     * @param {*} enemy // enemy object
+     */
     spawnHealthPotion(enemy) {
         world.collectableObjects.push(new HealthPotion(enemy));
     }

@@ -59,7 +59,9 @@ class Goblin extends MovableObject {
     }
 
     animate() {
-
+        /**
+         * goblin movement mechanics
+         */
         setInterval(() => {
             if ((this.x - world.character.x <= this.aggroRange) && gameStarted) {
                 
@@ -74,12 +76,12 @@ class Goblin extends MovableObject {
             }
         }, 1000 / 60);
 
+        /**
+         * goblin animations
+         * 
+         */
         setInterval(() => {
             let goblinGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
-
-            // if (this.HP > 0) {
-            // console.log('goblinHP', this.HP)  
-            // }
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;

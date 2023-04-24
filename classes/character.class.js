@@ -298,7 +298,7 @@ class Character extends MovableObject {
         }, 200);
 
         /**
-         * character hurt sounds
+         * character hurt sounds (50% chance each)
          */
         setInterval(() => {
             if (this.isHurt() && !this.fireballStatus) {
@@ -347,13 +347,13 @@ class Character extends MovableObject {
                 }
                 this.MP -= this.fireballMPcost;
 
-            }, 300);
+            }, 300); // delay to ensure the cast animation is finished before the fireball is thrown
 
             setTimeout(() => {
                 this.fireballStatus = false;
                 this.currentImage = 0;
 
-            }, 750);
+            }, 750); // delay to ensure the animation is finished
         }
     }
 
@@ -380,13 +380,13 @@ class Character extends MovableObject {
                 this.MP -= this.firewallMPcost;
                 if (!isMuted) this.sound_specialAttack.play();
 
-            }, 300);
+            }, 300); // delay to ensure the firewall is casted after the cast-animation
 
             setTimeout(() => {
                 this.firewallStatus = false;
                 this.currentImage = 0;
 
-            }, 700);
+            }, 700); // delay to ensure the animation is finished
         }
     }
 }

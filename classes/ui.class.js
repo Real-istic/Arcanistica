@@ -10,14 +10,19 @@ class Ui extends DrawableObject {
     this.checkForCooldowns();
   }
 
+  /**
+   * checks if the cooldowns are refreshed and sets the opacity of the buttons accordingly
+   */
   checkForCooldowns() {
     setInterval(() => {
       this.setFireballOpacity()
       this.setFirewallOpacity()
-
     }, 100);
   }
 
+  /**
+   * sets the opacity of the fireball-button
+   */
   setFireballOpacity() {
     let fireballButton = document.getElementById('fireballButton');
     if (world.character.fireballCooldown <= 0) {
@@ -29,6 +34,9 @@ class Ui extends DrawableObject {
     }
   }
 
+  /**
+   * sets the opacity of the firewall-button
+   */
   setFirewallOpacity() {
     let firewallButton = document.getElementById('firewallButton');
     if (world.character.firewallCooldown <= 0) {
@@ -39,6 +47,5 @@ class Ui extends DrawableObject {
       firewallButton.style.cursor = 'not-allowed';
     }
   }
-
 
 }

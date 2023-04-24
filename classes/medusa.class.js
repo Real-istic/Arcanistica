@@ -69,6 +69,9 @@ class Medusa extends MovableObject {
 
     animate() {
 
+        /**
+         * medusa movement mechanics
+         */
         setInterval(() => {
             let medusaGetsHitByFirewall = world.throwableObjects.some(firewall => this.isColliding(firewall));
             let characterGetsTooFarAway = !this.isFinallyDead && (this.x - world.character.x > 420 || this.x - world.character.x < -350 && this.x - world.character.x > -380) && !this.rockProjectileStatus && !medusaGetsHitByFirewall
@@ -86,6 +89,9 @@ class Medusa extends MovableObject {
             }
         }, 1000 / 60);
 
+        /**
+         * medusa animation
+         */
         setInterval(() => {
             let medusaGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
 
@@ -96,9 +102,6 @@ class Medusa extends MovableObject {
                 this.spawnManaCrystal(this);
                 this.spawnHealthPotion(this);
 
-                // } else if (!this.isFinallyDead && world.character.isColliding(this) ) {
-                // this.playAnimation(this.IMAGES_ATTACK);
-
             } else if (medusaGetsHitByProjectile && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
                 if (!isMuted) this.sound_hurt.play();
@@ -108,6 +111,9 @@ class Medusa extends MovableObject {
             }
         }, 150);
 
+        /**
+         * determines when medusa throws a rock projectile at the character
+         */
         setInterval(() => {
             let characterIsAtHighRange = this.x - world.character.x > 250 && this.x - world.character.x < 500 || this.x - world.character.x < -220 && this.x - world.character.x > -500;
             this.rockProjectileCooldown -= 50;
@@ -117,17 +123,15 @@ class Medusa extends MovableObject {
             }
             if (!this.isFinallyDead && characterIsAtHighRange && !this.rockProjectileStatus && this.rockProjectileCooldown <= 0) {
                 this.otherDirection = false;
-
                 this.throwRockProjectile();
             }
-
-            // if (this.HP > 0) {
-            // console.log('Medusa HP: ', this.HP) 
-            // }
         }, 100);
 
     }
 
+    /**
+     * throws a rock projectile at the character
+     */
     async throwRockProjectile() {
         if (this.rockProjectileCooldown <= 0) {
             this.rockProjectileStatus = true;
@@ -149,13 +153,13 @@ class Medusa extends MovableObject {
             setTimeout(() => {
                 this.rockProjectileStatus = false;
                 this.currentImage = 0;
-            }, 1500); // delay to ensure the animation is finished and no longer blocks ohther animations
+            }, 1500); // delay to ensure the animation is finished and no longer blocks other animations
             setTimeout(() => {
                 if (this.isDead()) {
                     this.isFinallyDead = true;
                     this.playAnimationOnce(this.IMAGES_DEATH);
                 }
-            }, 2000);
+            }, 2000); // delay to ensure that the death-animation is played while no other animation is active
         }
     }
 

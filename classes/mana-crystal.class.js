@@ -5,7 +5,7 @@ class ManaCrystal extends CollectableObject {
     speedX = 1 + this.getRndInteger(3, 7);
     acceleration = 0.3;
     accelerationX = 0.001;
-    yGround = this.getRndInteger(140, 360)
+    yGround = this.getRndInteger(360, 140)
     enemy;
     offset = {
         top: -50,
@@ -50,11 +50,19 @@ class ManaCrystal extends CollectableObject {
     }
 
     animate() {
+        /**
+         * animates the mana crystal
+         */
         setInterval(() => {
             this.playAnimation(this.IMAGES);
         }, 150);
     }
 
+    /**
+     * determines how much mana the character gains
+     * 
+     * @param {*} character the character
+     */
     gatherManaCrystal(character) {
         	let crystal = world.collectableObjects.indexOf(this);
 

@@ -3,7 +3,6 @@ statusbars;
 icons;
 frames;
 
-
     constructor(statusbars, icons, frames){
         this.statusbars = statusbars;
         this.icons = icons;

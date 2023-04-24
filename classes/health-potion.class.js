@@ -37,12 +37,20 @@ class HealthPotion extends CollectableObject {
         if (!isMuted) this.sound_drop.play();
     }
 
+    /**
+     * animate potion
+     */
     animate() {
         setInterval(() => {
             this.playAnimationOnce(this.IMAGES);
         }, 1500);
     }
 
+    /**
+     * determines how much HP the character gains
+     * 
+     * @param {*} character the character
+     */
     gatherHealthPotion(character) {
         let potion = world.collectableObjects.indexOf(this);
 

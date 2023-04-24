@@ -1,8 +1,12 @@
 class ThrowableObject extends MovableObject {
 
+    /**
+     * determines the mechanics of the throwable object
+     * 
+     * @param {*} projectileOffsetX translates the spawn-position
+     * @param {*} speed speed of the projectile
+     */
     throw(projectileOffsetX, speed) {
-        // this.speedY = 0.12;
-        // this.applyGravity();
 
         if (this instanceof MagicBladeProjectile || this instanceof FirecircleProjectile) {
             if (this.otherDirection) {
@@ -38,7 +42,11 @@ class ThrowableObject extends MovableObject {
     }
 
 
-
+    /**
+     * deletes the projectile after a certain time
+     * 
+     * @param {*} timeout delay before the projectile gets deleted
+     */
     async deleteProjectile(timeout) {
         await new Promise(resolve => setTimeout(resolve, timeout));
         let projectileIndex = world.throwableObjects.indexOf(this);
@@ -48,6 +56,9 @@ class ThrowableObject extends MovableObject {
         }
     }
 
+    /**
+     * animates the projectile
+     */
     animate() {
         setInterval(() => {
             this.playAnimation();

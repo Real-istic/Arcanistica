@@ -40,13 +40,13 @@ class MagicBladeProjectile extends ThrowableObject {
     }
 
     animate() {
-
+        /**
+         * Animation for the magic blade projectile
+         */
         setInterval(() => {
             let endboss = world.level.enemies[0];
             let characterGetsHitByMagicBlade = this.isColliding(world.character);
             let magicBladeGetsOutOfRange = endboss.x > this.x + this.range || endboss.x < this.x - this.range;
-            // console.log('last hit: ', )
-            // console.log('Fireballs', world.throwableObjects)
 
             if (characterGetsHitByMagicBlade || magicBladeGetsOutOfRange) {
                 this.playAnimationOnce(this.IMAGES_PROJECTILE_MAGICBLADE_HIT);
@@ -55,7 +55,6 @@ class MagicBladeProjectile extends ThrowableObject {
             } else if (!characterGetsHitByMagicBlade) {
                 this.playAnimation(this.IMAGES_PROJECTILE_MAGICBLADE);
             }
-
         }, 50);
     }
 

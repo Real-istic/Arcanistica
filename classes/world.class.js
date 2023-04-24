@@ -10,8 +10,6 @@ class World {
     collectableObjects = [];
 
     constructor(canvas, keyboard) {
-        // canvas.width=900;
-        // canvas.height=480;
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
@@ -23,13 +21,14 @@ class World {
         this.character.world = this;
     }
 
-
+    /**
+     * checks the world for collisions between objects
+     * 
+     */
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            // console.log('enemy is hit status', enemy.isHurt())
 
             if (this.character.isColliding(enemy)) {
-                // console.log('HP = ', this.character.HP)
                 if (!enemy.isFinallyDead && !(enemy instanceof Medusa) && !this.character.isAboveGround()) {
                     this.character.isHit(enemy.dpf);
                 }
@@ -43,6 +42,7 @@ class World {
                 }
             });
         })
+
         this.throwableObjects.forEach((object) => {
             if (this.character.isColliding(object)) {
                 this.character.isHit(object.dpf);
@@ -55,6 +55,7 @@ class World {
             }
 
         })
+
         this.collectableObjects.forEach((object) => {
             if (object.isColliding(this.character) && (object instanceof ManaCrystal)) {
                 object.gatherManaCrystal(this.character);
@@ -65,7 +66,7 @@ class World {
 
     }
 
-    // Draw() wird immer wieder aufgerufen
+    // draws everything on the canvas and calls itself again
     draw() {
 
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

@@ -47,11 +47,11 @@ class RockProjectile extends ThrowableObject {
     }
 
     animate() {
-
+        /**
+         * deletes unnecessary projectiles
+         */
         setInterval(() => {
-
                 this.deleteProjectile(this.clearProjectileTime);
-            
         }, 50);
     }
 }
