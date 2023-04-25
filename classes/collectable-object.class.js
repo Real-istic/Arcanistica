@@ -3,9 +3,9 @@ class CollectableObject extends MovableObject {
     /**
      * used for the random y drop-coordinate
      * 
-     * @param {*} min minimum value
-     * @param {*} max maximum value
-     * @returns 
+     * @param {*} min // minimum value
+     * @param {*} max // maximum value
+     * @returns the random Y-Coordinate for the collectable to drop from (in a specific range)
      */
     getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;

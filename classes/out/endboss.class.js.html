@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: endboss.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: endboss.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class Endboss extends MovableObject {
+    y = 110;
+    width = 364;
+    height = 364;
+    dpf = 0.02;
+    HP = 350;
+    speed = 2;
+
+    // magicBlade
+    magicBladeCooldown = 0;
+    resetMagicBladeCooldown = 1000;
+    magicBladeStatus = false;
+
+    // firecircle
+    firecircleCooldown = 0;
+    resetFirecircleCooldown = 2000;
+    firecircleStatus = false;
+
+    offset = {
+        top: 85,
+        bottom: 0,
+        left: 10,
+        right: -50
+    }
+
+    sound_attack = new Audio('./audio/endboss_attack.mp3');
+    sound_hurt = new Audio('./audio/endboss_hurt.mp3');
+    sound_death = new Audio('./audio/endboss_death.mp3');
+    sound_taunt = new Audio('./audio/endboss_taunt.mp3');
+    sound_taunt = new Audio('./audio/endboss_taunt.mp3');
+    soundSwitchTaunt = false;
+
+    IMAGES_WALK = [
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk5.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Walk6.png',
+    ]
+
+    IMAGES_DEATH = [
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Death4.png',
+    ]
+
+    IMAGES_HURT = [
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Hurt1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Hurt2.png',
+    ]
+
+    IMAGES_ATTACK = [
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack5.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack6.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Attack7.png',
+    ]
+
+    IMAGES_ATTACK_MAGICBLADE = [
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_blade5.png',
+    ]
+
+    IMAGES_ATTACK_FIRECIRCLE = [
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire1.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire2.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire3.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire4.png',
+        './assets/bosses-pixel-art-game-assets-pack/PNG/Boss1/Magic_fire5.png',
+    ]
+
+    constructor() {
+        super().loadImage(this.IMAGES_WALK[0])
+        this.loadImages(this.IMAGES_WALK)
+        this.loadImages(this.IMAGES_DEATH)
+        this.loadImages(this.IMAGES_HURT)
+        this.loadImages(this.IMAGES_ATTACK)
+        this.loadImages(this.IMAGES_ATTACK_MAGICBLADE)
+        this.loadImages(this.IMAGES_ATTACK_FIRECIRCLE)
+        this.x = 4200;
+        this.animate();
+    }
+
+    animate() {
+
+        /**
+         * endboss movement mechanics
+         */
+        setInterval(() => {
+           // waits for the player to be in range
+            if (this.x - world.character.x &lt;= this.aggroRange) {
+                if (!this.isFinallyDead &amp;&amp; this.x > world.character.x &amp;&amp; !this.magicBladeStatus) {
+                    this.x -= this.speed;
+                    this.otherDirection = false;
+
+                } else if (!this.isFinallyDead &amp;&amp; this.x &lt; world.character.x - 100 &amp;&amp; !this.magicBladeStatus) {
+                    this.x += this.speed;
+                    this.otherDirection = true;
+                }
+            }
+        }, 1000 / 60);
+
+        /**
+         * attack-mechanics of the Endboss depends on the Range to the player
+         * 
+         */
+        setInterval(() => {
+            let playerIsAtMidRange = this.x - world.character.x > 150 &amp;&amp; this.x - world.character.x &lt; 370 || this.x - world.character.x &lt; -250 &amp;&amp; this.x - world.character.x > -470;
+
+            let playerIsAtHighRange = this.x - world.character.x > 380 &amp;&amp; this.x - world.character.x &lt; 1200 || this.x - world.character.x &lt; -480 &amp;&amp; this.x - world.character.x > -1300;
+
+            this.firecircleCooldown -= 50;
+            this.magicBladeCooldown -= 50;
+
+            if (this.magicBladeCooldown &lt;= 0) {
+                this.magicBladeCooldown = 0;
+            }
+            if (this.firecircleCooldown &lt;= 0) {
+                this.firecircleCooldown = 0;
+            }
+            if (this.magicBladeCooldown &lt;= 0 &amp;&amp; !this.magicBladeStatus &amp;&amp; !this.isFinallyDead &amp;&amp; playerIsAtMidRange &amp;&amp; !playerIsAtHighRange &amp;&amp; !this.firecircleStatus) {
+                this.throwMagicBlade();
+            }
+            if (this.firecircleCooldown &lt;= 0 &amp;&amp; !this.firecircleStatus &amp;&amp; !this.isFinallyDead &amp;&amp; !playerIsAtMidRange &amp;&amp; playerIsAtHighRange) {
+                this.throwFirecircle()
+            }
+        }, 100);
+
+        /**
+         * endboss animations
+         */
+        setInterval(() => {
+            let fireballHitsEndboss = world.throwableObjects.some(projectile => (this.isColliding(projectile) &amp;&amp; projectile instanceof Fireball));
+            let fireWallHitsEndboss = world.throwableObjects.some(projectile => (this.isColliding(projectile) &amp;&amp; projectile instanceof Firewall));
+
+            if ((this.x - world.character.x &lt;= 650) &amp;&amp; !this.soundSwitchTaunt) {
+                this.soundSwitchTaunt = true; // taunt only once if the player is in range
+                if (!isMuted) this.sound_taunt.play();
+            }
+            if (this.isDead() &amp;&amp; !this.isFinallyDead) {
+                this.isFinallyDead = true;
+                this.playAnimationOnce(this.IMAGES_DEATH);
+                if (!isMuted) this.sound_death.play();
+
+            } else if ((fireballHitsEndboss || fireWallHitsEndboss) &amp;&amp; !this.isFinallyDead) {
+                this.playAnimation(this.IMAGES_HURT);
+                if (!isMuted) this.sound_hurt.play();
+
+                if (Math.random() &lt; 0.25 &amp;&amp; fireballHitsEndboss) { // reduced dropchance
+                    this.spawnManaCrystal(this);
+                    this.spawnHealthPotion(this)
+                }
+                if (Math.random() &lt; 0.1 &amp;&amp; fireWallHitsEndboss) { // heavily reduced dropchance
+                    this.spawnManaCrystal(this);
+                    this.spawnHealthPotion(this)
+                }
+            }
+
+            else if (!this.isFinallyDead &amp;&amp; world.character.isColliding(this) &amp;&amp; !this.magicBladeStatus &amp;&amp; !this.firecircleStatus) {
+                this.playAnimation(this.IMAGES_ATTACK);
+                if (!isMuted) this.sound_attack.play();
+
+            } else if (!this.isFinallyDead &amp;&amp; !this.magicBladeStatus &amp;&amp; !this.firecircleStatus) {
+                this.playAnimation(this.IMAGES_WALK);
+            }
+        }, 180);
+    }
+
+    /**
+     * throws a magic blade at the player
+     */
+    async throwMagicBlade() {
+        if (this.magicBladeCooldown &lt;= 0) {
+            this.magicBladeStatus = true;
+            this.magicBladeCooldown = this.resetMagicBladeCooldown;
+            this.playAnimationOnce(this.IMAGES_ATTACK_MAGICBLADE);
+
+            setTimeout(() => {
+                if (this.otherDirection) {
+                    let magicBladeProjectile = new MagicBladeProjectile(this.x - 300, this.y + 60 + Math.random() * 100, this.otherDirection);
+                    world.throwableObjects.push(magicBladeProjectile);
+
+                } else {
+                    let magicBladeProjectile = new MagicBladeProjectile(this.x + 50, this.y + 60 + Math.random() * 100, this.otherDirection);
+                    world.throwableObjects.push(magicBladeProjectile);
+                }
+            }, 600); // delay to ensure that the magic blade is thrown at the end of the animation
+
+            setTimeout(() => {
+                this.magicBladeStatus = false;
+                this.currentImage = 0;
+            }, 700); // delay to ensure that the animation is finished
+        }
+    }
+
+    /**
+     * throws a firecircle at the player
+     */
+    async throwFirecircle() {
+        if (this.firecircleCooldown &lt;= 0) {
+            this.firecircleStatus = true;
+            this.firecircleCooldown = this.resetFirecircleCooldown;
+            this.playAnimationOnce(this.IMAGES_ATTACK_FIRECIRCLE);
+
+            setTimeout(() => {
+                if (this.otherDirection) {
+                    let firecircleProjectile = new FirecircleProjectile(this.x - 300, this.y + 40 + Math.random() * 100, this.otherDirection);
+                    world.throwableObjects.push(firecircleProjectile);
+
+                } else {
+                    let firecircleProjectile = new FirecircleProjectile(this.x + 50, this.y + 40 + Math.random() * 100, this.otherDirection);
+                    world.throwableObjects.push(firecircleProjectile);
+                }
+            }, 600); // delay to ensure that the Firecircle is thrown at the end of the animation
+
+            setTimeout(() => {
+                this.firecircleStatus = false;
+                this.currentImage = 0;
+            }, 700); // delay to ensure that the animation is finished
+        }
+    }
+
+}
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Background.html">Background</a></li><li><a href="Cloud.html">Cloud</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Apr 25 2023 19:46:32 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

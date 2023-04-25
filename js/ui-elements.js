@@ -1,5 +1,5 @@
 const uiElements = new UiElements(
-
+    // health- and mana-bar
     [
         new Ui('./assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hp_bar_bg.png', 90, 30, 100, 20),
         new Ui('./assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/stamina-energy-magic_bar_bg.png', 90, 60, 100, 20),
@@ -8,12 +8,12 @@ const uiElements = new UiElements(
         new Ui('./assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hp_bar_border.png', 90, 30, 100, 20),
         new Ui('./assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/hp_bar_border.png', 90, 60, 100, 20),
     ],
-
+    // health- and mana-icons
     [
         new Ui('./assets/fantasy-platformer-game-ui/PNG/15Character/heart.png', 180, 28, 25, 25),
         new Ui('./assets/fantasy-platformer-game-ui/PNG/15Character/magic.png', 180, 57, 25, 25),
     ],
-
+    // character portrait and frame
     [
         new Ui('./assets/fantasy-character-avatar-icons-pixel-art/PNG/Background/con8.png', 22, 18, 60, 60),
         new Ui('./assets/fantasy-platformer-game-ui/PNG/16Inner_Interface/square_border_big_full_empty.png', 15, 13, 70, 70),
