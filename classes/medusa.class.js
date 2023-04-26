@@ -4,9 +4,9 @@ class Medusa extends MovableObject {
     height = 194;
     dpf = 0.03;
     speed = 2;
-    HP = 150;
+    HP = 130;
     rockProjectileCooldown = 0;
-    resetRockProjectileCooldown = 2500
+    resetRockProjectileCooldown = 2800
     rockProjectileStatus = false
     sound_hurt = new Audio('./audio/medusa_hurt.mp3');
     sound_death = new Audio('./audio/medusa_death.mp3');

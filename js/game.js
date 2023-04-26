@@ -87,7 +87,7 @@ function gameIntervals() {
             music_gameOver.pause();
             if (!isMuted) music_endboss.play();
         }
-    }, 500);
+    }, 200);
 
     // Loop music
     music_game.addEventListener('ended', function () {

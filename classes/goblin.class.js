@@ -2,7 +2,7 @@ class Goblin extends MovableObject {
     y = 290;
     width = 164;
     height = 164;
-    dpf = 0.012;
+    dpf = 0.008;
     speed = 1.5;
     sound_attack = new Audio('./audio/hit_by_goblin_slower.mp3');
     sound_hurt = new Audio('./audio/goblin_hurt.mp3');
