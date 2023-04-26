@@ -115,7 +115,7 @@ class Medusa extends MovableObject {
          * determines when medusa throws a rock projectile at the character
          */
         setInterval(() => {
-            let characterIsAtHighRange = this.x - world.character.x > 250 && this.x - world.character.x < 500 || this.x - world.character.x < -220 && this.x - world.character.x > -500;
+            let characterIsAtHighRange = this.x - world.character.x > 280 && this.x - world.character.x < 500 || this.x - world.character.x < -250 && this.x - world.character.x > -500;
             this.rockProjectileCooldown -= 50;
 
             if (this.rockProjectileCooldown <= 0) {
