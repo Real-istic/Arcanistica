@@ -5,6 +5,7 @@ let gameOver = false;
 let gameStarted = false;
 let isMuted = false;
 let intervalIDs = [];
+let isFullscreen = false;
 let music_gameOver = new Audio('./audio/music_game_over.mp3');
 let music_game = new Audio('./audio/music_game.mp3');
 let music_victory = new Audio('./audio/music_victory.mp3');
@@ -104,19 +105,31 @@ function restartGame() {
 }
 
 /**
- * sets the canvassize to fullscreen
+ * toggles the canvassize (frameDiv) to fullscreen or windowed
  */
-function openFullscreen() {
+function toggleFullscreen() {
     var elem = document.getElementById("frameDiv");
-
-    if (elem.requestFullscreen) {
+  
+    if (!isFullscreen) {
+      if (elem.requestFullscreen) {
         elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) { /* Safari */
+      } else if (elem.webkitRequestFullscreen) { /* Safari */
         elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE11 */
+      } else if (elem.msRequestFullscreen) { /* IE11 */
         elem.msRequestFullscreen();
+      }
+      isFullscreen = true;
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+      }
+      isFullscreen = false;
     }
-}
+  }
 
 /**
  * Keyboard controls (keydown)
