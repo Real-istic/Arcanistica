@@ -33,6 +33,9 @@ class Firewall extends ThrowableObject {
         if (!isMuted) this.sound_hitByFirewall.play();
     }
 
+    /**
+     * sets the firewall interval
+     */
     animate() {
         /**
          * firewall animation and removal

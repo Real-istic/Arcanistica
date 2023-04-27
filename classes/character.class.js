@@ -4,7 +4,6 @@ class Character extends MovableObject {
     height = 164;
     speed = 5;
     idleCounter = 0;
-    world;
     idleTime = 0;
     HP = 100;
     maxHP = 100;
@@ -229,13 +228,13 @@ class Character extends MovableObject {
             if (this.MP <= this.maxMP && !this.isFinallyDead) {
                 this.MP += this.manaregen;
             }
-            if (this.world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
+            if (world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
                 this.moveRight();
             }
-            if (this.world.keyboard.LEFT && this.x > -150 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
+            if (world.keyboard.LEFT && this.x > -150 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
                 this.moveLeft();
             }
-            if (this.world.keyboard.SPACE && !this.isAboveGround() && !characterCollidesWithRock) {
+            if (world.keyboard.SPACE && !this.isAboveGround() && !characterCollidesWithRock) {
                 this.jump();
                 if (!isMuted) this.sound_jump.play();
             }
@@ -245,8 +244,8 @@ class Character extends MovableObject {
          * character animations and cooldownchecks
          */
         setInterval(() => {
-            let characterIsAbleToWalk = ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) && !this.isAboveGround() && !this.fireballStatus && !this.isFinallyDead && !this.isHurt() && !this.firewallStatus
-            let characterIsAbleToJump = (this.world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround() && !this.fireballStatus && !this.firewallStatus
+            let characterIsAbleToWalk = ((world.keyboard.RIGHT || world.keyboard.LEFT)) && !this.isAboveGround() && !this.fireballStatus && !this.isFinallyDead && !this.isHurt() && !this.firewallStatus
+            let characterIsAbleToJump = (world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround() && !this.fireballStatus && !this.firewallStatus
 
             this.fireballCooldown -= 100;
             this.firewallCooldown -= 100;
@@ -279,9 +278,9 @@ class Character extends MovableObject {
          * character idle functionalities and animations
          */
         setInterval(() => {
-            let nothingHappensToCharacter = !(this.isAboveGround()) && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isDead() && !(this.world.keyboard.arrowRight) && !(this.isHurt()) && !(this.fireballStatus) && this.idleTime < 35 && !this.firewallStatus
+            let nothingHappensToCharacter = !(this.isAboveGround()) && !(world.keyboard.RIGHT || world.keyboard.LEFT) && !this.isDead() && !(world.keyboard.arrowRight) && !(this.isHurt()) && !(this.fireballStatus) && this.idleTime < 35 && !this.firewallStatus
 
-            let somethingHappensToCharacter = this.isAboveGround() || (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) || this.isDead() || this.isHurt() || this.world.keyboard.arrowRight && this.world.keyboard.SPACE || this.fireballStatus || this.firewallStatus
+            let somethingHappensToCharacter = this.isAboveGround() || (world.keyboard.RIGHT || world.keyboard.LEFT) || this.isDead() || this.isHurt() || world.keyboard.arrowRight && world.keyboard.SPACE || this.fireballStatus || this.firewallStatus
 
             // console.log('fireballstatus', this.fireballStatus)
             // console.log('idleTime ', this.idleTime)
@@ -317,11 +316,11 @@ class Character extends MovableObject {
      */
     setCameraPosition() {
         if (!this.otherDirection) {
-            this.cameraOffset >= 200 ? this.cameraOffset -= 3 : this.cameraOffset -= 0;
-            this.world.camera_x = -this.x + this.cameraOffset;
+            this.cameraOffset >= 200 ? this.cameraOffset -= 2 : this.cameraOffset -= 0;
+            world.camera_x = -this.x + this.cameraOffset;
         } else {
-            this.cameraOffset <= 400 ? this.cameraOffset += 3 : this.cameraOffset -= 0;
-            this.world.camera_x = -this.x + this.cameraOffset;
+            this.cameraOffset <= 400 ? this.cameraOffset += 2 : this.cameraOffset -= 0;
+            world.camera_x = -this.x + this.cameraOffset;
         }
     }
 

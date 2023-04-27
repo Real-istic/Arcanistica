@@ -126,6 +126,9 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+     * sets the Endboss intervals
+     */
     animate() {
 
         /**

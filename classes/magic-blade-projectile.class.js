@@ -39,6 +39,9 @@ class MagicBladeProjectile extends ThrowableObject {
 
     }
 
+    /**
+     * sets the magic-blade inerval
+     */
     animate() {
         /**
          * Animation for the magic blade projectile

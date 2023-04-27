@@ -1,5 +1,5 @@
 // Creates the JoyStick object into the DIV 'joyDiv'
-var joy = new JoyStick('joyDiv');
+let joy = new JoyStick('joyDiv');
 
 const joystick = document.getElementById("joystick");
 joystick.addEventListener('touchmove', (e) => {

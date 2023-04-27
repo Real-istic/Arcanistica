@@ -49,8 +49,8 @@ class MovableObject extends DrawableObject {
     moveRight() {
         this.x += this.speed;
         this.otherDirection = false;
-        this.world.level.backgrounds[0].x += this.speed / 18;
-        this.world.level.backgrounds[1].x += this.speed / 13;
+        world.level.backgrounds[0].x += this.speed / 18;
+        world.level.backgrounds[1].x += this.speed / 13;
         // this.walking_sound.play();
     }
 
@@ -61,8 +61,8 @@ class MovableObject extends DrawableObject {
     moveLeft() {
         this.x -= this.speed;
         this.otherDirection = true;
-        this.world.level.backgrounds[0].x -= this.speed / 18;
-        this.world.level.backgrounds[1].x -= this.speed / 13;
+        world.level.backgrounds[0].x -= this.speed / 18;
+        world.level.backgrounds[1].x -= this.speed / 13;
         // this.walking_sound.play();
     }
 

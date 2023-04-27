@@ -2,8 +2,8 @@ class Goblin extends MovableObject {
     y = 290;
     width = 164;
     height = 164;
-    dpf = 0.008;
-    speed = 1.5;
+    dpf = 0.005;
+    speed = 2;
     sound_attack = new Audio('./audio/hit_by_goblin_slower.mp3');
     sound_hurt = new Audio('./audio/goblin_hurt.mp3');
     sound_death = new Audio('./audio/goblin_death.mp3');
@@ -58,6 +58,9 @@ class Goblin extends MovableObject {
         this.animate();
     }
 
+    /**
+     * sets the goblin intervals
+     */
     animate() {
         /**
          * goblin movement mechanics

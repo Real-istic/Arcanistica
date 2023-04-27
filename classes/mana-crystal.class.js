@@ -48,11 +48,10 @@ class ManaCrystal extends CollectableObject {
         this.applyGravityToCollectable();
         if (!isMuted) this.sound_drop.play();
     }
-
+    /**
+     * animates the mana crystal
+     */
     animate() {
-        /**
-         * animates the mana crystal
-         */
         setInterval(() => {
             this.playAnimation(this.IMAGES);
         }, 150);
@@ -64,24 +63,24 @@ class ManaCrystal extends CollectableObject {
      * @param {*} character the character
      */
     gatherManaCrystal(character) {
-        	let crystal = world.collectableObjects.indexOf(this);
+        let crystal = world.collectableObjects.indexOf(this);
 
-            if (((character.MP + this.MPgain) || (character.MP + this.MPgain + this.MPgainBonus)) >= character.maxMP) {
+        if (((character.MP + this.MPgain) || (character.MP + this.MPgain + this.MPgainBonus)) >= character.maxMP) {
+            character.MP = character.maxMP;
+
+        } else if (((character.MP + this.MPgain) || (character.MP + this.MPgain + this.MPgainBonus)) <= character.maxMP) {
+            if (this.enemy.isFinallyDead && ((character.MP + this.MPgain + this.MPgainBonus) < character.maxMP)) {
+                character.MP += this.MPgain + this.MPgainBonus;
+
+            } else if (this.enemy.isFinallyDead && ((character.MP + this.MPgain + this.MPgainBonus) > character.maxMP)) {
                 character.MP = character.maxMP;
-    
-            } else if (((character.MP + this.MPgain) || (character.MP + this.MPgain + this.MPgainBonus)) <= character.maxMP) {
-                if (this.enemy.isFinallyDead && ((character.MP + this.MPgain + this.MPgainBonus) < character.maxMP)) {
-                    character.MP += this.MPgain + this.MPgainBonus;
-    
-                } else if (this.enemy.isFinallyDead && ((character.MP + this.MPgain + this.MPgainBonus) > character.maxMP)) {
-                    character.MP = character.maxMP;
-    
-                } else {
-                    character.MP += this.MPgain;
-                }
+
+            } else {
+                character.MP += this.MPgain;
             }
-            if (!isMuted) this.sound_collect.play();
-            world.collectableObjects.splice(crystal, 1);
+        }
+        if (!isMuted) this.sound_collect.play();
+        world.collectableObjects.splice(crystal, 1);
     }
 
 }

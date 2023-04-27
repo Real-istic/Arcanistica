@@ -182,7 +182,7 @@ canvas {
   background-repeat: no-repeat;
   cursor: pointer;
   background-image: url("./assets/fantasy-platformer-game-ui/PNG/01main/buttons1_yellow.png");
-  transition: all 200ms ease-in-out;
+  transition: all 100ms ease-in-out;
   text-align: center;
   color: black !important;
   font-size: 24px !important;
@@ -191,7 +191,7 @@ canvas {
 }
 
 .restart:hover {
-  transform: translateX(5px);
+  background-image: url("./assets/fantasy-platformer-game-ui/PNG/01main/buttons1.png");
 }
 
 #joyDiv {

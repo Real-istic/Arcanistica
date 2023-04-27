@@ -41,6 +41,9 @@ class Fireball extends ThrowableObject {
         if (!isMuted) this.sound_castFireball.play();
     }
 
+    /**
+     * sets the fireball intervall
+     */
     animate() {
 
         /**

@@ -1,6 +1,6 @@
 class World {
-    character = new Character();
-    level = level1;
+    character;
+    level;
     canvas;
     ctx;
     keyboard;
@@ -10,17 +10,37 @@ class World {
     collectableObjects = [];
 
     constructor(canvas, keyboard) {
-        this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
         this.keyboard = keyboard;
+        this.initialize();
+    }
+
+    /**
+     * initializes the character, level and draw function
+     */
+    async initialize() {
+        this.character = await this.loadCharacter();
+        this.level = await this.loadLevel1();
         this.draw();
-        this.setWorld();
     }
 
-    setWorld() {
-        this.character.world = this;
+    /**
+     * 
+     * @returns the level1
+     */
+    async loadLevel1() {
+        return level1;
     }
 
+    /**
+     * 
+     * @returns the character
+     */
+    async loadCharacter() {
+        return new Character();
+    }
+    
     /**
      * checks the world for collisions between objects and sets the dmgoutput to the objects
      * 
@@ -55,7 +75,6 @@ class World {
                     if (!isMuted) this.character.sound_hitByMagicBlade.play();
                 }
             }
-
         })
 
         // for gathering collectable objects
@@ -66,32 +85,33 @@ class World {
                 object.gatherHealthPotion(this.character);
             }
         })
-
     }
 
-    // draws everything on the canvas and calls itself again
+    /**
+     * draws everything on the canvas and calls itself again
+     */
     draw() {
 
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.ctx.translate(this.camera_x, 0);
-            this.addObjectsToMap(this.level.backgrounds);
-            this.addObjectsToMap(this.level.clouds);
-            this.addObjectsToMap(this.level.enemies);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.translate(this.camera_x, 0);
+        this.addObjectsToMap(this.level.backgrounds);
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.enemies);
 
-            this.addToMap(this.character);
-            this.ctx.translate(-this.camera_x, 0);
-            this.ctx.translate(this.camera_x, 0);
-            this.addObjectsToMap(this.throwableObjects);
-            this.addObjectsToMap(this.collectableObjects);
-            this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.character);
+        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.translate(this.camera_x, 0);
+        this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.collectableObjects);
+        this.ctx.translate(-this.camera_x, 0);
 
-            // --- space for fixed objects below 
+        // --- space for fixed objects below 
 
-            this.addObjectsToMap(this.ui.statusbars);
-            this.addObjectsToMap(this.ui.icons);
-            this.addObjectsToMap(this.ui.frames);
+        this.addObjectsToMap(this.ui.statusbars);
+        this.addObjectsToMap(this.ui.icons);
+        this.addObjectsToMap(this.ui.frames);
 
-            // --- space for fixed objects above 
+        // --- space for fixed objects above 
 
         let self = this;
         // Performance? -> check
@@ -100,7 +120,6 @@ class World {
                 self.draw();
             });
         }, 1000 / 60);
-
     }
 
     /**
@@ -115,7 +134,7 @@ class World {
     }
 
     /**
-     * the final add to map function which draws the objects on the canvas and checks for assets (and non centered assets) that has to be drawn mirrored
+     * the final add to map function which draws the objects on the canvas and checks for assets (and non centered assets) that has to be drawn mirrored or not
      * 
      * @param {*} mo // movable object
      */

@@ -1,5 +1,5 @@
 class RockProjectile extends ThrowableObject {
-    dpf = 0.004 + Math.random() * 0.003;
+    dpf = 0.002 + Math.random() * 0.002;
     offset = {
         top: 0,
         bottom: 0,
@@ -30,7 +30,6 @@ class RockProjectile extends ThrowableObject {
         './assets/rpg-monster-sprites-pixel-art/PNG/medusa/Stone1.png',
     ]
 
-
     constructor(x, y, otherDirection) {
         super().loadImage(this.IMAGES_PROJECTILE_ROCK[0]);
         this.loadImages(this.IMAGES_PROJECTILE_ROCK);
@@ -45,13 +44,13 @@ class RockProjectile extends ThrowableObject {
         if (!isMuted) this.sound_hitByRock.play();
 
     }
-
+    
+    /**
+     * deletes unnecessary projectiles
+     */
     animate() {
-        /**
-         * deletes unnecessary projectiles
-         */
         setInterval(() => {
-                this.deleteProjectile(this.clearProjectileTime);
+            this.deleteProjectile(this.clearProjectileTime);
         }, 50);
     }
 }
