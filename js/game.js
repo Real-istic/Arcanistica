@@ -51,7 +51,6 @@ function buildUI() {
  * sets the overlayscreen to none and starts the game after pushing the enemies to the level
  */
 async function startGame() {
-    
     let overlayScreen = document.getElementById('overlayScreen');
     overlayScreen.style.display = 'none';
     gameStarted = true;
@@ -181,6 +180,18 @@ function restartGame() {
     window.location.href = window.location.href;
 }
 
+/**
+ * checks if the screen width is smaller than 930px and if the screen is in portrait mode
+ */
+window.addEventListener('resize', function(){
+    let rotateScreen = document.querySelector('#rotateDevice');
+
+    if (window.innerWidth < 930 && window.innerWidth < window.innerHeight) {
+        rotateScreen.style.display = 'flex';
+    } else {
+        rotateScreen.style.display = 'none';
+    }
+  });
 
 /**
  * toggles the canvassize (frameDiv) to fullscreen or windowed
