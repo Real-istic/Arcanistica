@@ -63,24 +63,17 @@ class ManaCrystal extends CollectableObject {
      * @param {*} character the character
      */
     gatherManaCrystal(character) {
-        let crystal = world.collectableObjects.indexOf(this);
-
-        if (((character.MP + this.MPgain) || (character.MP + this.MPgain + this.MPgainBonus)) >= character.maxMP) {
+        let potionIndex = world.collectableObjects.indexOf(this);
+        let potentialMPGain = this.enemy?.isFinallyDead ? this.MPgain + this.MPgainBonus : this.MPgain;
+        let potentialMPAfterGain = character.MP + potentialMPGain;
+    
+        if (potentialMPAfterGain >= character.maxMP) {
             character.MP = character.maxMP;
-
-        } else if (((character.MP + this.MPgain) || (character.MP + this.MPgain + this.MPgainBonus)) <= character.maxMP) {
-            if (this.enemy.isFinallyDead && ((character.MP + this.MPgain + this.MPgainBonus) < character.maxMP)) {
-                character.MP += this.MPgain + this.MPgainBonus;
-
-            } else if (this.enemy.isFinallyDead && ((character.MP + this.MPgain + this.MPgainBonus) > character.maxMP)) {
-                character.MP = character.maxMP;
-
-            } else {
-                character.MP += this.MPgain;
-            }
+        } else {
+            character.MP += potentialMPGain;
         }
         if (!isMuted) this.sound_collect.play();
-        world.collectableObjects.splice(crystal, 1);
+        world.collectableObjects.splice(potionIndex, 1);
     }
 
 }

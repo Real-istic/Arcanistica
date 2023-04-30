@@ -282,8 +282,6 @@ class Character extends MovableObject {
 
             let somethingHappensToCharacter = this.isAboveGround() || (world.keyboard.RIGHT || world.keyboard.LEFT) || this.isDead() || this.isHurt() || world.keyboard.arrowRight && world.keyboard.SPACE || this.fireballStatus || this.firewallStatus
 
-            // console.log('fireballstatus', this.fireballStatus)
-            // console.log('idleTime ', this.idleTime)
             if (somethingHappensToCharacter) {
                 this.idleTime = 0
             }
@@ -309,7 +307,6 @@ class Character extends MovableObject {
             }
         }, 400);
     }
-
 
     /**
      * character camera positioning

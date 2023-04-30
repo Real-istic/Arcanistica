@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: goblin.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: goblin.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class Goblin extends MovableObject {
+    y = 290;
+    width = 164;
+    height = 164;
+    dpf = 0.005;
+    speed = 2;
+    sound_attack = new Audio('./audio/hit_by_goblin_slower.mp3');
+    sound_hurt = new Audio('./audio/goblin_hurt.mp3');
+    sound_death = new Audio('./audio/goblin_death.mp3');
+    IMAGES_WALK = [
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk1.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk3.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk4.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk5.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/walk6.png',
+    ]
+
+    IMAGES_DEATH = [
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death1.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death3.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/death4.png',
+    ]
+
+    IMAGES_HURT = [
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt1.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/hurt3.png',
+    ]
+
+    IMAGES_ATTACK = [
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack1.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack2.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack3.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack4.png',
+        './assets/pixel-art-monster-enemy-game-sprites/PNG/goblin/attack5.png',
+    ]
+
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 30,
+        right: -150
+    }
+    constructor() {
+        super().loadImage(this.IMAGES_WALK[0])
+        this.loadImages(this.IMAGES_WALK)
+        this.loadImages(this.IMAGES_DEATH)
+        this.loadImages(this.IMAGES_HURT)
+        this.loadImages(this.IMAGES_ATTACK)
+        this.x = 900 + Math.random() * 3000;
+        this.speed += Math.random() * 1;
+
+        this.animate();
+    }
+
+    /**
+     * sets the goblin intervals
+     */
+    animate() {
+        /**
+         * goblin movement mechanics
+         */
+        setInterval(() => {
+            if ((this.x - world.character.x &lt;= this.aggroRange) &amp;&amp; gameStarted) {
+                
+                if (!this.isFinallyDead &amp;&amp; this.x - 80 > world.character.x &amp;&amp; !world.throwableObjects.some(projectile => this.isColliding(projectile))) {
+                    this.x -= this.speed;
+                    this.otherDirection = false;
+
+                } else if (!this.isFinallyDead &amp;&amp; this.x + 80 &lt; world.character.x &amp;&amp; !world.throwableObjects.some(projectile => this.isColliding(projectile))) {
+                    this.x += this.speed;
+                    this.otherDirection = true;
+                }
+            }
+        }, 1000 / 60);
+
+        /**
+         * goblin animations
+         * 
+         */
+        setInterval(() => {
+            let goblinGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
+
+            if (this.isDead() &amp;&amp; !this.isFinallyDead) {
+                this.isFinallyDead = true;
+                this.playAnimationOnce(this.IMAGES_DEATH);
+                if (!isMuted) this.sound_death.play();
+                this.spawnManaCrystal(this);
+                this.spawnHealthPotion(this);
+
+            } else if (!this.isFinallyDead &amp;&amp; world.character.isColliding(this)) {
+                this.playAnimation(this.IMAGES_ATTACK);
+                if (!isMuted) this.sound_attack.play();
+
+            } else if (goblinGetsHitByProjectile &amp;&amp; !this.isFinallyDead) {
+                this.playAnimation(this.IMAGES_HURT);
+                if (!isMuted) this.sound_hurt.play();
+
+            } else if (!this.isFinallyDead) {
+                this.playAnimation(this.IMAGES_WALK);
+            }
+        }, 150);
+    }
+
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Background.html">Background</a></li><li><a href="Cloud.html">Cloud</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Apr 30 2023 19:20:38 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

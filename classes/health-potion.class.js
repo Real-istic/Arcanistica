@@ -52,24 +52,17 @@ class HealthPotion extends CollectableObject {
      * @param {*} character the character
      */
     gatherHealthPotion(character) {
-        let potion = world.collectableObjects.indexOf(this);
-
-        if (((character.HP + this.HPgain) || (character.HP + this.HPgain + this.HPgainBonus)) >= character.maxHP) {
+        let potionIndex = world.collectableObjects.indexOf(this);
+        let potentialHPGain = this.enemy?.isFinallyDead ? this.HPgain + this.HPgainBonus : this.HPgain;
+        let potentialHPAfterGain = character.HP + potentialHPGain;
+    
+        if (potentialHPAfterGain >= character.maxHP) {
             character.HP = character.maxHP;
-
-        } else if (((character.HP + this.HPgain) || (character.HP + this.HPgain + this.HPgainBonus)) <= character.maxHP) {
-            if (this.enemy.isFinallyDead && ((character.HP + this.HPgain + this.HPgainBonus) < character.maxHP)) {
-                character.HP += this.HPgain + this.HPgainBonus;
-
-            } else if (this.enemy.isFinallyDead && ((character.HP + this.HPgain + this.HPgainBonus) > character.maxHP)) {
-                character.HP = character.maxHP;
-
-            } else {
-                character.HP += this.HPgain;
-            }
+        } else {
+            character.HP += potentialHPGain;
         }
         if (!isMuted) this.sound_collect.play();
-        world.collectableObjects.splice(potion, 1);
+        world.collectableObjects.splice(potionIndex, 1);
     }
 
 }
