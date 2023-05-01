@@ -1,5 +1,5 @@
 class HealthPotion extends CollectableObject {
-    HPgain = 10;
+    HPgain = 20;
     HPgainBonus = 25;
     speedY = 8;
     speedX = 3 + this.getRndInteger(5, 9);
