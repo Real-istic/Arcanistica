@@ -42,18 +42,12 @@ class Fireball extends ThrowableObject {
     }
 
     /**
-     * sets the fireball intervall
+     * fireball animation and deletion
      */
     animate() {
-
-        /**
-         * This interval determines the animation of the fireball.
-         */
         setInterval(() => {
             let enemyGetsHitByFireball = world.level.enemies.some(enemy => enemy.isColliding(this) && !enemy.isFinallyDead)
             let fireballGetsOutOfRange = world.character.x > this.x + this.range || world.character.x < this.x - this.range;
-            // console.log('last hit: ', )
-            // console.log('Fireballs', world.throwableObjects)
 
             if (enemyGetsHitByFireball || fireballGetsOutOfRange) {
                 this.playAnimationOnce(this.IMAGES_FIREBALL_HIT);

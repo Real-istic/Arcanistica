@@ -127,84 +127,34 @@ class Endboss extends MovableObject {
     }
 
     /**
-     * sets the Endboss intervals
+     * sets the Endboss intervals for movement, attack and animation
      */
     animate() {
+        this.endbossMovementIntevall();
+        this.endbossAttackIntervall();
+        this.endbossAnimationInterval();
+    }
 
-        /**
-         * endboss movement mechanics
-         */
-        setInterval(() => {
-           // waits for the player to be in range
-            if (this.x - world.character.x <= this.aggroRange) {
-                if (!this.isFinallyDead && this.x > world.character.x && !this.magicBladeStatus) {
-                    this.x -= this.speed;
-                    this.otherDirection = false;
-
-                } else if (!this.isFinallyDead && this.x < world.character.x - 100 && !this.magicBladeStatus) {
-                    this.x += this.speed;
-                    this.otherDirection = true;
-                }
-            }
-        }, 1000 / 60);
-
-        /**
-         * attack-mechanics of the Endboss depends on the Range to the player
-         * 
-         */
-        setInterval(() => {
-            let playerIsAtMidRange = this.x - world.character.x > 150 && this.x - world.character.x < 370 || this.x - world.character.x < -250 && this.x - world.character.x > -470;
-
-            let playerIsAtHighRange = this.x - world.character.x > 380 && this.x - world.character.x < 1200 || this.x - world.character.x < -480 && this.x - world.character.x > -1300;
-
-            this.firecircleCooldown -= 50;
-            this.magicBladeCooldown -= 50;
-
-            if (this.magicBladeCooldown <= 0) {
-                this.magicBladeCooldown = 0;
-            }
-            if (this.firecircleCooldown <= 0) {
-                this.firecircleCooldown = 0;
-            }
-            if (this.magicBladeCooldown <= 0 && !this.magicBladeStatus && !this.isFinallyDead && playerIsAtMidRange && !playerIsAtHighRange && !this.firecircleStatus) {
-                this.throwMagicBlade();
-            }
-            if (this.firecircleCooldown <= 0 && !this.firecircleStatus && !this.isFinallyDead && !playerIsAtMidRange && playerIsAtHighRange) {
-                this.throwFirecircle()
-            }
-        }, 100);
-
-        /**
-         * endboss animations
-         */
+    /**
+     * sets the endboss animation interval
+     */
+    endbossAnimationInterval() {
         setInterval(() => {
             let fireballHitsEndboss = world.throwableObjects.some(projectile => (this.isColliding(projectile) && projectile instanceof Fireball));
-            let fireWallHitsEndboss = world.throwableObjects.some(projectile => (this.isColliding(projectile) && projectile instanceof Firewall));
+            let firewallHitsEndboss = world.throwableObjects.some(projectile => (this.isColliding(projectile) && projectile instanceof Firewall));
+            this.endbossTauntSound();
 
-            if ((this.x - world.character.x <= 650) && !this.soundSwitchTaunt) {
-                this.soundSwitchTaunt = true; // taunt only once if the player is in range
-                if (!isMuted) this.sound_taunt.play();
-            }
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
                 this.playAnimationOnce(this.IMAGES_DEATH);
                 if (!isMuted) this.sound_death.play();
 
-            } else if ((fireballHitsEndboss || fireWallHitsEndboss) && !this.isFinallyDead) {
+            } else if ((fireballHitsEndboss || firewallHitsEndboss) && !this.isFinallyDead) {
                 this.playAnimation(this.IMAGES_HURT);
                 if (!isMuted) this.sound_hurt.play();
+                this.dropCollectables(fireballHitsEndboss, firewallHitsEndboss);
 
-                if (Math.random() < 0.25 && fireballHitsEndboss) { // reduced dropchance
-                    this.spawnManaCrystal(this);
-                    this.spawnHealthPotion(this)
-                }
-                if (Math.random() < 0.1 && fireWallHitsEndboss) { // heavily reduced dropchance
-                    this.spawnManaCrystal(this);
-                    this.spawnHealthPotion(this)
-                }
-            }
-
-            else if (!this.isFinallyDead && world.character.isColliding(this) && !this.magicBladeStatus && !this.firecircleStatus) {
+            } else if (!this.isFinallyDead && world.character.isColliding(this) && !this.magicBladeStatus && !this.firecircleStatus) {
                 this.playAnimation(this.IMAGES_ATTACK);
                 if (!isMuted) this.sound_attack.play();
 
@@ -215,57 +165,156 @@ class Endboss extends MovableObject {
     }
 
     /**
+     * plays a taunt sound if the player gets in range of the Endboss
+     */
+    endbossTauntSound() {
+        if ((this.x - world.character.x <= 650) && !this.soundSwitchTaunt) {
+            this.soundSwitchTaunt = true; // taunts only once if the player gets in range
+            if (!isMuted) this.sound_taunt.play();
+        }
+    }
+
+    /**
+     * handles the Collectables that the Endboss drops if he's hit by a fireball or firewall
+     * 
+     * @param {*} fireballHitsEndboss // true if the Endboss is hit by a fireball
+     * @param {*} firewallHitsEndboss // true if the Endboss is hit by a firewall
+     */
+    dropCollectables(fireballHitsEndboss, firewallHitsEndboss) {
+        if (Math.random() < 0.25 && fireballHitsEndboss) { // reduced dropchance
+            this.spawnManaCrystal(this);
+            this.spawnHealthPotion(this)
+        }
+        if (Math.random() < 0.1 && firewallHitsEndboss) { // heavily reduced dropchance
+            this.spawnManaCrystal(this);
+            this.spawnHealthPotion(this)
+        }
+    }
+
+    /**
+     * movement-mechanics of the Endboss
+     */
+    endbossMovementIntevall() {
+        setInterval(() => {
+            if (this.x - world.character.x <= this.aggroRange) { // waits for the player to be in range
+                if (!this.isFinallyDead && this.x > world.character.x && !this.magicBladeStatus) {
+                    this.x -= this.speed;
+                    this.otherDirection = false;
+
+                } else if (!this.isFinallyDead && this.x < world.character.x - 100 && !this.magicBladeStatus) {
+                    this.x += this.speed;
+                    this.otherDirection = true;
+                }
+            }
+        }, 1000 / 60);
+    }
+
+    /**
+     * attack-mechanics of the Endboss depends on the Range to the player
+     */
+    endbossAttackIntervall() {
+        setInterval(() => {
+            let playerIsAtMidRange = this.x - world.character.x > 150 && this.x - world.character.x < 370 || this.x - world.character.x < -250 && this.x - world.character.x > -470;
+            let playerIsAtHighRange = this.x - world.character.x > 380 && this.x - world.character.x < 1200 || this.x - world.character.x < -480 && this.x - world.character.x > -1300;
+            this.endbossCooldownHandling();
+
+            if (this.magicBladeCooldown <= 0 && !this.magicBladeStatus && !this.isFinallyDead && playerIsAtMidRange && !playerIsAtHighRange && !this.firecircleStatus) {
+                this.throwMagicBlade();
+            }
+            if (this.firecircleCooldown <= 0 && !this.firecircleStatus && !this.isFinallyDead && !playerIsAtMidRange && playerIsAtHighRange) {
+                this.throwFirecircle()
+            }
+        }, 100);
+    }
+
+    endbossCooldownHandling() {
+        this.firecircleCooldown -= 50;
+        this.magicBladeCooldown -= 50;
+
+        if (this.magicBladeCooldown <= 0) {
+            this.magicBladeCooldown = 0;
+        }
+        if (this.firecircleCooldown <= 0) {
+            this.firecircleCooldown = 0;
+        }
+    }
+
+    /**
      * throws a magic blade at the player
      */
-    async throwMagicBlade() {
+    throwMagicBlade() {
         if (this.magicBladeCooldown <= 0) {
             this.magicBladeStatus = true;
             this.magicBladeCooldown = this.resetMagicBladeCooldown;
             this.playAnimationOnce(this.IMAGES_ATTACK_MAGICBLADE);
-
-            setTimeout(() => {
-                if (this.otherDirection) {
-                    let magicBladeProjectile = new MagicBladeProjectile(this.x - 300, this.y + 60 + Math.random() * 100, this.otherDirection);
-                    world.throwableObjects.push(magicBladeProjectile);
-
-                } else {
-                    let magicBladeProjectile = new MagicBladeProjectile(this.x + 50, this.y + 60 + Math.random() * 100, this.otherDirection);
-                    world.throwableObjects.push(magicBladeProjectile);
-                }
-            }, 600); // delay to ensure that the magic blade is thrown at the end of the animation
-
-            setTimeout(() => {
-                this.magicBladeStatus = false;
-                this.currentImage = 0;
-            }, 700); // delay to ensure that the animation is finished
+            this.magicBladeCastAnimationTimeout();
+            this.magicBladeAnimationTimeout();
         }
+    }
+
+    /**
+     * delay that the magic blade is thrown after the cast animation is finished
+     */
+    magicBladeCastAnimationTimeout() {
+        setTimeout(() => {
+            if (this.otherDirection) {
+                let magicBladeProjectile = new MagicBladeProjectile(this.x - 300, this.y + 60 + Math.random() * 100, this.otherDirection);
+                world.throwableObjects.push(magicBladeProjectile);
+
+            } else {
+                let magicBladeProjectile = new MagicBladeProjectile(this.x + 50, this.y + 60 + Math.random() * 100, this.otherDirection);
+                world.throwableObjects.push(magicBladeProjectile);
+            }
+        }, 600); 
+    }
+
+    /**
+     * delay to ensure that the magic blade animation is finished before the magic blade can be thrown
+     */
+    magicBladeAnimationTimeout() {
+        setTimeout(() => {
+            this.magicBladeStatus = false;
+            this.currentImage = 0;
+        }, 700); 
     }
 
     /**
      * throws a firecircle at the player
      */
-    async throwFirecircle() {
+    throwFirecircle() {
         if (this.firecircleCooldown <= 0) {
             this.firecircleStatus = true;
             this.firecircleCooldown = this.resetFirecircleCooldown;
             this.playAnimationOnce(this.IMAGES_ATTACK_FIRECIRCLE);
-
-            setTimeout(() => {
-                if (this.otherDirection) {
-                    let firecircleProjectile = new FirecircleProjectile(this.x - 300, this.y + 40 + Math.random() * 100, this.otherDirection);
-                    world.throwableObjects.push(firecircleProjectile);
-
-                } else {
-                    let firecircleProjectile = new FirecircleProjectile(this.x + 50, this.y + 40 + Math.random() * 100, this.otherDirection);
-                    world.throwableObjects.push(firecircleProjectile);
-                }
-            }, 600); // delay to ensure that the Firecircle is thrown at the end of the animation
-
-            setTimeout(() => {
-                this.firecircleStatus = false;
-                this.currentImage = 0;
-            }, 700); // delay to ensure that the animation is finished
+            this.firecircleCastAnimationTimeout();
+            this.firecircleAnimationTimeout();
         }
+    }
+
+    /**
+     * delay to ensure that the firecircle is thrown after the cast animation is finished
+     */
+    firecircleCastAnimationTimeout() {
+        setTimeout(() => {
+            if (this.otherDirection) {
+                let firecircleProjectile = new FirecircleProjectile(this.x - 300, this.y + 40 + Math.random() * 100, this.otherDirection);
+                world.throwableObjects.push(firecircleProjectile);
+
+            } else {
+                let firecircleProjectile = new FirecircleProjectile(this.x + 50, this.y + 40 + Math.random() * 100, this.otherDirection);
+                world.throwableObjects.push(firecircleProjectile);
+            }
+        }, 600); 
+    }
+
+    /**
+     * delay to ensure that the firecircle animation is finished before the next firecircle can be thrown
+     */
+    firecircleAnimationTimeout() {
+        setTimeout(() => {
+            this.firecircleStatus = false;
+            this.currentImage = 0;
+        }, 700); 
     }
 
 }

@@ -54,20 +54,24 @@ class Goblin extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK)
         this.x = 900 + Math.random() * 3000;
         this.speed += Math.random() * 1;
-
         this.animate();
     }
 
     /**
-     * sets the goblin intervals
+     * sets the goblin intervals for movement and animation
      */
     animate() {
-        /**
-         * goblin movement mechanics
-         */
+        this.goblinMovementInterval();
+        this.goblinAnimationInterval();
+    }
+
+    /**
+     * handles the goblins movement
+     */
+    goblinMovementInterval() {
         setInterval(() => {
             if ((this.x - world.character.x <= this.aggroRange) && gameStarted) {
-                
+
                 if (!this.isFinallyDead && this.x - 80 > world.character.x && !world.throwableObjects.some(projectile => this.isColliding(projectile))) {
                     this.x -= this.speed;
                     this.otherDirection = false;
@@ -78,20 +82,17 @@ class Goblin extends MovableObject {
                 }
             }
         }, 1000 / 60);
+    }
 
-        /**
-         * goblin animations
-         * 
-         */
+    /**
+     * handles the goblins animations
+     */
+    goblinAnimationInterval() {
         setInterval(() => {
             let goblinGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
 
             if (this.isDead() && !this.isFinallyDead) {
-                this.isFinallyDead = true;
-                this.playAnimationOnce(this.IMAGES_DEATH);
-                if (!isMuted) this.sound_death.play();
-                this.spawnManaCrystal(this);
-                this.spawnHealthPotion(this);
+                this.goblinDeathBehaviour();
 
             } else if (!this.isFinallyDead && world.character.isColliding(this)) {
                 this.playAnimation(this.IMAGES_ATTACK);
@@ -107,4 +108,14 @@ class Goblin extends MovableObject {
         }, 150);
     }
 
+    /**
+     * handles the goblins death behaviour
+     */
+    goblinDeathBehaviour() {
+        this.isFinallyDead = true;
+        this.playAnimationOnce(this.IMAGES_DEATH);
+        if (!isMuted) this.sound_death.play();
+        this.spawnManaCrystal(this);
+        this.spawnHealthPotion(this);
+    }
 }

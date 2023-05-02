@@ -215,48 +215,65 @@ class Character extends MovableObject {
      * sets intervals for charactermechanics and animations
      */
     animate() {
-        /**
-         * character movement mechanics and animations
-         */
-        setInterval(() => {
-            let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
+        this.characterMovementInterval();
+        this.characterAnimationsInterval();
+        this.characterIdleMechanicsInterval();
+        this.characterHurtSoundsInterval();
+    }
 
+    /**
+     * character movement mechanics and animations
+     */
+    characterMovementInterval() {
+        setInterval(() => {
             this.setMPbarWidth(this.MP)
             this.setHPbarWidth(this.HP)
             this.setCameraPosition();
-
-            if (this.MP <= this.maxMP && !this.isFinallyDead) {
-                this.MP += this.manaregen;
-            }
-            if (world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
-                this.moveRight();
-            }
-            if (world.keyboard.LEFT && this.x > -150 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus) {
-                this.moveLeft();
-            }
-            if (world.keyboard.SPACE && !this.isAboveGround() && !characterCollidesWithRock) {
-                this.jump();
-                if (!isMuted) this.sound_jump.play();
-            }
+            this.characterMovementExecution();
+            this.characterManaRegen();
         }, 1000 / 60);
+    }
 
-        /**
-         * character animations and cooldownchecks
-         */
+    /**
+     * character's mana regeneration
+     */
+    characterManaRegen() {
+        if (this.MP <= this.maxMP && !this.isFinallyDead) {
+            this.MP += this.manaregen;
+        }
+    }
+
+    /**
+     * executes the Movement of the character
+     * 
+     * @param {*} characterCollidesWithRock // checks if character collides with rock
+     */
+    characterMovementExecution() {
+        let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
+        let characterIsAbleToMoveRight = world.keyboard.RIGHT && this.x < world.level.level_end_x && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus;
+        let characterIsAbleToMoveLeft = world.keyboard.LEFT && this.x > -150 && !this.isFinallyDead && !this.fireballStatus && !characterCollidesWithRock && !this.firewallStatus;
+        let characterIsAbleToJump = world.keyboard.SPACE && !this.isAboveGround() && !this.isFinallyDead && !this.firewallStatus && !characterCollidesWithRock;
+
+        if (characterIsAbleToMoveRight) {
+            this.moveRight();
+        }
+        if (characterIsAbleToMoveLeft) {
+            this.moveLeft();
+        }
+        if (characterIsAbleToJump) {
+            this.jump();
+            if (!isMuted) this.sound_jump.play();
+        }
+    }
+
+    /**
+     * handles the character animations
+     */
+    characterAnimationsInterval() {
         setInterval(() => {
             let characterIsAbleToWalk = ((world.keyboard.RIGHT || world.keyboard.LEFT)) && !this.isAboveGround() && !this.fireballStatus && !this.isFinallyDead && !this.isHurt() && !this.firewallStatus
             let characterIsAbleToJump = (world.keyboard.SPACE && !this.fireballStatus && !this.isFinallyDead) || this.isAboveGround() && !this.fireballStatus && !this.firewallStatus
-
-            this.fireballCooldown -= 100;
-            this.firewallCooldown -= 100;
-
-            if (this.fireballCooldown <= 0) {
-                this.fireballCooldown = 0;
-            }
-
-            if (this.firewallCooldown <= 0) {
-                this.firewallCooldown = 0;
-            }
+            this.setFireCooldowns();
 
             if (this.isDead() && !this.isFinallyDead) {
                 this.isFinallyDead = true;
@@ -273,13 +290,30 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_WALK)
             }
         }, 100);
+    }
 
-        /**
-         * character idle functionalities and animations
-         */
+    /**
+     * handles the character's firespell cooldowns
+     */
+    setFireCooldowns() {
+        this.fireballCooldown -= 100;
+        this.firewallCooldown -= 100;
+
+        if (this.fireballCooldown <= 0) {
+            this.fireballCooldown = 0;
+        }
+
+        if (this.firewallCooldown <= 0) {
+            this.firewallCooldown = 0;
+        }
+    }
+
+    /**
+     * handles the character's idle animations and functionalities
+     */
+    characterIdleMechanicsInterval() {
         setInterval(() => {
             let nothingHappensToCharacter = !(this.isAboveGround()) && !(world.keyboard.RIGHT || world.keyboard.LEFT) && !this.isDead() && !(world.keyboard.arrowRight) && !(this.isHurt()) && !(this.fireballStatus) && this.idleTime < 35 && !this.firewallStatus
-
             let somethingHappensToCharacter = this.isAboveGround() || (world.keyboard.RIGHT || world.keyboard.LEFT) || this.isDead() || this.isHurt() || world.keyboard.arrowRight && world.keyboard.SPACE || this.fireballStatus || this.firewallStatus
 
             if (somethingHappensToCharacter) {
@@ -293,10 +327,9 @@ class Character extends MovableObject {
                 this.idleTime++
             }
         }, 200);
+    }
 
-        /**
-         * character hurt sounds (50% chance each)
-         */
+    characterHurtSoundsInterval() {
         setInterval(() => {
             if (this.isHurt() && !this.fireballStatus) {
                 if (Math.random() < 0.5) {
@@ -324,65 +357,88 @@ class Character extends MovableObject {
     /**
      * throws a fireball in the direction the character is facing
      */
-    async throwFireball() {
+    throwFireball() {
         let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
 
         if (this.fireballCooldown <= 0 && this.MP >= this.fireballMPcost && !characterCollidesWithRock) {
             this.fireballStatus = true;
             this.fireballCooldown = this.resetFireballCooldown;
             this.playAnimationOnce(this.IMAGES_ATTACK)
-   
-            setTimeout(() => {
-                if (this.otherDirection) {
-                    let fireball = new Fireball(this.x + 100, this.y + 10, this.otherDirection);
-                    world.throwableObjects.push(fireball);
-
-                } else {
-                    let fireball = new Fireball(this.x + 50, this.y + 10, this.otherDirection);
-                    world.throwableObjects.push(fireball);
-                }
-                this.MP -= this.fireballMPcost;
-
-            }, 300); // delay to ensure the cast animation is finished before the fireball is thrown
-
-            setTimeout(() => {
-                this.fireballStatus = false;
-                this.currentImage = 0;
-
-            }, 750); // delay to ensure the animation is finished
+            this.fireballCastAnimationTimeout();
+            this.fireballAnimationTimeout();
         }
+    }
+
+    /**
+     * delay to ensure that the cast animation is finished before the fireball is thrown
+     */
+    fireballCastAnimationTimeout() {
+        setTimeout(() => {
+            if (this.otherDirection) {
+                let fireball = new Fireball(this.x + 100, this.y + 10, this.otherDirection);
+                world.throwableObjects.push(fireball);
+
+            } else {
+                let fireball = new Fireball(this.x + 50, this.y + 10, this.otherDirection);
+                world.throwableObjects.push(fireball);
+            }
+            this.MP -= this.fireballMPcost;
+
+        }, 300);
+    }
+
+    /**
+     * delay to ensure that the fireball animation is finished before the next fireball can be thrown
+     */
+    fireballAnimationTimeout() {
+        setTimeout(() => {
+            this.fireballStatus = false;
+            this.currentImage = 0;
+
+        }, 750);
     }
 
     /**
      * casts a firewall in the direction the character is facing
      */
-    async castFirewall() {
+    castFirewall() {
         let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
 
         if (this.firewallCooldown <= 0 && this.MP >= this.firewallMPcost && !characterCollidesWithRock) {
             this.firewallStatus = true;
             this.firewallCooldown = this.resetFirewallCooldown;
             this.playAnimationOnce(this.IMAGES_SPECIAL_ATTACK)
-
-            setTimeout(() => {
-                if (this.otherDirection) {
-                    let firewall = new Firewall(this.x - 250, this.yGround + 90, this.otherDirection);
-                    world.throwableObjects.push(firewall);
-
-                } else {
-                    let firewall = new Firewall(this.x + 150, this.yGround + 90, this.otherDirection);
-                    world.throwableObjects.push(firewall);
-                }
-                this.MP -= this.firewallMPcost;
-                if (!isMuted) this.sound_specialAttack.play();
-
-            }, 300); // delay to ensure the firewall is casted after the cast-animation
-
-            setTimeout(() => {
-                this.firewallStatus = false;
-                this.currentImage = 0;
-
-            }, 700); // delay to ensure the animation is finished
+            this.firewallCastAnimationTimeout();
+            this.firewallAnimationTimeout();
         }
     }
+
+    /**
+     * delay to ensure that the cast animation is finished before the firewall is cast
+     */
+    firewallCastAnimationTimeout() {
+        setTimeout(() => {
+            if (this.otherDirection) {
+                let firewall = new Firewall(this.x - 250, this.yGround + 90, this.otherDirection);
+                world.throwableObjects.push(firewall);
+
+            } else {
+                let firewall = new Firewall(this.x + 150, this.yGround + 90, this.otherDirection);
+                world.throwableObjects.push(firewall);
+            }
+            this.MP -= this.firewallMPcost;
+            if (!isMuted) this.sound_specialAttack.play();
+        }, 300); 
+    }
+
+    /**
+     * delay to ensure that the firewall animation is finished before the next firewall can be cast
+     */
+    firewallAnimationTimeout() {
+        setTimeout(() => {
+            this.firewallStatus = false;
+            this.currentImage = 0;
+        }, 700); 
+    }
+
 }

@@ -1,5 +1,5 @@
 class ManaCrystal extends CollectableObject {
-    MPgain = 8;
+    MPgain = 15;
     MPgainBonus = 25;
     speedY = 8;
     speedX = 1 + this.getRndInteger(3, 7);

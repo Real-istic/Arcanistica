@@ -3,7 +3,6 @@ let joy = new JoyStick('joyDiv');
 
 const joystick = document.getElementById("joystick");
 joystick.addEventListener('touchmove', (e) => {
-    console.log('touchmove', joy.GetDir());
     const direction = joy.GetDir();
     
     if (direction === 'E' || direction === 'NE' || direction === 'SE') {

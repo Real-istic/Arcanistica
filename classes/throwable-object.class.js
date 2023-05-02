@@ -3,29 +3,13 @@ class ThrowableObject extends MovableObject {
     /**
      * determines the mechanics of the throwable object
      * 
-     * @param {*} projectileOffsetX translates the spawn-position
-     * @param {*} speed speed of the projectile
+     * @param {*} projectileOffsetX // translates the spawn-position
+     * @param {*} speed // speed of the projectile
      */
     throw(projectileOffsetX, speed) {
 
         if (this instanceof MagicBladeProjectile || this instanceof FirecircleProjectile) {
-            if (this.otherDirection) {
-                this.x += projectileOffsetX + 350
-                setInterval(() => {
-                    this.x += speed;
-                    if (this instanceof FirecircleProjectile) {
-                        this.applyFireCircleGravity()
-                    }
-                }, 50);
-            } else if (!this.otherDirection){
-                this.x -= projectileOffsetX
-                setInterval(() => {
-                    this.x -= speed;
-                    if (this instanceof FirecircleProjectile) {
-                        this.applyFireCircleGravity()
-                    }
-                }, 50);
-            }
+            this.endbossProjectileHandling(projectileOffsetX, speed);
             
         } else {
             if (this.otherDirection) {
@@ -41,6 +25,31 @@ class ThrowableObject extends MovableObject {
         }
     }
 
+    /**
+     * handles the projectiles of the endboss
+     * 
+     * @param {*} projectileOffsetX // translates the spawn-position
+     * @param {*} speed // speed of the projectile
+     */
+    endbossProjectileHandling(projectileOffsetX, speed) {
+        if (this.otherDirection) {
+            this.x += projectileOffsetX + 350
+            setInterval(() => {
+                this.x += speed;
+                if (this instanceof FirecircleProjectile) {
+                    this.applyFireCircleGravity()
+                }
+            }, 50);
+        } else if (!this.otherDirection){
+            this.x -= projectileOffsetX
+            setInterval(() => {
+                this.x -= speed;
+                if (this instanceof FirecircleProjectile) {
+                    this.applyFireCircleGravity()
+                }
+            }, 50);
+        }
+    }
 
     /**
      * deletes the projectile after a certain time

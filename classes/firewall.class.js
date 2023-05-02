@@ -34,12 +34,9 @@ class Firewall extends ThrowableObject {
     }
 
     /**
-     * sets the firewall interval
+     * firewall animation and deletion
      */
     animate() {
-        /**
-         * firewall animation and removal
-         */
         setInterval(() => {
             this.deleteProjectile(this.clearProjectileTime);
         }, 50);

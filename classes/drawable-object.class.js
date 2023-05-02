@@ -68,7 +68,6 @@ class DrawableObject {
         ctx.scale(-1, 1);
         ctx.translate(this.img.width - 90, 0)
         ctx.drawImage(this.img, -this.x - this.width, this.y, this.width, this.height);
-        // this.drawMirroredFrame(ctx);
         ctx.restore();
     }
 
@@ -82,31 +81,7 @@ class DrawableObject {
         ctx.scale(-1, 1);
         ctx.translate(this.img.width - 82, -0)
         ctx.drawImage(this.img, -this.x - this.width, this.y, this.width, this.height);
-        // this.drawMirroredFrame(ctx);
         ctx.restore();
     }
-
-    // /**
-    //  * test frames for collision detection but without offsets
-    //  * 
-    //  * @param {*} ctx // canvas context
-    //  */
-    // drawMirroredFrame(ctx) {
-    //     ctx.beginPath();
-    //     ctx.lineWidth = '3';
-    //     ctx.strokeStyle = 'blue';
-    //     ctx.rect(-this.x - this.width, this.y, this.width, this.height);
-    //     ctx.stroke();
-    // }
-
-    // drawFrame(ctx) {
-    //     if (this instanceof Goblin || this instanceof Character || this instanceof Endboss) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = '3';
-    //         ctx.strokeStyle = 'blue';
-    //         ctx.rect(this.x, this.y, this.width, this.height);
-    //         ctx.stroke();
-    //     }
-    // }
 
 }

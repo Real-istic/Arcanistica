@@ -19,20 +19,35 @@ class CollectableObject extends MovableObject {
             {
                 if ((this.isAboveGround() || this.speedY > 0) && !this.enemy.otherDirection) {
                     this.y -= this.speedY
-                    // (line below) prevent the collectables from dropping out of the left hand side of the map, by reducing its X-Drop speed
-                    this.x -= (world.character.x <= 200) ? (this.speedX / 2) : this.speedX;
-                    this.speedY -= this.acceleration;
-                    this.speedX += this.accelerationX;
+                    this.reduceDropSpeedLeftMapSide();
+
                 } else if ((this.isAboveGround() || this.speedY > 0) && this.enemy.otherDirection) {
                     this.y -= this.speedY
-                    // (line below) prevent the collectables from dropping out of the right hand side of the map, by reducing its X-Drop speed
-                    this.x += (world.character.x >= 3900) ? (this.speedX / 2) : this.speedX;
-                    this.speedY -= this.acceleration;
-                    this.speedX -= this.accelerationX;
+                    this.reduceDropSpeedRightMapSide();
+
                 } else {
                     this.y = this.yGround;
                 }
             }
         }, 1000 / 100);
     }
+
+    /**
+     * prevent the collectables from dropping out of the left hand side of the map, by reducing its X-Drop speed
+     */
+    reduceDropSpeedLeftMapSide() {
+        this.x -= (world.character.x <= 200) ? (this.speedX / 2) : this.speedX;
+        this.speedY -= this.acceleration;
+        this.speedX += this.accelerationX;
+    }
+
+    /**
+     * prevent the collectables from dropping out of the right hand side of the map, by reducing its X-Drop speed
+     */
+    reduceDropSpeedRightMapSide() {
+        this.x += (world.character.x >= 3900) ? (this.speedX / 2) : this.speedX;
+        this.speedY -= this.acceleration;
+        this.speedX -= this.accelerationX;
+    }
+
 }

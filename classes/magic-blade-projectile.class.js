@@ -1,9 +1,9 @@
 class MagicBladeProjectile extends ThrowableObject {
-    dpf = 0.02 + Math.random() * 0.02;
+    dpf = 0.02 + Math.random() * 0.01;
 
     offset = world.level.enemies[0].otherDirection ?
-    { top: 35, bottom: 160, left: 150, right: -150}:
-    { top: 35, bottom: 160, left: -40, right: 70 };
+        { top: 35, bottom: 160, left: 150, right: -150 } :
+        { top: 35, bottom: 160, left: -40, right: 70 };
 
     projectileOffset = 80;
     speed = 20;
@@ -40,12 +40,9 @@ class MagicBladeProjectile extends ThrowableObject {
     }
 
     /**
-     * sets the magic-blade inerval
+     * handles the animation of the magic blade and the deletion
      */
     animate() {
-        /**
-         * Animation for the magic blade projectile
-         */
         setInterval(() => {
             let endboss = world.level.enemies[0];
             let characterGetsHitByMagicBlade = this.isColliding(world.character);

@@ -40,15 +40,22 @@ class World {
     async loadCharacter() {
         return new Character();
     }
-    
+
     /**
-     * checks the world for collisions between objects and sets the dmgoutput to the objects
+     * checks the world for collisions between objects and calls the collision handling functions
      * 
      */
     checkCollisions() {
-        // important collisions
-        this.level.enemies.forEach((enemy) => {
+        this.enemyCollisionHandling();
+        this.endbossProjectileSplashSoundHandling();
+        this.collectableObjectsHandling();
+    }
 
+    /**
+     * handles the collisions between the character and the enemies and sets the dmgoutput to them 
+     */
+    enemyCollisionHandling() {
+        this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 if (!enemy.isFinallyDead && !(enemy instanceof Medusa) && !this.character.isAboveGround()) {
                     this.character.isHit(enemy.dpf);
@@ -63,8 +70,12 @@ class World {
                 }
             });
         })
+    }
 
-        // different hitsounds if the endboss projectiles hits the character
+    /**
+     * handles the splashsounds of the endboss projectiles that hits the character
+     */
+    endbossProjectileSplashSoundHandling() {
         this.throwableObjects.forEach((object) => {
             if (this.character.isColliding(object)) {
                 this.character.isHit(object.dpf);
@@ -76,8 +87,12 @@ class World {
                 }
             }
         })
+    }
 
-        // for gathering collectable objects
+    /**
+     * checks the world for collisions between the character and collectable objects
+     */
+    collectableObjectsHandling() {
         this.collectableObjects.forEach((object) => {
             if (object.isColliding(this.character) && (object instanceof ManaCrystal)) {
                 object.gatherManaCrystal(this.character);
@@ -91,35 +106,38 @@ class World {
      * draws everything on the canvas and calls itself again
      */
     draw() {
-
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgrounds);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
-
         this.addToMap(this.character);
-        this.ctx.translate(-this.camera_x, 0);
-        this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.collectableObjects);
-        this.ctx.translate(-this.camera_x, 0);
+        this.drawFixedObjects();
+        this.ensureSmoothPerformance();
+    }
 
-        // --- space for fixed objects below 
-
-        this.addObjectsToMap(this.ui.statusbars);
-        this.addObjectsToMap(this.ui.icons);
-        this.addObjectsToMap(this.ui.frames);
-
-        // --- space for fixed objects above 
-
+    /**
+     * ensures a smooth performance of the game
+     */
+    ensureSmoothPerformance() {
         let self = this;
-        // Performance? -> check
         setTimeout(() => {
             requestAnimationFrame(function () {
                 self.draw();
             });
         }, 1000 / 60);
+    }
+
+    /**
+     * draws the fixed objects on the canvas
+     */
+    drawFixedObjects() {
+        this.ctx.translate(-this.camera_x, 0);
+        this.addObjectsToMap(this.ui.statusbars);
+        this.addObjectsToMap(this.ui.icons);
+        this.addObjectsToMap(this.ui.frames);
     }
 
     /**
@@ -140,12 +158,14 @@ class World {
      */
     addToMap(mo) {
         this.checkCollisions()
+        let mirroredObject = (mo instanceof Goblin || mo instanceof Medusa || mo instanceof MagicBladeProjectile || mo instanceof FirecircleProjectile) && !mo.otherDirection
+        let mirroredObjectNotCentered = (mo instanceof Endboss && !mo.otherDirection) || (mo instanceof Character && mo.otherDirection) || (mo instanceof Fireball && mo.otherDirection)
 
         // mirror rendering if necessary
-        if ((mo instanceof Goblin || mo instanceof Medusa || mo instanceof MagicBladeProjectile || mo instanceof FirecircleProjectile) && !mo.otherDirection) {
+        if (mirroredObject) {
             mo.drawMirroredObjects(this.ctx)
 
-        } else if ((mo instanceof Endboss && !mo.otherDirection) || (mo instanceof Character && mo.otherDirection) || (mo instanceof Fireball && mo.otherDirection)) {
+        } else if (mirroredObjectNotCentered) {
             // mirror rendering for not centered objects
             mo.drawMirroredObjectsNotCentered(this.ctx)
 
