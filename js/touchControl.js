@@ -1,4 +1,4 @@
-// Creates the JoyStick object into the DIV 'joyDiv'
+// Creates the JoyStick object into the DIV 'joyDiv' and handles its events
 let joy = new JoyStick('joyDiv');
 
 const joystick = document.getElementById("joystick");

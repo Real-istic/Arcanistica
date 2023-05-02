@@ -96,13 +96,18 @@
     }
 
     /**
-     * sets medusa intervals
+     * sets the medusa intervals for movement, animation and attack
      */
     animate() {
+        this.medusaMovementInterval();
+        this.medusaAnimationInterval();
+        this.medusaAttackInterval();
+    }
 
-        /**
-         * medusa movement mechanics
-         */
+    /**
+     * handles the medusas movement
+     */
+    medusaMovementInterval() {
         setInterval(() => {
             let medusaGetsHitByFirewall = world.throwableObjects.some(firewall => this.isColliding(firewall));
             let characterGetsTooFarAway = !this.isFinallyDead &amp;&amp; (this.x - world.character.x > 320 || this.x - world.character.x &lt; -350 &amp;&amp; this.x - world.character.x > -380) &amp;&amp; !this.rockProjectileStatus &amp;&amp; !medusaGetsHitByFirewall
@@ -119,10 +124,12 @@
                 }
             }
         }, 1000 / 60);
+    }
 
-        /**
-         * medusa animation
-         */
+    /**
+     * handles the medusas animation
+     */
+    medusaAnimationInterval() {
         setInterval(() => {
             let medusaGetsHitByProjectile = world.throwableObjects.some(projectile => this.isColliding(projectile));
 
@@ -141,10 +148,12 @@
                 this.playAnimation(this.IMAGES_WALK);
             }
         }, 150);
+    }
 
-        /**
-         * determines when medusa throws a rock projectile at the character
-         */
+    /**
+     * handles the cast attack with a rock projectile
+     */
+    medusaAttackInterval() {
         setInterval(() => {
             let characterIsAtHighRange = this.x - world.character.x > 300 &amp;&amp; this.x - world.character.x &lt; 400 || this.x - world.character.x &lt; -280 &amp;&amp; this.x - world.character.x > -400;
             this.rockProjectileCooldown -= 50;
@@ -157,43 +166,59 @@
                 this.throwRockProjectile();
             }
         }, 100);
-
     }
 
     /**
      * throws a rock projectile at the character
      */
-    async throwRockProjectile() {
+    throwRockProjectile() {
         if (this.rockProjectileCooldown &lt;= 0) {
             this.rockProjectileStatus = true;
             this.rockProjectileCooldown = this.resetRockProjectileCooldown;
-
             this.playAnimationOnce(this.IMAGES_ATTACK);
-
-            setTimeout(() => {
-                if (this.otherDirection) {
-                    let rockProjectile = new RockProjectile(world.character.x - 10, this.yGround - 45, this.otherDirection);
-                    world.throwableObjects.push(rockProjectile);
-
-                } else {
-                    let rockProjectile = new RockProjectile(world.character.x - 80, this.yGround - 45, this.otherDirection);
-                    world.throwableObjects.push(rockProjectile);
-                }
-            }, 200); // short delay before the projectile is thrown
-
-            setTimeout(() => {
-                this.rockProjectileStatus = false;
-                this.currentImage = 0;
-            }, 1500); // delay to ensure the animation is finished and no longer blocks other animations
-            setTimeout(() => {
-                if (this.isDead()) {
-                    this.isFinallyDead = true;
-                    this.playAnimationOnce(this.IMAGES_DEATH);
-                }
-            }, 2000); // delay to ensure that the death-animation is played while no other animation is active
+            this.rockProjectileCastAnimationTimeout();
+            this.rockProjectileAnimationTimeout();
+            this.ensureMedusaDeathAnimationTimeout();
         }
     }
 
+    /**
+     * delay to ensure that the rock projectile is thrown while the animation is active
+     */
+    rockProjectileCastAnimationTimeout() {
+        setTimeout(() => {
+            if (this.otherDirection) {
+                let rockProjectile = new RockProjectile(world.character.x - 10, this.yGround - 45, this.otherDirection);
+                world.throwableObjects.push(rockProjectile);
+
+            } else {
+                let rockProjectile = new RockProjectile(world.character.x - 80, this.yGround - 45, this.otherDirection);
+                world.throwableObjects.push(rockProjectile);
+            }
+        }, 200); 
+    }
+
+    /**
+     * delay to ensure that the animation is finished and no longer blocks other animations
+     */
+    rockProjectileAnimationTimeout() {
+        setTimeout(() => {
+            this.rockProjectileStatus = false;
+            this.currentImage = 0;
+        }, 1500);
+    }
+
+    /**
+     * ensures that the medusa death animation is played after a rockprojectile cast
+     */
+    ensureMedusaDeathAnimationTimeout() {
+        setTimeout(() => {
+            if (this.isDead()) {
+                this.isFinallyDead = true;
+                this.playAnimationOnce(this.IMAGES_DEATH);
+            }
+        }, 2000); 
+    }
 
 }
 </code></pre>
@@ -212,7 +237,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Apr 30 2023 19:20:38 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 12:51:46 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

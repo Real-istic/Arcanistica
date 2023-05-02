@@ -136,26 +136,10 @@ function gameIntervals() {
     let endboss = world.level.enemies[0];
     setInterval(() => {
         if (world.character.isFinallyDead) {
-            gameOver = true;
-            music_game.pause();
-            music_endboss.pause();
-
-            setTimeout(() => {
-                if (!isMuted) music_gameOver.play();
-                for (let i = 1; i < 9999; i++) window.clearInterval(i);
-                document.getElementById('gameOverScreen').style.display = 'flex';
-            }, 2100);
+            characterIsDead();
 
         } else if (endboss.isFinallyDead) {
-            gameOver = true;
-            music_game.pause();
-            music_endboss.pause();
-
-            setTimeout(() => {
-                if (!isMuted) music_victory.play();
-                for (let i = 1; i < 9999; i++) window.clearInterval(i);
-                document.getElementById('gameOverScreen2').style.display = 'flex';
-            }, 2100);
+            endbossIsDead();
         }
 
         if (endboss.x - world.character.x <= 800 && !gameOver) {
@@ -171,6 +155,38 @@ function gameIntervals() {
         if (!isMuted) this.play();
     }, false);
     if (!isMuted) music_game.play();
+}
+
+/**
+ * handles the character death-event
+ */
+function characterIsDead() {
+    gameOver = true;
+    music_game.pause();
+    music_endboss.pause();
+
+    setTimeout(() => {
+        if (!isMuted) music_gameOver.play();
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
+        document.getElementById('gameOverScreen').style.display = 'flex';
+    }, 2100);
+}
+
+/**
+ * handles the endboss death-event
+ * 
+ * @param {*} endboss // endboss object
+ */
+function endbossIsDead() {
+    gameOver = true;
+    music_game.pause();
+    music_endboss.pause();
+
+    setTimeout(() => {
+        if (!isMuted) music_victory.play();
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
+        document.getElementById('gameOverScreen2').style.display = 'flex';
+    }, 2100);
 }
 
 /**

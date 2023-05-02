@@ -243,48 +243,65 @@
      * sets intervals for charactermechanics and animations
      */
     animate() {
-        /**
-         * character movement mechanics and animations
-         */
-        setInterval(() => {
-            let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
+        this.characterMovementInterval();
+        this.characterAnimationsInterval();
+        this.characterIdleMechanicsInterval();
+        this.characterHurtSoundsInterval();
+    }
 
+    /**
+     * character movement mechanics and animations
+     */
+    characterMovementInterval() {
+        setInterval(() => {
             this.setMPbarWidth(this.MP)
             this.setHPbarWidth(this.HP)
             this.setCameraPosition();
-
-            if (this.MP &lt;= this.maxMP &amp;&amp; !this.isFinallyDead) {
-                this.MP += this.manaregen;
-            }
-            if (world.keyboard.RIGHT &amp;&amp; this.x &lt; world.level.level_end_x &amp;&amp; !this.isFinallyDead &amp;&amp; !this.fireballStatus &amp;&amp; !characterCollidesWithRock &amp;&amp; !this.firewallStatus) {
-                this.moveRight();
-            }
-            if (world.keyboard.LEFT &amp;&amp; this.x > -150 &amp;&amp; !this.isFinallyDead &amp;&amp; !this.fireballStatus &amp;&amp; !characterCollidesWithRock &amp;&amp; !this.firewallStatus) {
-                this.moveLeft();
-            }
-            if (world.keyboard.SPACE &amp;&amp; !this.isAboveGround() &amp;&amp; !characterCollidesWithRock) {
-                this.jump();
-                if (!isMuted) this.sound_jump.play();
-            }
+            this.characterMovementExecution();
+            this.characterManaRegen();
         }, 1000 / 60);
+    }
 
-        /**
-         * character animations and cooldownchecks
-         */
+    /**
+     * character's mana regeneration
+     */
+    characterManaRegen() {
+        if (this.MP &lt;= this.maxMP &amp;&amp; !this.isFinallyDead) {
+            this.MP += this.manaregen;
+        }
+    }
+
+    /**
+     * executes the Movement of the character
+     * 
+     * @param {*} characterCollidesWithRock // checks if character collides with rock
+     */
+    characterMovementExecution() {
+        let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
+        let characterIsAbleToMoveRight = world.keyboard.RIGHT &amp;&amp; this.x &lt; world.level.level_end_x &amp;&amp; !this.isFinallyDead &amp;&amp; !this.fireballStatus &amp;&amp; !characterCollidesWithRock &amp;&amp; !this.firewallStatus;
+        let characterIsAbleToMoveLeft = world.keyboard.LEFT &amp;&amp; this.x > -150 &amp;&amp; !this.isFinallyDead &amp;&amp; !this.fireballStatus &amp;&amp; !characterCollidesWithRock &amp;&amp; !this.firewallStatus;
+        let characterIsAbleToJump = world.keyboard.SPACE &amp;&amp; !this.isAboveGround() &amp;&amp; !this.isFinallyDead &amp;&amp; !this.firewallStatus &amp;&amp; !characterCollidesWithRock;
+
+        if (characterIsAbleToMoveRight) {
+            this.moveRight();
+        }
+        if (characterIsAbleToMoveLeft) {
+            this.moveLeft();
+        }
+        if (characterIsAbleToJump) {
+            this.jump();
+            if (!isMuted) this.sound_jump.play();
+        }
+    }
+
+    /**
+     * handles the character animations
+     */
+    characterAnimationsInterval() {
         setInterval(() => {
             let characterIsAbleToWalk = ((world.keyboard.RIGHT || world.keyboard.LEFT)) &amp;&amp; !this.isAboveGround() &amp;&amp; !this.fireballStatus &amp;&amp; !this.isFinallyDead &amp;&amp; !this.isHurt() &amp;&amp; !this.firewallStatus
             let characterIsAbleToJump = (world.keyboard.SPACE &amp;&amp; !this.fireballStatus &amp;&amp; !this.isFinallyDead) || this.isAboveGround() &amp;&amp; !this.fireballStatus &amp;&amp; !this.firewallStatus
-
-            this.fireballCooldown -= 100;
-            this.firewallCooldown -= 100;
-
-            if (this.fireballCooldown &lt;= 0) {
-                this.fireballCooldown = 0;
-            }
-
-            if (this.firewallCooldown &lt;= 0) {
-                this.firewallCooldown = 0;
-            }
+            this.setFireCooldowns();
 
             if (this.isDead() &amp;&amp; !this.isFinallyDead) {
                 this.isFinallyDead = true;
@@ -301,17 +318,32 @@
                 this.playAnimation(this.IMAGES_WALK)
             }
         }, 100);
+    }
 
-        /**
-         * character idle functionalities and animations
-         */
+    /**
+     * handles the character's firespell cooldowns
+     */
+    setFireCooldowns() {
+        this.fireballCooldown -= 100;
+        this.firewallCooldown -= 100;
+
+        if (this.fireballCooldown &lt;= 0) {
+            this.fireballCooldown = 0;
+        }
+
+        if (this.firewallCooldown &lt;= 0) {
+            this.firewallCooldown = 0;
+        }
+    }
+
+    /**
+     * handles the character's idle animations and functionalities
+     */
+    characterIdleMechanicsInterval() {
         setInterval(() => {
             let nothingHappensToCharacter = !(this.isAboveGround()) &amp;&amp; !(world.keyboard.RIGHT || world.keyboard.LEFT) &amp;&amp; !this.isDead() &amp;&amp; !(world.keyboard.arrowRight) &amp;&amp; !(this.isHurt()) &amp;&amp; !(this.fireballStatus) &amp;&amp; this.idleTime &lt; 35 &amp;&amp; !this.firewallStatus
-
             let somethingHappensToCharacter = this.isAboveGround() || (world.keyboard.RIGHT || world.keyboard.LEFT) || this.isDead() || this.isHurt() || world.keyboard.arrowRight &amp;&amp; world.keyboard.SPACE || this.fireballStatus || this.firewallStatus
 
-            // console.log('fireballstatus', this.fireballStatus)
-            // console.log('idleTime ', this.idleTime)
             if (somethingHappensToCharacter) {
                 this.idleTime = 0
             }
@@ -323,10 +355,9 @@
                 this.idleTime++
             }
         }, 200);
+    }
 
-        /**
-         * character hurt sounds (50% chance each)
-         */
+    characterHurtSoundsInterval() {
         setInterval(() => {
             if (this.isHurt() &amp;&amp; !this.fireballStatus) {
                 if (Math.random() &lt; 0.5) {
@@ -337,7 +368,6 @@
             }
         }, 400);
     }
-
 
     /**
      * character camera positioning
@@ -355,67 +385,90 @@
     /**
      * throws a fireball in the direction the character is facing
      */
-    async throwFireball() {
+    throwFireball() {
         let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
 
         if (this.fireballCooldown &lt;= 0 &amp;&amp; this.MP >= this.fireballMPcost &amp;&amp; !characterCollidesWithRock) {
             this.fireballStatus = true;
             this.fireballCooldown = this.resetFireballCooldown;
             this.playAnimationOnce(this.IMAGES_ATTACK)
-   
-            setTimeout(() => {
-                if (this.otherDirection) {
-                    let fireball = new Fireball(this.x + 100, this.y + 10, this.otherDirection);
-                    world.throwableObjects.push(fireball);
-
-                } else {
-                    let fireball = new Fireball(this.x + 50, this.y + 10, this.otherDirection);
-                    world.throwableObjects.push(fireball);
-                }
-                this.MP -= this.fireballMPcost;
-
-            }, 300); // delay to ensure the cast animation is finished before the fireball is thrown
-
-            setTimeout(() => {
-                this.fireballStatus = false;
-                this.currentImage = 0;
-
-            }, 750); // delay to ensure the animation is finished
+            this.fireballCastAnimationTimeout();
+            this.fireballAnimationTimeout();
         }
+    }
+
+    /**
+     * delay to ensure that the cast animation is finished before the fireball is thrown
+     */
+    fireballCastAnimationTimeout() {
+        setTimeout(() => {
+            if (this.otherDirection) {
+                let fireball = new Fireball(this.x + 100, this.y + 10, this.otherDirection);
+                world.throwableObjects.push(fireball);
+
+            } else {
+                let fireball = new Fireball(this.x + 50, this.y + 10, this.otherDirection);
+                world.throwableObjects.push(fireball);
+            }
+            this.MP -= this.fireballMPcost;
+
+        }, 300);
+    }
+
+    /**
+     * delay to ensure that the fireball animation is finished before the next fireball can be thrown
+     */
+    fireballAnimationTimeout() {
+        setTimeout(() => {
+            this.fireballStatus = false;
+            this.currentImage = 0;
+
+        }, 750);
     }
 
     /**
      * casts a firewall in the direction the character is facing
      */
-    async castFirewall() {
+    castFirewall() {
         let characterCollidesWithRock = world.throwableObjects.some(object => object.isColliding(this))
 
         if (this.firewallCooldown &lt;= 0 &amp;&amp; this.MP >= this.firewallMPcost &amp;&amp; !characterCollidesWithRock) {
             this.firewallStatus = true;
             this.firewallCooldown = this.resetFirewallCooldown;
             this.playAnimationOnce(this.IMAGES_SPECIAL_ATTACK)
-
-            setTimeout(() => {
-                if (this.otherDirection) {
-                    let firewall = new Firewall(this.x - 250, this.yGround + 90, this.otherDirection);
-                    world.throwableObjects.push(firewall);
-
-                } else {
-                    let firewall = new Firewall(this.x + 150, this.yGround + 90, this.otherDirection);
-                    world.throwableObjects.push(firewall);
-                }
-                this.MP -= this.firewallMPcost;
-                if (!isMuted) this.sound_specialAttack.play();
-
-            }, 300); // delay to ensure the firewall is casted after the cast-animation
-
-            setTimeout(() => {
-                this.firewallStatus = false;
-                this.currentImage = 0;
-
-            }, 700); // delay to ensure the animation is finished
+            this.firewallCastAnimationTimeout();
+            this.firewallAnimationTimeout();
         }
     }
+
+    /**
+     * delay to ensure that the cast animation is finished before the firewall is cast
+     */
+    firewallCastAnimationTimeout() {
+        setTimeout(() => {
+            if (this.otherDirection) {
+                let firewall = new Firewall(this.x - 250, this.yGround + 90, this.otherDirection);
+                world.throwableObjects.push(firewall);
+
+            } else {
+                let firewall = new Firewall(this.x + 150, this.yGround + 90, this.otherDirection);
+                world.throwableObjects.push(firewall);
+            }
+            this.MP -= this.firewallMPcost;
+            if (!isMuted) this.sound_specialAttack.play();
+        }, 300); 
+    }
+
+    /**
+     * delay to ensure that the firewall animation is finished before the next firewall can be cast
+     */
+    firewallAnimationTimeout() {
+        setTimeout(() => {
+            this.firewallStatus = false;
+            this.currentImage = 0;
+        }, 700); 
+    }
+
 }</code></pre>
         </article>
     </section>
@@ -432,7 +485,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Apr 30 2023 19:20:38 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 12:51:46 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
