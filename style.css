@@ -288,10 +288,10 @@ canvas {
     transform: rotateZ(0deg);
   } 
   30% {
-    transform: rotateZ(90deg);
+    transform: rotateZ(-90deg);
   }
   80% {
-    transform: rotateZ(90deg);
+    transform: rotateZ(-90deg);
   }
   85% {
     transform: rotateZ(0deg);
