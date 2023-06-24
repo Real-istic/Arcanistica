@@ -2,7 +2,7 @@ class Fireball extends ThrowableObject {
     dpf = 0.04 + Math.random() * 0.04;
     offset = {
         top: 0,
-        bottom: 0,
+        bottom: 100,
         left: 170,
         right: 20
     }
