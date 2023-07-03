@@ -25,11 +25,11 @@ class Ui extends DrawableObject {
    */
   setFireballOpacity() {
     let fireballButton = document.getElementById('fireballButton');
-    if (world.character.fireballCooldown <= 0) {
+    if (world.character.fireballCooldown <= 0 && world.character.MP >= world.character.fireballMPcost) {
       fireballButton.style.opacity = 1;
       fireballButton.style.cursor = 'pointer';
     } else {
-      fireballButton.style.opacity = 0.5;
+      fireballButton.style.opacity = 0.4;
       fireballButton.style.cursor = 'not-allowed';
     }
   }
@@ -39,11 +39,11 @@ class Ui extends DrawableObject {
    */
   setFirewallOpacity() {
     let firewallButton = document.getElementById('firewallButton');
-    if (world.character.firewallCooldown <= 0) {
+    if (world.character.firewallCooldown <= 0 && world.character.MP >= world.character.firewallMPcost) {
       firewallButton.style.opacity = 1;
       firewallButton.style.cursor = 'pointer';
     } else {
-      firewallButton.style.opacity = 0.5;
+      firewallButton.style.opacity = 0.4;
       firewallButton.style.cursor = 'not-allowed';
     }
   }

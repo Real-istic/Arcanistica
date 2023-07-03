@@ -29,7 +29,7 @@ class Character extends MovableObject {
 
     // fireWALL
     firewallCooldown = 0;
-    resetFirewallCooldown = 2500
+    resetFirewallCooldown = 1500
     firewallStatus = false
     firewallMPcost = 60;
 
@@ -455,7 +455,7 @@ class Character extends MovableObject {
      */
     notEnoughMana() {
         let currentTime = Date.now();
-        if (currentTime - this.lastCallTime >= 2000) {
+        if (currentTime - this.lastCallTime >= 1500) {
             if (Math.random() < 0.5) {
                 if (!isMuted) this.sound_i_need_more_mana.play();
             } else {
