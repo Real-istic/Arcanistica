@@ -12,12 +12,13 @@ class Character extends MovableObject {
     manaregen = 0.2;
     cameraOffset = 190;
 
-    sound_walk = new Audio('./audio/walk_grass.mp3');
     sound_hit1 = new Audio('./audio/character_hit1.mp3');
     sound_hit2 = new Audio('./audio/character_hit2.mp3');
     sound_jump = new Audio('./audio/jump.mp3');
     sound_death = new Audio('./audio/character_death.mp3');
     sound_specialAttack = new Audio('./audio/firewall_cast.mp3');
+    sound_not_enough_mana = new Audio('./audio/not_enough_mana.mp3');
+    sound_i_need_more_mana = new Audio('./audio/i_need_more_mana.mp3');
 
     // fireBALL
     fireballCooldown = 0;
@@ -329,6 +330,9 @@ class Character extends MovableObject {
         }, 200);
     }
 
+    /**
+     * handles the two character's hurt sounds randomly
+     */
     characterHurtSoundsInterval() {
         setInterval(() => {
             if (this.isHurt() && !this.fireballStatus) {
@@ -339,6 +343,17 @@ class Character extends MovableObject {
                 }
             }
         }, 400);
+    }
+
+    /**
+     * plays a sound if MP (ManaPoints) are too low
+     */
+    notEnoughMana() {
+        if (Math.random() < 0.5) {
+            if (!isMuted) this.sound_i_need_more_mana.play();
+        } else {
+            if (!isMuted) this.sound_not_enough_mana.play();
+        }
     }
 
     /**
@@ -366,6 +381,8 @@ class Character extends MovableObject {
             this.playAnimationOnce(this.IMAGES_ATTACK)
             this.fireballCastAnimationTimeout();
             this.fireballAnimationTimeout();
+        } else {
+            this.notEnoughMana();
         }
     }
 
@@ -410,6 +427,8 @@ class Character extends MovableObject {
             this.playAnimationOnce(this.IMAGES_SPECIAL_ATTACK)
             this.firewallCastAnimationTimeout();
             this.firewallAnimationTimeout();
+        } else {
+            this.notEnoughMana();
         }
     }
 
@@ -428,7 +447,7 @@ class Character extends MovableObject {
             }
             this.MP -= this.firewallMPcost;
             if (!isMuted) this.sound_specialAttack.play();
-        }, 300); 
+        }, 300);
     }
 
     /**
@@ -438,7 +457,7 @@ class Character extends MovableObject {
         setTimeout(() => {
             this.firewallStatus = false;
             this.currentImage = 0;
-        }, 700); 
+        }, 700);
     }
 
 }

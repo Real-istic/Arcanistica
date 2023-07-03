@@ -19,7 +19,7 @@ async function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     buildUI();
-    isMuted = JSON.parse(localStorage.getItem("isMuted"));
+    isMuted = await JSON.parse(localStorage.getItem("isMuted")) || false;
     let muteButton = document.getElementById('muteButton');
     muteButton.src = isMuted == false ? './assets/fantasy-platformer-game-ui/PNG/17Icons/yellow/off_yellow.png' : './assets/fantasy-platformer-game-ui/PNG/17Icons/brown/off.png';
     await pushContentToLevel()
