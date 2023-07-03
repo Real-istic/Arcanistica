@@ -11,6 +11,7 @@ class Character extends MovableObject {
     maxMP = 100;
     manaregen = 0.2;
     cameraOffset = 190;
+    lastCallTime = 0;
 
     sound_hit1 = new Audio('./audio/character_hit1.mp3');
     sound_hit2 = new Audio('./audio/character_hit2.mp3');
@@ -346,17 +347,6 @@ class Character extends MovableObject {
     }
 
     /**
-     * plays a sound if MP (ManaPoints) are too low
-     */
-    notEnoughMana() {
-        if (Math.random() < 0.5) {
-            if (!isMuted) this.sound_i_need_more_mana.play();
-        } else {
-            if (!isMuted) this.sound_not_enough_mana.play();
-        }
-    }
-
-    /**
      * character camera positioning
      */
     setCameraPosition() {
@@ -381,7 +371,7 @@ class Character extends MovableObject {
             this.playAnimationOnce(this.IMAGES_ATTACK)
             this.fireballCastAnimationTimeout();
             this.fireballAnimationTimeout();
-        } else {
+        } else if (this.fireballCooldown <= 0 && this.MP < this.fireballMPcost) {
             this.notEnoughMana();
         }
     }
@@ -427,7 +417,7 @@ class Character extends MovableObject {
             this.playAnimationOnce(this.IMAGES_SPECIAL_ATTACK)
             this.firewallCastAnimationTimeout();
             this.firewallAnimationTimeout();
-        } else {
+        } else if (this.firewallCooldown <= 0 && this.MP < this.firewallMPcost) {
             this.notEnoughMana();
         }
     }
@@ -460,4 +450,18 @@ class Character extends MovableObject {
         }, 700);
     }
 
+    /**
+     * plays a sound if MP (ManaPoints) are too low
+     */
+    notEnoughMana() {
+        let currentTime = Date.now();
+        if (currentTime - this.lastCallTime >= 2000) {
+            if (Math.random() < 0.5) {
+                if (!isMuted) this.sound_i_need_more_mana.play();
+            } else {
+                if (!isMuted) this.sound_not_enough_mana.play();
+            }
+            this.lastCallTime = currentTime;
+        }
+    }
 }
