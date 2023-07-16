@@ -36,7 +36,7 @@ class CollectableObject extends MovableObject {
      * prevent the collectables from dropping out of the left hand side of the map, by reducing its X-Drop speed
      */
     reduceDropSpeedLeftMapSide() {
-        this.x -= (world.character.x <= 400) ? (this.speedX / 4) : this.speedX;
+        this.x -= (world.character.x <= 300) ? (this.speedX / 3) : this.speedX;
         this.speedY -= this.acceleration;
         this.speedX += this.accelerationX;
     }
@@ -45,7 +45,7 @@ class CollectableObject extends MovableObject {
      * prevent the collectables from dropping out of the right hand side of the map, by reducing its X-Drop speed
      */
     reduceDropSpeedRightMapSide() {
-        this.x += (world.character.x >= 3800) ? (this.speedX / 4) : this.speedX;
+        this.x += (world.character.x >= 3800) ? (this.speedX / 3) : this.speedX;
         this.speedY -= this.acceleration;
         this.speedX -= this.accelerationX;
     }
