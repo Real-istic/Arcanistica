@@ -253,6 +253,14 @@ canvas {
   cursor: pointer;
 }
 
+#fullscreenHint {
+  position: absolute;
+  display: none;
+  top: 5%;
+  right: 8%;
+  z-index: 2;
+}
+
 #rotateDevice {
   position: absolute;
   display: none;
@@ -397,7 +405,7 @@ canvas {
     display: none;
   }
 
-  #fullscreenIcon {
+  #fullscreenIcon, #fullscreenHint {
     display: block;
   }
 }
@@ -474,7 +482,7 @@ canvas {
     display: none;
   }
 
-  #fullscreenIcon {
+  #fullscreenIcon, #fullscreenHint {
     display: block;
   }
 }

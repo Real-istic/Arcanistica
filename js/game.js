@@ -16,6 +16,7 @@ let music_endboss = new Audio('./audio/music_endboss.mp3');
  * initializes the canvas, world and ui (also loads the localstorage to check if the game is muted)
  */
 async function init() {
+    this.checkScreenSize();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     buildUI();
@@ -48,7 +49,7 @@ function buildUI() {
 }
 
 /**
- * sets the overlayscreen to none and starts the game after pushing the enemies to the level
+ * sets the overlayscreen to none and starts the game after the intervals are initialized
  */
 async function startGame() {
     let overlayScreen = document.getElementById('overlayScreen');
@@ -108,7 +109,8 @@ function pushBackgroundsToLevel() {
         new Background('./assets/pixel-art-forest-platformer-tileset/Background/Modded/background2.png', -230),
         new Background('./assets/pixel-art-forest-platformer-tileset/Background/Modded/background1.png', -400),
         new Background('./assets/pixel-art-forest-platformer-tileset/Background/Modded/background3.png', -100),
-    )}
+    )
+}
 
 /**
  * mutes or unmutes the sound
@@ -197,17 +199,27 @@ function restartGame() {
 }
 
 /**
- * checks if the screen width is smaller than 930px and if the screen is in portrait mode
+ * calls the checkScreenSize function on window resize
  */
-window.addEventListener('resize', function(){
-    let rotateScreen = document.querySelector('#rotateDevice');
+window.addEventListener('resize', function () {
+    this.checkScreenSize()
+});
+
+/**
+ * checks if the screen width is smaller than 930px and if the screen is in portrait mode also shows the rotate device screen
+ */
+function checkScreenSize() {
+    let rotateScreen = document.getElementById('rotateDevice');
+    let fulscreenHint = document.getElementById('fullscreenHint');
 
     if (window.innerWidth < 930 && window.innerWidth < window.innerHeight) {
         rotateScreen.style.display = 'flex';
+        fulscreenHint.style.display = 'none';
     } else {
         rotateScreen.style.display = 'none';
+        fulscreenHint.style.display = 'flex';
     }
-  });
+}
 
 /**
  * toggles the canvassize (frameDiv) to fullscreen or windowed
