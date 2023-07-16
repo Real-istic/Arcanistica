@@ -210,14 +210,11 @@ window.addEventListener('resize', function () {
  */
 function checkScreenSize() {
     let rotateScreen = document.getElementById('rotateDevice');
-    let fulscreenHint = document.getElementById('fullscreenHint');
 
     if (window.innerWidth < 930 && window.innerWidth < window.innerHeight) {
         rotateScreen.style.display = 'flex';
-        fulscreenHint.style.display = 'none';
     } else {
         rotateScreen.style.display = 'none';
-        fulscreenHint.style.display = 'flex';
     }
 }
 
