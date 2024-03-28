@@ -56,6 +56,18 @@ async function startGame() {
     overlayScreen.style.display = 'none';
     gameStarted = true;
     gameIntervals();
+    if (!isFullscreen && (window.innerWidth < 930 && window.innerWidth > window.innerHeight)) {
+        let elem = document.getElementById("frameDiv");
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+        isFullscreen = true;
+        console.log('FULLSCREEN', fullscreen)
+    }
 }
 
 /**
@@ -222,7 +234,7 @@ function checkScreenSize() {
  * toggles the canvassize (frameDiv) to fullscreen or windowed
  */
 function toggleFullscreen() {
-    var elem = document.getElementById("frameDiv");
+    let elem = document.getElementById("frameDiv");
 
     if (!isFullscreen) {
         if (elem.requestFullscreen) {
