@@ -83,15 +83,15 @@ async function pushContentToLevel() {
  */
 function pushEnemiesToLevel() {
     level1.enemies.push(
-        // new Endboss(),
-        // new Goblin(),
-        // new Goblin(),
-        // new Goblin(),
-        // new Goblin(),
-        // new Goblin(),
-        // new Goblin(),
-        // new Medusa(),
-        // new Medusa()
+        new Endboss(),
+        new Goblin(),
+        new Goblin(),
+        new Goblin(),
+        new Goblin(),
+        new Goblin(),
+        new Goblin(),
+        new Medusa(),
+        new Medusa()
     );
 }
 
