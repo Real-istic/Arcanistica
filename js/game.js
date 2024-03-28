@@ -12,6 +12,20 @@ let music_victory = new Audio('./audio/music_victory.mp3');
 let music_endboss = new Audio('./audio/music_endboss.mp3');
 
 
+function initializeEventListener() {
+    const firewallButton = document.getElementById('firewallButton');
+    const fireballButton = document.getElementById('fireballButton');
+    firewallButton.addEventListener('click', () => {
+        world.character.castFirewall();
+    });
+
+    fireballButton.addEventListener('click', () => {
+        world.character.throwFireball();
+    });
+}
+
+
+
 /**
  * initializes the canvas, world and ui (also loads the localstorage to check if the game is muted)
  */
@@ -56,6 +70,7 @@ async function startGame() {
     overlayScreen.style.display = 'none';
     gameStarted = true;
     gameIntervals();
+    initializeEventListener();
     if (!isFullscreen && (window.innerWidth < 930 && window.innerWidth > window.innerHeight)) {
         let elem = document.getElementById("frameDiv");
         if (elem.requestFullscreen) {
