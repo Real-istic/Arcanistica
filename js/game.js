@@ -66,7 +66,6 @@ async function startGame() {
             elem.msRequestFullscreen();
         }
         isFullscreen = true;
-        console.log('FULLSCREEN', fullscreen)
     }
 }
 
@@ -84,15 +83,15 @@ async function pushContentToLevel() {
  */
 function pushEnemiesToLevel() {
     level1.enemies.push(
-        new Endboss(),
-        new Goblin(),
-        new Goblin(),
-        new Goblin(),
-        new Goblin(),
-        new Goblin(),
-        new Goblin(),
-        new Medusa(),
-        new Medusa()
+        // new Endboss(),
+        // new Goblin(),
+        // new Goblin(),
+        // new Goblin(),
+        // new Goblin(),
+        // new Goblin(),
+        // new Goblin(),
+        // new Medusa(),
+        // new Medusa()
     );
 }
 
@@ -152,11 +151,11 @@ function gameIntervals() {
         if (world.character.isFinallyDead) {
             characterIsDead();
 
-        } else if (endboss.isFinallyDead) {
+        } else if (endboss?.isFinallyDead) {
             endbossIsDead();
         }
 
-        if (endboss.x - world.character.x <= 800 && !gameOver) {
+        if (endboss?.x - world.character.x <= 800 && !gameOver) {
             music_game.pause();
             music_gameOver.pause();
             if (!isMuted) music_endboss.play();

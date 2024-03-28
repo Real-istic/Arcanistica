@@ -2,7 +2,7 @@ class Endboss extends MovableObject {
     y = 110;
     width = 364;
     height = 364;
-    dpf = 0.02;
+    dpf = 0.01;
     HP = 350;
     speed = 2;
 

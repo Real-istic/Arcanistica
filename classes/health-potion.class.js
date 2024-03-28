@@ -64,5 +64,4 @@ class HealthPotion extends CollectableObject {
         if (!isMuted) this.sound_collect.play();
         world.collectableObjects.splice(potionIndex, 1);
     }
-
 }

@@ -76,11 +76,11 @@ var JoyStick = (function(container, parameters, callback)
     var title = (typeof parameters.title === "undefined" ? "joystick" : parameters.title),
         width = (typeof parameters.width === "undefined" ? 0 : parameters.width),
         height = (typeof parameters.height === "undefined" ? 0 : parameters.height),
-        internalFillColor = (typeof parameters.internalFillColor === "undefined" ? "rgba(128, 128, 128, 0.319)" : parameters.internalFillColor),
+        internalFillColor = (typeof parameters.internalFillColor === "undefined" ? "rgba(128, 128, 128, 0.6)" : parameters.internalFillColor),
         internalLineWidth = (typeof parameters.internalLineWidth === "undefined" ? 3 : parameters.internalLineWidth),
-        internalStrokeColor = (typeof parameters.internalStrokeColor === "undefined" ? "rgba(128, 128, 128, 0.319)" : parameters.internalStrokeColor),
+        internalStrokeColor = (typeof parameters.internalStrokeColor === "undefined" ? "rgba(128, 128, 128, 0.6)" : parameters.internalStrokeColor),
         externalLineWidth = (typeof parameters.externalLineWidth === "undefined" ? 3 : parameters.externalLineWidth),
-        externalStrokeColor = (typeof parameters.externalStrokeColor ===  "undefined" ? "rgba(128, 128, 128, 0.319)" : parameters.externalStrokeColor),
+        externalStrokeColor = (typeof parameters.externalStrokeColor ===  "undefined" ? "rgba(128, 128, 128, 0.6)" : parameters.externalStrokeColor),
         autoReturnToCenter = (typeof parameters.autoReturnToCenter === "undefined" ? true : parameters.autoReturnToCenter);
 
     callback = callback || function(StickStatus) {};
@@ -109,8 +109,8 @@ var JoyStick = (function(container, parameters, callback)
     var centerY = canvas.height / 2;
     var directionHorizontalLimitPos = canvas.width / 15;
     var directionHorizontalLimitNeg = directionHorizontalLimitPos * -1;
-    var directionVerticalLimitPos = canvas.height / 10;
-    var directionVerticalLimitNeg = directionVerticalLimitPos * -1;
+    var directionVerticalLimitPos = canvas.height / 15;
+    var directionVerticalLimitNeg = directionVerticalLimitPos * -3.5;
     // Used to save current position of stick
     var movedX=centerX;
     var movedY=centerY;

@@ -4,31 +4,24 @@ let joy = new JoyStick('joyDiv');
 const joystick = document.getElementById("joystick");
 joystick.addEventListener('touchmove', (e) => {
     const direction = joy.GetDir();
-    
+    console.log(direction)
+
     if (direction === 'E' || direction === 'NE' || direction === 'SE') {
         keyboard.RIGHT = true;
         keyboard.LEFT = false;
-    } 
-    if (direction === 'W' || direction === 'NW' || direction === 'SW') {
+    } else if (direction === 'W' || direction === 'NW' || direction === 'SW') {
         keyboard.LEFT = true;
         keyboard.RIGHT = false;
-    } 
-    if (direction === 'N') {
-        keyboard.UP = true;
-        keyboard.SPACE = true;
-        keyboard.DOWN = false;
-        keyboard.LEFT = false;
-        keyboard.RIGHT = false;
-        
-    } else if (direction === 'NW' || direction === 'NE') {
-        keyboard.UP = true;
-        keyboard.SPACE = true;
-        keyboard.DOWN = false;
     }
-    if (direction === 'S' || direction === 'SW' || direction === 'SE') {
-        keyboard.DOWN = true;
+    if (direction === 'NW' || direction === 'N' || direction === 'NE') {
+        keyboard.SPACE = true;
+    } else if (direction === 'S' || direction === 'SW' || direction === 'SE' || direction === 'E' || direction === 'W') {
         keyboard.SPACE = false;
-        keyboard.UP = false;
+    }
+    if (direction === 'N') {
+        keyboard.SPACE = true;
+        keyboard.RIGHT = false;
+        keyboard.LEFT = false;
     }
 });
 
