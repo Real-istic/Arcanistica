@@ -97,6 +97,7 @@ canvas {
 
 #settingSound img {
   cursor: pointer;
+  z-index: 1;
 }
 
 #door {
